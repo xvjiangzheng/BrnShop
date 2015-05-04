@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台导航栏</title>
+    <style type="text/css">
+        *{ margin:0;padding:0;}
+        * html body{ overflow:visible;}
+        body{ font:12px/22px 'Microsoft Yahei',Verdana,Arial,sans-serif,"Times New Roman"; word-wrap:break-word; }
+        body,ul,li,img,div{ margin:0; padding:0;}
+        body div{ text-align:left;}
+        li{ list-style-type:none;}
+        img{ border:0 none;}
+        a:hover{ color:#9f0017;}
+        a:link, a:visited{ text-decoration:none; color:#000;}
+        a { outline:none;color:#000;}
+        .clear{ clear:both;}
+        .left{ float:left;}
+        .right{ float:right;}
+
+        /*头部*/
+        .top{ padding:0px 20px 0px 0px;background:url(/administration/content/images/top_bg.jpg) repeat-x 0px 26px #19597d; height:70px;}
+        .top_info{ padding-left:10px; height:30px; line-height:30px; color:#FFF;}
+        .top_info .left{ background:url(/administration/content/images/ico1.jpg) no-repeat left 8px; padding-left:17px;}
+        .top a img{ margin-top:1px;}
+        
+        #nav li{ float:left; padding-left:20px;}
+        #nav li a{ font-size:14px; color:#d9e6ed; height:38px; line-height:38px; display:block; text-align:center;}
+        #nav li a:hover{color:#FFF; }
+    </style>
+</head>
+<body>
+    <div class="top">
+        <div class="top_info">
+            <div class="left">
+                欢迎您：<strong>@WorkContext.UserName</strong></div>
+            <div class="right">
+                今天是：@CommonHelper.GetChineseDate() @CommonHelper.GetWeek()</div>
+            <div class="clear">
+            </div>
+        </div>
+        <a id="logo" class="left">
+            <img src="/administration/content/images/logo.jpg" height="36" /></a>
+        <ul class="right" id="nav">
+            <li><a href="/" target="_top">返回前台</a></li>
+            <li><a href="@Url.Action("logout", "account", new { area = "" })" target="_top">退出系统</a></li>
+        </ul>
+    </div>
+</body>
+</html>

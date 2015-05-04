@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FBA18BB0-6644-401C-9833-04EEF2917FA9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BrnShop.Data</RootNamespace>
+    <AssemblyName>BrnShop.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminActions.cs" />
+    <Compile Include="AdminGroups.cs" />
+    <Compile Include="AdminOperateLogs.cs" />
+    <Compile Include="Adverts.cs" />
+    <Compile Include="BannedIPs.cs" />
+    <Compile Include="Banners.cs" />
+    <Compile Include="BrowseHistories.cs" />
+    <Compile Include="Credits.cs" />
+    <Compile Include="EventLogs.cs" />
+    <Compile Include="Favorites.cs" />
+    <Compile Include="Helps.cs" />
+    <Compile Include="Brands.cs" />
+    <Compile Include="Categories.cs" />
+    <Compile Include="Coupons.cs" />
+    <Compile Include="DataBases.cs" />
+    <Compile Include="FilterWords.cs" />
+    <Compile Include="FriendLinks.cs" />
+    <Compile Include="LoginFailLogs.cs" />
+    <Compile Include="Navs.cs" />
+    <Compile Include="News.cs" />
+    <Compile Include="OAuths.cs" />
+    <Compile Include="OnlineUsers.cs" />
+    <Compile Include="OrderActions.cs" />
+    <Compile Include="OrderRefunds.cs" />
+    <Compile Include="Orders.cs" />
+    <Compile Include="ProductConsults.cs" />
+    <Compile Include="ProductReviews.cs" />
+    <Compile Include="Products.cs" />
+    <Compile Include="ProductStats.cs" />
+    <Compile Include="Promotions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regions.cs" />
+    <Compile Include="SearchHistories.cs" />
+    <Compile Include="ShipAddresses.cs" />
+    <Compile Include="PVStats.cs" />
+    <Compile Include="Topics.cs" />
+    <Compile Include="Users.cs" />
+    <Compile Include="UserRanks.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BrnShop.Core\BrnShop.Core.csproj">
+      <Project>{253C5E59-316C-44C8-A8A1-2BC2BD64ADE5}</Project>
+      <Name>BrnShop.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

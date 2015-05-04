@@ -1,0 +1,67 @@
+﻿@model BrnShop.Web.Admin.Models.AttributeValueListModel
+           
+@section header{
+    <title>属性值列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+@section body{
+    <h1 class="rightH1">
+        属性值管理 &gt;&gt; 属性值列表
+        <div class="right">
+            <a href="@Url.Action("categorylist")" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回分类</a>
+            <a href="@Url.Action("attributelist", new { cateId = Model.CateId })" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回属性列表</a>
+            <a href="@Url.Action("addattributevalue", new { AttrId = @Model.AttrId })" class="menuBT"><img src="/administration/content/images/add.jpg" />添加</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="table_top">
+    </div>
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="10" align="center">
+                    </th>
+                    <th width="80" align="left">
+                        编号
+                    </th>
+                    <th align="left">
+                        属性值
+                    </th>
+                    <th width="250" align="left">
+                        所属属性
+                    </th>
+                   <th width="100" align="left">
+                        排序
+                    </th>
+                    <th width="100" align="left">
+                        管理操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (AttributeValueInfo info in Model.AttributeValueList)
+                {
+                    <tr>
+                        <td align="center"></td>
+                        <td>@info.AttrValueId</td>
+                        <td>@info.AttrValue</td>
+                        <td>@Model.AttributeName</td>
+                        <td>@info.AttrValueDisplayOrder</td>
+                        <td>
+                            @Html.ActionLink("[编辑]", "EditAttributeValue", new { attrValueId = info.AttrValueId }, new { @class = "editOperate" })|
+                            @Html.ActionLink("[删除]", "DelAttributeValue", new { attrValueId = info.AttrValueId }, new { @class = "deleteOperate" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="table_bottom">
+    </div>
+}

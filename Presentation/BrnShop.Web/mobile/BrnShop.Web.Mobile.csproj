@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{47912737-8865-497A-973F-BD208944848A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BrnShop.Web.Mobile</RootNamespace>
+    <AssemblyName>BrnShop.Web.Mobile</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AreaRegistration.cs" />
+    <Compile Include="controllers\AccountController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\CartController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\CatalogController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\CategoryController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\HomeController.cs" />
+    <Compile Include="controllers\OrderController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\ToolController.cs" />
+    <Compile Include="controllers\UCenterController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\AccountModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\CartModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\CatalogModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\CategoryModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\OrderModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\UCenterModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="themes\default\views\account\findpwd.cshtml" />
+    <None Include="themes\default\views\account\login.cshtml" />
+    <None Include="themes\default\views\account\register.cshtml" />
+    <None Include="themes\default\views\account\resetpwd.cshtml" />
+    <None Include="themes\default\views\account\selectfindpwdtype.cshtml" />
+    <None Include="themes\default\views\cart\ajaxindex.cshtml" />
+    <None Include="themes\default\views\cart\index.cshtml" />
+    <None Include="themes\default\views\catalog\category.cshtml" />
+    <None Include="themes\default\views\catalog\product.cshtml" />
+    <None Include="themes\default\views\catalog\productconsultlist.cshtml" />
+    <None Include="themes\default\views\catalog\productdetails.cshtml" />
+    <None Include="themes\default\views\catalog\productreviewlist.cshtml" />
+    <None Include="themes\default\views\catalog\productsuitlist.cshtml" />
+    <None Include="themes\default\views\catalog\search.cshtml" />
+    <None Include="themes\default\views\category\list.cshtml" />
+    <None Include="themes\default\views\home\index.cshtml" />
+    <None Include="themes\default\views\order\confirmorder.cshtml" />
+    <None Include="themes\default\views\order\payresult.cshtml" />
+    <None Include="themes\default\views\order\payshow.cshtml" />
+    <None Include="themes\default\views\order\submitresult.cshtml" />
+    <None Include="themes\default\views\shared\404.cshtml" />
+    <None Include="themes\default\views\shared\error.cshtml" />
+    <None Include="themes\default\views\shared\prompt.cshtml" />
+    <None Include="themes\default\views\shared\_layout.cshtml" />
+    <None Include="themes\default\views\ucenter\account.cshtml" />
+    <None Include="themes\default\views\ucenter\addshipaddress.cshtml" />
+    <None Include="themes\default\views\ucenter\couponlist.cshtml" />
+    <None Include="themes\default\views\ucenter\editshipaddress.cshtml" />
+    <None Include="themes\default\views\ucenter\index.cshtml" />
+    <None Include="themes\default\views\ucenter\orderactionlist.cshtml" />
+    <None Include="themes\default\views\ucenter\orderinfo.cshtml" />
+    <None Include="themes\default\views\ucenter\orderlist.cshtml" />
+    <None Include="themes\default\views\ucenter\paycredit.cshtml" />
+    <None Include="themes\default\views\ucenter\revieworder.cshtml" />
+    <None Include="themes\default\views\ucenter\safesuccess.cshtml" />
+    <None Include="themes\default\views\ucenter\safeupdate.cshtml" />
+    <None Include="themes\default\views\ucenter\safeverify.cshtml" />
+    <None Include="themes\default\views\ucenter\shipaddresslist.cshtml" />
+    <None Include="themes\default\views\Web.config" />
+    <None Include="themes\default\views\_ViewStart.cshtml" />
+    <None Include="Web.config" />
+    <None Include="Web.linux.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="themes\default\css\account.css" />
+    <Content Include="themes\default\css\base.css" />
+    <Content Include="themes\default\css\buy.css" />
+    <Content Include="themes\default\css\content.css" />
+    <Content Include="themes\default\css\home.css" />
+    <Content Include="themes\default\css\list.css" />
+    <Content Include="themes\default\css\ucenter.css" />
+    <Content Include="themes\default\images\arrow.png" />
+    <Content Include="themes\default\images\bg_line.png" />
+    <Content Include="themes\default\images\card-border.png" />
+    <Content Include="themes\default\images\cartNull.png" />
+    <Content Include="themes\default\images\change.png" />
+    <Content Include="themes\default\images\check.png" />
+    <Content Include="themes\default\images\checked.png" />
+    <Content Include="themes\default\images\del.png" />
+    <Content Include="themes\default\images\del2.png" />
+    <Content Include="themes\default\images\home-icons.png" />
+    <Content Include="themes\default\images\icon.png" />
+    <Content Include="themes\default\images\icon10.png" />
+    <Content Include="themes\default\images\icon11.png" />
+    <Content Include="themes\default\images\icon12.png" />
+    <Content Include="themes\default\images\icon13.png" />
+    <Content Include="themes\default\images\icon14.png" />
+    <Content Include="themes\default\images\icon18.png" />
+    <Content Include="themes\default\images\icon19.png" />
+    <Content Include="themes\default\images\icon2.png" />
+    <Content Include="themes\default\images\icon20.png" />
+    <Content Include="themes\default\images\icon21.png" />
+    <Content Include="themes\default\images\icon23.png" />
+    <Content Include="themes\default\images\icon24.png" />
+    <Content Include="themes\default\images\icon29.png" />
+    <Content Include="themes\default\images\icon2b.png" />
+    <Content Include="themes\default\images\icon3.png" />
+    <Content Include="themes\default\images\icon37.png" />
+    <Content Include="themes\default\images\icon4.png" />
+    <Content Include="themes\default\images\icon5.png" />
+    <Content Include="themes\default\images\icon9.png" />
+    <Content Include="themes\default\images\icon_detail.png" />
+    <Content Include="themes\default\images\icon_heart.png" />
+    <Content Include="themes\default\images\icon_order.png" />
+    <Content Include="themes\default\images\icon_pop_star2.png" />
+    <Content Include="themes\default\images\icon_slid.png" />
+    <Content Include="themes\default\images\icon_star2.png" />
+    <Content Include="themes\default\images\icon_star3.png" />
+    <Content Include="themes\default\images\icon_suc.png" />
+    <Content Include="themes\default\images\line2.png" />
+    <Content Include="themes\default\images\logo.png" />
+    <Content Include="themes\default\images\member-icons.png" />
+    <Content Include="themes\default\images\member.png" />
+    <Content Include="themes\default\images\memberBg.png" />
+    <Content Include="themes\default\images\msj.jpg" />
+    <Content Include="themes\default\images\radio.png" />
+    <Content Include="themes\default\images\radio1.png" />
+    <Content Include="scripts\account.js" />
+    <Content Include="scripts\cart.js" />
+    <Content Include="scripts\common.js" />
+    <Content Include="scripts\order.js" />
+    <Content Include="scripts\product.js" />
+    <Content Include="scripts\region.js" />
+    <Content Include="scripts\ucenter.order.js" />
+    <Content Include="scripts\ucenter.safe.js" />
+    <Content Include="scripts\ucenter.user.js" />
+    <Content Include="scripts\utils.js" />
+    <Content Include="themes\default\theme.png" />
+    <Content Include="themes\default\theme.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\BrnShop.Core\BrnShop.Core.csproj">
+      <Project>{253C5E59-316C-44C8-A8A1-2BC2BD64ADE5}</Project>
+      <Name>BrnShop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\BrnShop.Services\BrnShop.Services.csproj">
+      <Project>{311C5C3B-2427-4A8E-B623-2BAEB95B1D9E}</Project>
+      <Name>BrnShop.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BrnShop.Web.Framework\BrnShop.Web.Framework.csproj">
+      <Project>{BC9FDDF7-958C-4CD9-9068-1F721EEC34C3}</Project>
+      <Name>BrnShop.Web.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

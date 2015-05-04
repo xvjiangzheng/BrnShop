@@ -1,0 +1,74 @@
+﻿@model BrnShop.Web.Admin.Models.OnlineUserTrendModel
+           
+@section header{
+    <title>趋势分析</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css" />
+    <!--[if lte IE 8]><script type="text/javascript" src="/administration/scripts/excanvas.js"></script><![endif]-->
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.flot.js"></script>
+    <script type="text/javascript">
+     @{
+         if (Model.PVStatList.Count > 0)
+         {
+             StringBuilder data = new StringBuilder();
+             int index = 0;
+             for (int i = 0; i < 24; i++)
+             {
+                 if(index < Model.PVStatList.Count)
+                 {
+                 int hour = TypeHelper.ObjectToInt(Model.PVStatList[index].Value.Substring(10));
+                 if(hour == i)
+                 {
+                 data.AppendFormat("[{0},{1}],", i, Model.PVStatList[index].Count);
+                 index++;
+                 }
+                 }
+                 else
+                 {
+                 data.AppendFormat("[{0},{1}],", i, 0);
+                 }
+             }
+             @:var data = [@Html.Raw(data.Remove(data.Length - 1, 1).ToString())];
+         }
+         else
+         {
+         @:var data = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0],[12,0],[13,0],[14,0],[15,0],[16,0],[17,0],[18,0],[19,0],[20,0],[21,0],[22,0],[23,0]];
+         }
+     }
+     var dataset = [{ label: "趋势分析", data: data}];
+     var options = {
+         series: {
+             lines: { show: true },
+             points: {
+                 radius: 3,
+                 show: true
+             }
+         },
+		 xaxis: {
+            tickSize: 1,
+            tickDecimals: 0
+            },
+         colors: ["#016094"]
+     };
+     $(function () {
+         $.plot($("#flot-placeholder"), dataset, options);
+     });
+    </script>
+}
+@section body{
+    <h1 class="rightH1">
+        报表统计 &gt;&gt; 趋势分析
+        <div class="right">
+            <a href="@ViewData["referer"]" class="menuBT">
+                <img src="/administration/content/images/add.jpg" />返回</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="dataListSearch">
+        <div id="flot-placeholder" style="width: 1100px; height: 350px; margin-left:10px;">
+        </div>
+    </div>
+}

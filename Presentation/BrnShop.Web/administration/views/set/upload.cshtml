@@ -1,0 +1,200 @@
+﻿@model BrnShop.Web.Admin.Models.UploadModel
+
+@section header{
+    <title>上传设置</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+            $(function () {
+                if ($("input:radio[name='WatermarkType']:checked").val() == "1") {
+                    $(".watermark").show();
+                    $(".image").hide();
+                }
+                else if ($("input:radio[name='WatermarkType']:checked").val() == "2") {
+                    $(".watermark").show();
+                    $(".text").hide();
+                }
+                else{
+                    $(".watermark").hide();
+                }
+
+                $("input:radio[name='WatermarkType']").click(function () {
+                    if ($(this).val() == "1") {
+                        $(".watermark").show();
+                        $(".image").hide();
+                    }
+                    else if ($(this).val() == "2") {
+                        $(".watermark").show();
+                        $(".text").hide();
+                    }
+                    else {
+                        $(".watermark").hide();
+                    }
+                })
+            })
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 上传设置
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+    <tr>
+    <td  width="146px" align="right">上传服务器：</td>
+    <td>@Html.TextBoxFor(x => x.UploadServer, new { @class = "input", size = "35" }) 如果上传到本机请留空</td>
+    </tr>
+
+         <tr>
+    <td align="right">图片类型：</td>
+    <td>
+    @Html.TextBoxFor(x => x.UploadImgType, new { @class = "input", size = "35" })如果有多个值用","分割 @Html.ValidationMessageFor(x => x.UploadImgType)
+    </td>
+    </tr>
+
+  <tr>
+    <td align="right">图片大小：</td>
+    <td>
+    @Html.TextBoxFor(x => x.UploadImgSize, new { @class = "input", size = "35" })单位为字节 @Html.ValidationMessageFor(x => x.UploadImgSize)
+    </td>
+    </tr>
+
+              <tr>
+    <td align="right">水印类型：</td>
+    <td><p>
+      <label>
+@Html.RadioButtonFor(x => x.WatermarkType, 0, new { @class = "checkbox" })无</label>
+      <label>
+@Html.RadioButtonFor(x => x.WatermarkType, 1, new { @class = "checkbox" })文字</label>
+      <label>
+@Html.RadioButtonFor(x => x.WatermarkType, 2, new { @class = "checkbox" })图片</label>
+@Html.ValidationMessageFor(x => x.WatermarkType)
+ <br />
+    </p>
+</td>
+    </tr>
+
+         <tr class="watermark">
+    <td align="right">水印质量：</td>
+    <td>
+   @Html.TextBoxFor(x => x.WatermarkQuality, new { @class = "input", size = "35" }) @Html.ValidationMessageFor(x => x.WatermarkQuality)
+@Html.ValidationMessageFor(x => x.WatermarkQuality)
+    </td>
+    </tr>
+         <tr class="watermark">
+    <td align="right">水印位置：</td>
+    <td>
+    <p>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 1, new { @class = "checkbox" })上左</label>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 2, new { @class = "checkbox" })上中</label>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 3, new { @class = "checkbox" })上右</label>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 4, new { @class = "checkbox" })中左</label>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 5, new { @class = "checkbox" })中中</label>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 6, new { @class = "checkbox" })中右</label>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 7, new { @class = "checkbox" })下左</label>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 8, new { @class = "checkbox" })下中</label>
+      <label>
+        @Html.RadioButtonFor(x => x.WatermarkPosition, 9, new { @class = "checkbox" })下右</label>
+@Html.ValidationMessageFor(x => x.WatermarkPosition)
+ <br />
+    </p>
+    </td>
+    </tr>
+         <tr class="watermark image">
+    <td align="right">水印图片：</td>
+    <td>
+   @Html.TextBoxFor(x => x.WatermarkImg, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.WatermarkImg)
+    </td>
+    </tr>
+         <tr class="watermark image">
+    <td align="right">图片透明度：</td>
+    <td>
+   @Html.TextBoxFor(x => x.WatermarkImgOpacity, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.WatermarkImgOpacity)
+    </td>
+    </tr>
+         <tr class="watermark text">
+    <td align="right">水印文字：</td>
+    <td>
+   @Html.TextBoxFor(x => x.WatermarkText, new { @class = "input", size = "35" })必须是"Watermarks"文件夹中图片 @Html.ValidationMessageFor(x => x.WatermarkText)
+    </td>
+    </tr>
+             <tr class="watermark text">
+    <td align="right">文字字体：</td>
+    <td>@Html.DropDownListFor(x => x.WatermarkTextFont, ViewData["fontList"] as List<SelectListItem>)
+    </td>
+    </tr>
+         <tr class="watermark text">
+    <td align="right">文字大小：</td>
+    <td>
+   @Html.TextBoxFor(x => x.WatermarkTextSize, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.WatermarkTextSize)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">品牌缩略图：</td>
+    <td>
+   @Html.TextBoxFor(x => x.BrandThumbSize, new { @class = "input", size = "35" })格式为"宽_高",如果有多个用","分割 @Html.ValidationMessageFor(x => x.BrandThumbSize)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">商品展示缩略图：</td>
+    <td>
+   @Html.TextBoxFor(x => x.ProductShowThumbSize, new { @class = "input", size = "35" })格式为"宽_高",如果有多个用","分割 @Html.ValidationMessageFor(x => x.ProductShowThumbSize)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">用户头像缩略图：</td>
+    <td>
+   @Html.TextBoxFor(x => x.UserAvatarThumbSize, new { @class = "input", size = "35" })格式为"宽_高",如果有多个用","分割 @Html.ValidationMessageFor(x => x.UserAvatarThumbSize)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">用户等级头像缩略图：</td>
+    <td>
+   @Html.TextBoxFor(x => x.UserRankAvatarThumbSize, new { @class = "input", size = "35" })格式为"宽_高",如果有多个用","分割 @Html.ValidationMessageFor(x => x.UserRankAvatarThumbSize)
+    </td>
+    </tr>
+
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

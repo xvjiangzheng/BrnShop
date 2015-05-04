@@ -1,0 +1,54 @@
+﻿@model BrnShop.Web.Admin.Models.AdvertPositionModel
+
+@section header{
+    <title>添加广告位置</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+广告管理 &gt;&gt; 添加广告位置
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="56px" align="right">标题：</td>
+    <td>@Html.TextBoxFor(x => x.Title, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Title)</td>
+    </tr>
+      <tr>
+    <td align="right">描述：</td>
+    <td>@Html.TextAreaFor(x => x.Description, new { cols = "40", rows = "6" })@Html.ValidationMessageFor(x => x.Description)</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+            </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

@@ -1,0 +1,113 @@
+﻿@model BrnShop.Web.Admin.Models.CouponListModel
+
+@section header{
+<title>优惠券列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+优惠券管理 &gt;&gt; 优惠券列表
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+   
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>
+          编号：
+        </td>
+        <td width="130">
+          	@Html.TextBox("SN", Model.SN, new { height = "18" })
+        </td>
+                <td>
+          &nbsp;&nbsp;&nbsp;账户名：
+        </td>
+        <td width="130">
+          	@Html.TextBox("AccountName", Model.AccountName, new { height = "18" })
+        </td>
+       <td>
+       <input id="SearchCoupon" name="SearchCoupon" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th align="left" >劵号</th>
+    <th width="120" align="left" >绑定用户</th>
+    <th width="120" align="left" >创建用户</th>
+    <th width="150" align="left" >创建时间</th>
+    <th width="150" align="left" >激活时间</th>
+    <th width="150" align="left" >使用时间</th>
+    <th width="70" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.CouponList.Rows)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@row["couponid"]" selectItem="true" name="couponIdList"/></td>
+    <td>@row["couponsn"]</td>
+    <td>
+      @if (Convert.ToInt32(row["uid"]) > 0)
+      {
+          @row["husername"]
+      }
+      else
+      {
+          @:未绑定
+      }
+</td>
+    <td>@row["cusername"]</td>
+    <td>@row["createtime"]</td>
+    <td>   
+     @if (Convert.ToInt32(row["uid"]) < 1)
+     {
+          @:未激活 
+     }
+     else
+     { 
+          @row["activatetime"]
+     }
+  }
+  </td>
+    <td>
+    @if (Convert.ToInt32(row["oid"]) < 1)
+    {
+        @:未使用 
+    }
+    else
+    { 
+        @row["usetime"]
+    }
+    </td>
+    <td>
+        @Html.ActionLink("[删除]", "delcoupon", new { couponIdList = row["couponid"] }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+         <div class="dataListEdit">
+    <a href="#" delUrl="@Url.Action("delcoupon")" class="batch batchDel">批量删除</a>
+            <div class="page">
+                @Html.AdminPager(Model.PageModel)
+            </div>
+        </div>
+}
+}

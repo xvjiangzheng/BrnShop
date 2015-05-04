@@ -1,0 +1,97 @@
+﻿@model BrnShop.Web.Admin.Models.RelateProductListModel
+           
+@section header{
+    <title>关联商品列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+}
+@section body{
+    <h1 class="rightH1">
+        商品管理 &gt;&gt; 关联商品列表
+        <div class="right">
+            <a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT">
+                <img src="/administration/content/images/goback.jpg" />返回列表</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="table_top">
+    </div>
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="10" align="center"></th>
+                    <th width="80" align="left">商品编号</th>
+                    <th align="left">商品名称</th>
+                    <th width="80" align="left">商城价格</th>
+                    <th width="62" align="left">管理操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.RelateProductList.Rows)
+                {
+                    <tr>
+                        <td align="center"></td>
+                        <td>@row["relatepid"]</td>
+                        <td>@row["name"]</td>
+                        <td>@row["shopprice"]</td>
+                        <td>
+                            <a href="#" url="@Url.Action("delrelateproduct", new { pid = Model.Pid, relatePid = row["relatepid"] })" class = "ajaxdeleteOperate" }>[删除]</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="table_bottom">
+    </div>
+    @using (Html.BeginForm("addrelateproduct", "product"))
+    {
+        <div class="addTable" style="margin-left: 15px; margin-bottom: 10px; padding-top: 10px;
+            border: 2px solid #dbeffa">
+            <input type="hidden" id="Pid" name="Pid" value="@Model.Pid" />
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="56px" align="right">
+                            商品：
+                        </td>
+                        <td>
+                            <div class="selectBt">
+                                <input type="button" value="选择商品" onclick="openProductSelectLayer(this)"/>
+                                <input type="hidden" class="Pid" id="relatePid" name="relatePid" value="0" />
+                                <input type="hidden" class="ProductName" id="ProductName" name="ProductName" value="选择商品" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                        </td>
+                        <td>
+                            <input type="image" id="addRelateProduct" style="margin: 0px; padding: 0px;" src="/administration/content/images/a.jpg" />
+                            <script type="text/javascript">
+                                $("#addRelateProduct").click(function () {
+                                    if (parseInt($("#relatePid").val()) < 1) {
+                                        alert("请选择商品");
+                                        return false;
+                                    }
+                                    else {
+                                        $(this).parents("form").submit();
+                                        return false;
+                                    }
+                                })
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}

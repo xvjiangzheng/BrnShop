@@ -1,0 +1,188 @@
+﻿@model BrnShop.Web.Admin.Models.UserModel
+
+@section header{
+    <title>添加用户</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/administration/scripts/region.js"></script>
+    <script type="text/javascript">
+            provinceId = @ViewData["provinceId"]; //省id
+            cityId = @ViewData["cityId"]; //市id
+            countyId = @ViewData["countyId"]; //县或区id
+
+        $(function () {
+            $(".addTag li").click(function () {
+                $(".addTag li").removeClass("hot");
+                $(this).addClass("hot");
+                $(".addTable").hide().eq($(this).index()).show(0);
+
+            })
+
+            $(".addBt").click(function () {
+                $("form:first").submit();
+                return false;
+            })
+        });
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+用户管理 &gt;&gt; 添加用户
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+<ul class="addTag">
+        <li class="hot"><a href="javascript:;">基本信息</a></li>
+        <li><a href="javascript:;">积分信息</a></li>
+        <li><a href="javascript:;">扩展信息</a></li>
+        <div class="clear">
+        </div>
+    </ul>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="86px" align="right">用户名：</td>
+    <td>@Html.TextBoxFor(x => x.UserName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.UserName)</td>
+    </tr>
+
+      <tr>
+    <td align="right">用户邮箱：</td>
+    <td>@Html.TextBoxFor(x => x.Email, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Email)</td>
+    </tr>
+          <tr>
+    <td align="right">手机号码：</td>
+    <td>@Html.TextBoxFor(x => x.Mobile, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Mobile)</td>
+    </tr>
+          <tr>
+    <td align="right">昵称：</td>
+    <td>@Html.TextBoxFor(x => x.NickName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.NickName)</td>
+    </tr>
+
+              <tr>
+    <td align="right">密码：</td>
+    <td>@Html.PasswordFor(x => x.Password, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Password)</td>
+    </tr>
+                  <tr>
+    <td align="right">确认密码：</td>
+    <td>@Html.PasswordFor(x => x.ConfirmPassword, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.ConfirmPassword)</td>
+    </tr>
+                  <tr>
+    <td align="right">用户等级：</td>
+    <td>@Html.DropDownListFor(x => x.UserRid, ViewData["userRankList"] as List<SelectListItem>) @Html.ValidationMessageFor(x => x.UserRid)</td>
+    </tr>
+                  <tr>
+    <td align="right">管理员组：</td>
+    <td>@Html.DropDownListFor(x => x.AdminGid, ViewData["adminGroupList"] as List<SelectListItem>) @Html.ValidationMessageFor(x => x.AdminGid)</td>
+    </tr>
+                      
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut1" ><img src="/administration/content/images/submit.jpg" /></a>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+    
+<div class="addTable hide">
+<table width="100%">
+ <tr>
+    <td width="86px"  align="right">支付积分：</td>
+    <td>@Html.TextBoxFor(x => x.PayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.PayCredits)</td>
+    </tr>
+     
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut2" ><img src="/administration/content/images/submit.jpg" /></a>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+    
+<div class="addTable hide">
+<table width="100%">
+  <tr>
+    <td width="86px" align="right">真实名称：</td>
+    <td>@Html.TextBoxFor(x => x.RealName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.RealName)</td>
+    </tr>
+      <tr>
+    <td align="right">性别：</td>
+        <td><p>
+      <label>@Html.RadioButtonFor(x => x.Gender, 0, new { @class = "checkbox" })未知</label>
+      <label>@Html.RadioButtonFor(x => x.Gender, 1, new { @class = "checkbox" })男</label>
+      <label>@Html.RadioButtonFor(x => x.Gender, 2, new { @class = "checkbox" })女</label>
+            @Html.ValidationMessageFor(x=>x.Gender)
+ <br />
+    </p>
+</td>
+    </tr>
+    <tr>
+    <td align="right">身份证：</td>
+    <td>@Html.TextBoxFor(x => x.IdCard, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.IdCard)</td>
+    </tr>
+        <tr><td align="right">出生日期：</td>
+    <td>
+        @Html.TextBoxFor(x => x.Bday, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'Bday', dateFmt:'yyyy/MM/dd'})" }) @Html.ValidationMessageFor(x => x.Bday)
+        @if (Model.Bday != null)
+        {
+                <script type="text/javascript">
+                    var fmtDate= "@Model.Bday.Value.ToString("yyyy/MM/dd")";
+                    $("#Bday").val(fmtDate);
+                </script>
+        }
+    </td></tr>
+              <tr>
+    <td align="right">所在区域：</td>
+    <td>
+                    <select class="provinceSelect" id="provinceSelect">
+                <option selected="selected" value="-1">请选择</option>
+                </select>
+                <select class="citySelect" id="citySelect">
+                <option selected="selected" value="-1">请选择</option>
+                </select>
+                <select class="countySelect" id="countySelect" name="regionid">
+                <option selected="selected" value="-1">请选择</option>
+                </select>
+    </td>
+    </tr>
+          <tr>
+    <td align="right">详细地址：</td>
+    <td>@Html.TextBoxFor(x => x.Address, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Address)</td>
+    </tr>
+                  <tr>
+    <td align="right">简介：</td>
+    <td>@Html.TextAreaFor(x => x.Bio, new { cols = "40", rows = "6" })@Html.ValidationMessageFor(x => x.Bio)</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut3" ><img src="/administration/content/images/submit.jpg" /></a>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

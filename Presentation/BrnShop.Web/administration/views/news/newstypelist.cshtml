@@ -1,0 +1,48 @@
+﻿@model List<NewsTypeInfo>
+
+@section header{
+<title>新闻类型列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+新闻管理 &gt;&gt; 新闻类型
+<div class="right">
+<a href="@Url.Action("addnewstype")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加类型</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+        <div class="table_top">
+        </div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10"></th>
+    <th align="left" >名称</th>
+    <th width="60" align="left" >排序</th>  
+    <th width="90" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (NewsTypeInfo info in Model)
+  {
+  <tr>
+    <td></td>
+    <td>@info.Name</td>
+    <td>@info.DisplayOrder</td>
+    <td>
+        @Html.ActionLink("[编辑]", "editnewstype", new { newsTypeId = info.NewsTypeId }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "delnewstype", new { newsTypeId = info.NewsTypeId }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="table_bottom"></div>
+}

@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{253C5E59-316C-44C8-A8A1-2BC2BD64ADE5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BrnShop.Core</RootNamespace>
+    <AssemblyName>BrnShop.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Asyn\BSPAsyn.cs" />
+    <Compile Include="Asyn\IAsynStrategy.cs" />
+    <Compile Include="Asyn\State\UpdateBrowseHistoryState.cs" />
+    <Compile Include="Asyn\State\UpdateOnlineUserState.cs" />
+    <Compile Include="Asyn\State\UpdateProductStatState.cs" />
+    <Compile Include="Asyn\State\UpdatePVStatState.cs" />
+    <Compile Include="Asyn\State\UpdateSearchHistoryState.cs" />
+    <Compile Include="BSPException.cs" />
+    <Compile Include="BSPVersion.cs" />
+    <Compile Include="Cache\BSPCache.cs" />
+    <Compile Include="Cache\CacheKeys.cs" />
+    <Compile Include="Cache\CacheManager\CacheByRegex.cs" />
+    <Compile Include="Cache\CacheManager\ICacheManager.cs" />
+    <Compile Include="Cache\ICacheStrategy.cs" />
+    <Compile Include="Cart\BSPCart.cs" />
+    <Compile Include="Cart\ICartStrategy.cs" />
+    <Compile Include="Config\BSPConfig.cs" />
+    <Compile Include="Config\Info\CreditConfigInfo.cs" />
+    <Compile Include="Config\Info\EventConfigInfo.cs" />
+    <Compile Include="Config\Info\IConfigInfo.cs" />
+    <Compile Include="Config\IConfigStrategy.cs" />
+    <Compile Include="Config\Info\MemcachedCacheConfigInfo.cs" />
+    <Compile Include="Config\Info\MemcachedCartConfigInfo.cs" />
+    <Compile Include="Config\Info\MemcachedSessionConfigInfo.cs" />
+    <Compile Include="Config\Info\RabbitMQOrderConfigInfo.cs" />
+    <Compile Include="Config\Info\RedisNOSQLConfigInfo.cs" />
+    <Compile Include="Config\Info\RDBSConfigInfo.cs" />
+    <Compile Include="Config\Info\EmailConfigInfo.cs" />
+    <Compile Include="Config\Info\ShopConfigInfo.cs" />
+    <Compile Include="Config\Info\SMSConfigInfo.cs" />
+    <Compile Include="Data\NOSQL\INOSQLStrategy\IOrderStrategy.cs" />
+    <Compile Include="Data\NOSQL\INOSQLStrategy\IProductStrategy.cs" />
+    <Compile Include="Data\NOSQL\INOSQLStrategy\IPromotionStrategy.cs" />
+    <Compile Include="Data\NOSQL\INOSQLStrategy\IUserStrategy.cs" />
+    <Compile Include="Domain\Order\CartItemInfo.cs" />
+    <Compile Include="Domain\Order\OrderActionInfo.cs" />
+    <Compile Include="Domain\Order\OrderActionType.cs" />
+    <Compile Include="Domain\Order\RefundInfo.cs" />
+    <Compile Include="Domain\Product\ProductKeyWordInfo.cs" />
+    <Compile Include="Domain\Product\ProductState.cs" />
+    <Compile Include="Domain\Product\ProductStockInfo.cs" />
+    <Compile Include="Domain\Product\TimeProductInfo.cs" />
+    <Compile Include="Domain\Promotion\BuySendPromotionInfo.cs" />
+    <Compile Include="Domain\Promotion\CouponInfo.cs" />
+    <Compile Include="Domain\Promotion\ExtGiftInfo.cs" />
+    <Compile Include="Domain\Promotion\ExtSuitProductInfo.cs" />
+    <Compile Include="Domain\Promotion\FullCutPromotionInfo.cs" />
+    <Compile Include="Domain\Promotion\GiftPromotionInfo.cs" />
+    <Compile Include="Domain\Promotion\SuitPromotionInfo.cs" />
+    <Compile Include="Domain\Promotion\FullSendPromotionInfo.cs" />
+    <Compile Include="Domain\Promotion\SinglePromotionInfo.cs" />
+    <Compile Include="Data\BSPData.cs" />
+    <Compile Include="Data\DbException.cs" />
+    <Compile Include="Data\RDBS\RDBSFields.cs" />
+    <Compile Include="Data\RDBS\RDBSHelper.cs" />
+    <Compile Include="Data\RDBS\IRDBSStrategy\IOrderStrategy.cs" />
+    <Compile Include="Data\RDBS\IRDBSStrategy\IProductStrategy.cs" />
+    <Compile Include="Data\RDBS\IRDBSStrategy\IPromotionStrategy.cs" />
+    <Compile Include="Data\RDBS\IRDBSStrategy\IRDBSStrategy.cs" />
+    <Compile Include="Data\RDBS\IRDBSStrategy\IShopStrategy.cs" />
+    <Compile Include="Data\RDBS\IRDBSStrategy\IUserStrategy.cs" />
+    <Compile Include="Domain\Order\OrderState.cs" />
+    <Compile Include="Domain\User\ShipAddressInfo.cs" />
+    <Compile Include="Domain\Product\AttributeGroupInfo.cs" />
+    <Compile Include="Domain\Product\ProductAttributeInfo.cs" />
+    <Compile Include="Domain\Product\ProductConsultInfo.cs" />
+    <Compile Include="Domain\Product\ProductImageInfo.cs" />
+    <Compile Include="Domain\Product\ProductReviewInfo.cs" />
+    <Compile Include="Domain\Product\ProductConsultTypeInfo.cs" />
+    <Compile Include="Domain\Product\ProductSKUItemInfo.cs" />
+    <Compile Include="Domain\Promotion\TopicInfo.cs" />
+    <Compile Include="Domain\Shop\AdvertInfo.cs" />
+    <Compile Include="Domain\Shop\AdvertPositionInfo.cs" />
+    <Compile Include="Domain\Shop\BannedIPInfo.cs" />
+    <Compile Include="Domain\Shop\BannerInfo.cs" />
+    <Compile Include="Domain\Shop\CreditAction.cs" />
+    <Compile Include="Domain\Shop\CreditLogInfo.cs" />
+    <Compile Include="Domain\Shop\FilterWordInfo.cs" />
+    <Compile Include="Domain\Shop\HelpInfo.cs" />
+    <Compile Include="Domain\Order\OrderInfo.cs" />
+    <Compile Include="Domain\Order\OrderProductInfo.cs" />
+    <Compile Include="Domain\Product\AttributeInfo.cs" />
+    <Compile Include="Domain\Product\AttributeValueInfo.cs" />
+    <Compile Include="Domain\Product\BrandInfo.cs" />
+    <Compile Include="Domain\Product\CategoryInfo.cs" />
+    <Compile Include="Domain\Product\ProductInfo.cs" />
+    <Compile Include="Domain\Promotion\CouponTypeInfo.cs" />
+    <Compile Include="Domain\Shop\AdminOperateLogInfo.cs" />
+    <Compile Include="Domain\Shop\FriendLinkInfo.cs" />
+    <Compile Include="Domain\Shop\LoginFailLogInfo.cs" />
+    <Compile Include="Domain\Shop\NavInfo.cs" />
+    <Compile Include="Domain\Shop\NewsInfo.cs" />
+    <Compile Include="Domain\Shop\NewsTypeInfo.cs" />
+    <Compile Include="Domain\Shop\PVStatInfo.cs" />
+    <Compile Include="Domain\Shop\RegionInfo.cs" />
+    <Compile Include="Domain\User\AdminActionInfo.cs" />
+    <Compile Include="Domain\User\AdminGroupInfo.cs" />
+    <Compile Include="Domain\User\OAuthInfo.cs" />
+    <Compile Include="Domain\User\OnlineUserInfo.cs" />
+    <Compile Include="Domain\User\UserInfo.cs" />
+    <Compile Include="Domain\User\UserRankInfo.cs" />
+    <Compile Include="Event\BSPEvent.cs" />
+    <Compile Include="Event\EventInfo.cs" />
+    <Compile Include="Event\IEvent.cs" />
+    <Compile Include="Helper\CommonHelper.cs" />
+    <Compile Include="Helper\IOHelper.cs" />
+    <Compile Include="Helper\SecureHelper.cs" />
+    <Compile Include="Helper\StringHelper.cs" />
+    <Compile Include="Helper\TypeHelper.cs" />
+    <Compile Include="Helper\ValidateHelper.cs" />
+    <Compile Include="Helper\WebHelper.cs" />
+    <Compile Include="Email\BSPEmail.cs" />
+    <Compile Include="Email\IEmailStrategy.cs" />
+    <Compile Include="Order\BSPOrder.cs" />
+    <Compile Include="Order\IOrderStrategy.cs" />
+    <Compile Include="Plugin\BSPPlugin.cs" />
+    <Compile Include="Plugin\Interface\IOAuthPlugin.cs" />
+    <Compile Include="Plugin\Interface\IPayPlugin.cs" />
+    <Compile Include="Plugin\Interface\IPlugin.cs" />
+    <Compile Include="Plugin\Interface\IShipPlugin.cs" />
+    <Compile Include="Plugin\PluginInfo.cs" />
+    <Compile Include="Plugin\PluginType.cs" />
+    <Compile Include="Search\BSPSearch.cs" />
+    <Compile Include="Search\ISearchStrategy.cs" />
+    <Compile Include="Session\BSPSession.cs" />
+    <Compile Include="Session\ISessionStrategy.cs" />
+    <Compile Include="SMS\BSPSMS.cs" />
+    <Compile Include="SMS\ISMSStrategy.cs" />
+    <Compile Include="Random\BSPRandom.cs" />
+    <Compile Include="Random\IRandomStrategy.cs" />
+    <Compile Include="Random\RandomImage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

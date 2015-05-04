@@ -1,0 +1,171 @@
+﻿@model BrnShop.Web.Admin.Models.AccessModel
+
+@section header{
+    <title>访问控制</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+            var verifyPages = "@ViewData["verifyPages"]";
+            $(function () {
+                if ($("input:radio[name='IsClosed']:checked").val() == "1") {
+                    $("#CloseReasonTr").show();
+                }
+
+                if (verifyPages != "") {
+                    var pageList = verifyPages.split(",");
+                    for (var i = 0; i < pageList.length; i++) {
+                        $("input[name=VerifyPages][value='" + pageList[i] + "']").attr("checked", true);
+                    }
+                }
+
+                $("input:radio[name='IsClosed']").click(function () {
+                    if ($(this).val() == "1") {
+                        $("#CloseReasonTr").show();
+                    }
+                    else {
+                        $("#CloseReasonTr").hide();
+                    }
+                })
+
+            })
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 访问控制
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+
+  <tr>
+    <td width="120px" align="right">是否关闭站点：</td>
+   <td><p>
+      <label>@Html.RadioButtonFor(x => x.IsClosed, 1, new { @class = "checkbox" })关闭</label>
+      <label>@Html.RadioButtonFor(x => x.IsClosed, 0, new { @class = "checkbox" })不关闭</label>
+        @Html.ValidationMessageFor(x => x.IsClosed)
+ <br /></p>
+</td>
+    </tr>
+   <tr id="CloseReasonTr" style=" display:none;">
+    <td align="right">关闭原因：</td>
+    <td>@Html.TextAreaFor(x => x.CloseReason, new { cols = "40", rows = "10" }) @Html.ValidationMessageFor(x => x.CloseReason)
+     <br />
+     <br />
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">禁止访问时间：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.BanAccessTime, new { cols = "40", rows = "6" })格式为"小时:分钟-小时:分钟",例如"08:30-09:40",如果有多个时间段用回车分割 @Html.ValidationMessageFor(x => x.BanAccessTime)</p>
+    </td>
+    </tr>
+
+  <tr>
+    <td align="right">禁止访问IP：</td>
+    <td>
+        <br />
+    <p>@Html.TextAreaFor(x => x.BanAccessIP, new { cols = "40", rows = "6" })例如"192.168.1.*",其中"*"代表匹配全部，如果有多个IP用回车分割 @Html.ValidationMessageFor(x => x.BanAccessIP)</p>
+    <br />
+    </td>
+    </tr>
+
+      <tr>
+    <td align="right">允许访问IP：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.AllowAccessIP, new { cols = "40", rows = "6" })例如"192.168.1.*",其中"*"代表匹配全部，如果有多个IP用回车分割 @Html.ValidationMessageFor(x => x.AllowAccessIP)</p>
+    <br />
+    </td>
+        </tr>
+
+     <tr>
+    <td align="right">后台允许访问IP：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.AdminAllowAccessIP, new { cols = "40", rows = "6" })例如"192.168.1.*",其中"*"代表匹配全部，如果有多个IP用回车分割 @Html.ValidationMessageFor(x => x.AdminAllowAccessIP)</p>
+    <br />
+    </td>
+    </tr>
+                  <tr>
+    <td align="right">密钥：</td>
+    <td>@Html.PasswordFor(x => x.SecretKey, new { @class = "input", value=Model.SecretKey, size = "50" }) @Html.ValidationMessageFor(x => x.SecretKey)</td>
+    </tr>
+              <tr>
+    <td align="right">Cookie域：</td>
+    <td>@Html.TextBoxFor(x => x.CookieDomain, new { @class = "input", size = "50" }) @Html.ValidationMessageFor(x => x.CookieDomain)</td>
+    </tr>
+
+         <tr>
+    <td align="right">随机库：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.RandomLibrary, new { cols = "40", rows = "6" }) @Html.ValidationMessageFor(x => x.RandomLibrary)</p>
+    <br />
+    </td>
+    </tr>
+
+    <tr>
+    <td align="right">验证页面：</td>
+    <td><p>
+      <label><input type="checkbox" name="VerifyPages" value="/account/login"  class="checkbox" />会员登陆</label>
+      <label><input type="checkbox" name="VerifyPages" value="/account/register"  class="checkbox" />用户注册</label>
+      <label><input type="checkbox" name="VerifyPages" value="/account/findpwd"  class="checkbox" />找回密码</label>
+      <label><input type="checkbox" name="VerifyPages" value="/order/submitorder"  class="checkbox" />提交订单</label>
+      <br />
+    </p></td>
+    </tr>
+
+             <tr>
+    <td align="right">忽略词：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.IgnoreWords, new { cols = "40", rows = "6" })如果想指定某些词不被筛选匹配请在此指定，每一行代表一个词</p>
+    <br />
+    </td>
+    </tr>
+
+                 <tr>
+    <td align="right">允许的邮箱提供者：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.AllowEmailProvider, new { cols = "40", rows = "6" })每一行代表一个提供者,例如"163.com"</p>
+    <br />
+    </td>
+    </tr>
+
+                 <tr>
+    <td align="right">禁止的邮箱提供者：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.BanEmailProvider, new { cols = "40", rows = "6" })每一行代表一个提供者,例如"qq.com"</p>
+    <br />
+    </td>
+    </tr>
+
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

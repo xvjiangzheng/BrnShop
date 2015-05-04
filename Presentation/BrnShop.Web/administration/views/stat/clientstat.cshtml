@@ -1,0 +1,97 @@
+﻿@model BrnShop.Web.Admin.Models.ClientStatModel
+@section header{
+    <title>客户端统计</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css" />
+    <!--[if lte IE 8]><script type="text/javascript" src="/administration/scripts/excanvas.js"></script><![endif]-->
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.flot.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.flot.pie.js"></script>
+    <script type="text/javascript">
+     @{
+         if (Model.BrowserStat.Count > 0)
+         {
+             StringBuilder dataset1 = new StringBuilder();
+             foreach (PVStatInfo info in  Model.BrowserStat)
+             {
+                dataset1.AppendFormat("{0}label:'{1}',data:'{2}'{3},", "{", info.Value, info.Count, "}");
+             }
+             @:var dataset1 = [@Html.Raw(dataset1.Remove(dataset1.Length - 1, 1).ToString())];
+         }
+         else
+         {
+         @:var dataset1 = [];
+         }
+
+         if (Model.OSStat.Count > 0)
+         {
+             StringBuilder dataset2 = new StringBuilder();
+             foreach (PVStatInfo info in  Model.OSStat)
+             {
+                dataset2.AppendFormat("{0}label:'{1}',data:'{2}'{3},", "{", info.Value, info.Count, "}");
+             }
+             @:var dataset2 = [@Html.Raw(dataset2.Remove(dataset2.Length - 1, 1).ToString())];
+         }
+         else
+         {
+         @:var dataset2 = [];
+         }
+     }
+     var options1 = {
+            series: {
+                pie: {
+                    show: true,               
+                    label: {
+                        show:true,
+                        radius: 0.8,
+                        background: {
+                            opacity: 0.6,
+                            color: '#000'
+                        }
+                    }
+                    }
+                }
+     };
+     var options2 = {
+            series: {
+                pie: {
+                    show: true,               
+                    label: {
+                        show:true,
+                        radius: 0.8,
+                        background: {
+                            opacity: 0.6,
+                            color: '#000'
+                        }
+                    }
+                    }
+                }
+     };
+     $(function () {
+         $.plot($("#flot-placeholder1"), dataset1, options1);
+         $.plot($("#flot-placeholder2"), dataset2, options2);
+     });
+    </script>
+}
+@section body{
+    <h1 class="rightH1">
+        报表统计 &gt;&gt; 客户端统计
+        <div class="right">
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="dataListSearch">
+    <br />
+        <div id="flot-placeholder1" style="width: 500px; height: 300px; margin-left: 10px;
+            float: left;">
+        </div>
+        <div id="flot-placeholder2" style="width: 500px; height: 300px; margin-left: 10px;
+            float: left;">
+        </div>
+        <div class="clear">
+        </div>
+    <br />
+    </div>
+}

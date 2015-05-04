@@ -1,0 +1,60 @@
+﻿@model BrnShop.Web.Admin.Models.BannedIPModel
+
+@section header{
+    <title>编辑禁止IP</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+禁止IP &gt;&gt; 编辑禁止IP
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="80px" align="right">IP地址：</td>
+    <td>
+    @Html.TextBoxFor(x => x.IP1, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.IP1)
+    @Html.TextBoxFor(x => x.IP2, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.IP2)
+    @Html.TextBoxFor(x => x.IP3, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.IP3)
+    @Html.TextBoxFor(x => x.IP4, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.IP4)
+    </td>
+    </tr>
+      <tr>
+    <td align="right">解禁时间：</td>
+    <td>@Html.TextBoxFor(x => x.LiftBanTime, new { @class = "input", size = "20", onfocus = "WdatePicker({el:'LiftBanTime'})" })@Html.ValidationMessageFor(x => x.LiftBanTime)</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

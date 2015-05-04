@@ -1,0 +1,95 @@
+﻿@model BrnShop.Web.Admin.Models.SiteModel
+
+@section header{
+    <title>站点信息</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 站点信息
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="96px" align="right">商城名称：</td>
+    <td>@Html.TextBoxFor(x => x.ShopName, new { @class = "input", size = "35" })</td>
+    </tr>
+              <tr>
+    <td align="right">网站网址：</td>
+    <td>@Html.TextBoxFor(x => x.SiteUrl, new { @class = "input", size = "35" })</td>
+    </tr>
+      <tr>
+    <td align="right">网站标题：</td>
+    <td>@Html.TextBoxFor(x => x.SiteTitle, new { @class = "input", size = "35" })</td>
+    </tr>
+          <tr>
+    <td align="right">SEO关键字：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.SEOKeyword, new { cols = "40", rows = "6" })</p>
+    <br />
+    </td>
+        </tr>
+
+     <tr>
+    <td align="right">SEO描述：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.SEODescription, new { cols = "40", rows = "6" })</p>
+    <br />
+    </td>
+    </tr>
+          <tr>
+    <td align="right">备案信息：</td>
+    <td>@Html.TextBoxFor(x => x.ICP, new { @class = "input", size = "35" })</td>
+    </tr>
+          <tr>
+    <td align="right">脚本代码：</td>
+    <td>
+    <br />
+    @Html.TextAreaFor(x => x.Script, new { cols = "40", rows = "6" })</td>
+    </tr>
+          <tr>
+    <td align="right">版权：</td>
+    <td><p>
+      <label>
+@Html.RadioButtonFor(x => x.IsLicensed, 1, new { @class = "checkbox" })显示</label>
+      <label>
+@Html.RadioButtonFor(x => x.IsLicensed, 0, new { @class = "checkbox" })不显示</label>
+@Html.ValidationMessageFor(x => x.IsLicensed)
+ <br />
+    </p>
+</td>
+    </tr>
+
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CCE75BD7-2B6F-4BCF-856A-2447A1BC69A6}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BrnShop.Web</RootNamespace>
+    <AssemblyName>BrnShop.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
+    <Reference Include="System.Web">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="controllers\BrandController.cs" />
+    <Compile Include="controllers\CategoryController.cs" />
+    <Compile Include="controllers\CouponController.cs" />
+    <Compile Include="controllers\NewsController.cs" />
+    <Compile Include="controllers\UCenterController.cs" />
+    <Compile Include="controllers\OrderController.cs" />
+    <Compile Include="controllers\CatalogController.cs" />
+    <Compile Include="controllers\CartController.cs" />
+    <Compile Include="controllers\AccountController.cs" />
+    <Compile Include="controllers\HomeController.cs" />
+    <Compile Include="controllers\ToolController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="models\AccountModel.cs" />
+    <Compile Include="models\BrandModel.cs" />
+    <Compile Include="models\CategoryModel.cs" />
+    <Compile Include="models\HelpModel.cs" />
+    <Compile Include="models\NewsModel.cs" />
+    <Compile Include="models\UCenterModel.cs" />
+    <Compile Include="models\CatalogModel.cs" />
+    <Compile Include="models\OrderModel.cs" />
+    <Compile Include="models\CartModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="controllers\HelpController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\rdbs.config" />
+    <Content Include="App_Data\email.config" />
+    <Content Include="App_Data\installedplugin.config" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="robots.txt" />
+    <Content Include="scripts\account.js" />
+    <Content Include="scripts\DD_belatedPNG.js" />
+    <Content Include="scripts\dialog.js" />
+    <Content Include="scripts\magiczoom\graphics\hint.gif" />
+    <Content Include="scripts\magiczoom\graphics\loader.gif" />
+    <Content Include="scripts\magiczoom\magiczoom.css" />
+    <Content Include="scripts\magiczoom\magiczoom.js" />
+    <Content Include="scripts\MSClass.js" />
+    <Content Include="scripts\order.js" />
+    <Content Include="scripts\product.js" />
+    <Content Include="scripts\region.js" />
+    <Content Include="scripts\common.js" />
+    <Content Include="scripts\ucenter.order.js" />
+    <Content Include="scripts\ucenter.safe.js" />
+    <Content Include="scripts\ucenter.user.js" />
+    <Content Include="scripts\utils.js" />
+    <Content Include="themes\default\css\account.css" />
+    <Content Include="themes\default\css\base.css" />
+    <Content Include="themes\default\css\buy.css" />
+    <Content Include="themes\default\css\content.css" />
+    <Content Include="themes\default\css\help.css" />
+    <Content Include="themes\default\css\home.css" />
+    <Content Include="themes\default\css\list.css" />
+    <Content Include="themes\default\css\ucenter.css" />
+    <Content Include="themes\default\images\20130603A.png" />
+    <Content Include="themes\default\images\bgW.jpg" />
+    <Content Include="themes\default\images\bottomBg.jpg" />
+    <Content Include="themes\default\images\bottomLogo.jpg" />
+    <Content Include="themes\default\images\buy.png" />
+    <Content Include="themes\default\images\buy1.png" />
+    <Content Include="themes\default\images\categorys.jpg" />
+    <Content Include="themes\default\images\d.png" />
+    <Content Include="themes\default\images\deng.png" />
+    <Content Include="themes\default\images\du.gif" />
+    <Content Include="themes\default\images\floorB.gif" />
+    <Content Include="themes\default\images\gonggao.jpg" />
+    <Content Include="themes\default\images\guanzhu.png" />
+    <Content Include="themes\default\images\helpcenter_icon1.gif" />
+    <Content Include="themes\default\images\helpcenter_icon2.gif" />
+    <Content Include="themes\default\images\help_leftsz.gif" />
+    <Content Include="themes\default\images\i.gif" />
+    <Content Include="themes\default\images\itab3.gif" />
+    <Content Include="themes\default\images\jia.png" />
+    <Content Include="themes\default\images\jz.gif" />
+    <Content Include="themes\default\images\ljjs.jpg" />
+    <Content Include="themes\default\images\loading.gif" />
+    <Content Include="themes\default\images\lock.jpg" />
+    <Content Include="themes\default\images\logo.jpg" />
+    <Content Include="themes\default\images\logo.png" />
+    <Content Include="themes\default\images\lr.jpg" />
+    <Content Include="themes\default\images\lrS.jpg" />
+    <Content Include="themes\default\images\m.jpg" />
+    <Content Include="themes\default\images\newpp.png" />
+    <Content Include="themes\default\images\noBuy.png" />
+    <Content Include="themes\default\images\ok.gif" />
+    <Content Include="themes\default\images\p.jpg" />
+    <Content Include="themes\default\images\power_cx.png" />
+    <Content Include="themes\default\images\power_jy.gif" />
+    <Content Include="themes\default\images\power_kx.gif" />
+    <Content Include="themes\default\images\power_wj.png" />
+    <Content Include="themes\default\images\shopping.png" />
+    <Content Include="themes\default\images\shoppingNone.gif" />
+    <Content Include="themes\default\images\succ-error.png" />
+    <Content Include="themes\default\images\succ-ico.png" />
+    <Content Include="themes\default\images\succ-ok.png" />
+    <Content Include="themes\default\images\tb.png" />
+    <Content Include="themes\default\images\tip.png" />
+    <Content Include="themes\default\images\tj.jpg" />
+    <Content Include="themes\default\images\u.png" />
+    <Content Include="themes\default\images\user-avatar.gif" />
+    <Content Include="themes\default\images\userIMG-bg.png" />
+    <Content Include="themes\default\images\userSJ.png" />
+    <Content Include="themes\default\images\zoomloader.gif" />
+    <Content Include="themes\default\theme.xml" />
+    <Content Include="themes\default\theme.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\shop.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\sms.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="plugins\bin\" />
+    <Folder Include="upload\advert\" />
+    <Folder Include="upload\banner\" />
+    <Folder Include="upload\brand\" />
+    <Folder Include="upload\friendlink\" />
+    <Folder Include="upload\help\" />
+    <Folder Include="upload\news\" />
+    <Folder Include="upload\product\" />
+    <Folder Include="upload\userrank\" />
+    <Folder Include="upload\user\" />
+    <Folder Include="watermarks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="themes\default\views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="themes\default\views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\BrnShop.Core\BrnShop.Core.csproj">
+      <Project>{253C5E59-316C-44C8-A8A1-2BC2BD64ADE5}</Project>
+      <Name>BrnShop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\BrnShop.Services\BrnShop.Services.csproj">
+      <Project>{311C5C3B-2427-4A8E-B623-2BAEB95B1D9E}</Project>
+      <Name>BrnShop.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BrnShop.Web.Framework\BrnShop.Web.Framework.csproj">
+      <Project>{BC9FDDF7-958C-4CD9-9068-1F721EEC34C3}</Project>
+      <Name>BrnShop.Web.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="plugins\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\credit.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\event.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Data\ipdata.config" />
+    <Content Include="App_Data\redisnosql.config" />
+    <Content Include="App_Data\memcachedcache.config" />
+    <Content Include="App_Data\memcachedsession.config" />
+    <Content Include="Web.linux.config" />
+    <Content Include="App_Data\memcachedcart.config" />
+    <Content Include="App_Data\rabbitmqorder.config" />
+    <Content Include="themes\default\views\account\findpwd.cshtml" />
+    <Content Include="themes\default\views\account\login.cshtml" />
+    <Content Include="themes\default\views\account\register.cshtml" />
+    <Content Include="themes\default\views\account\resetpwd.cshtml" />
+    <Content Include="themes\default\views\account\selectfindpwdtype.cshtml" />
+    <Content Include="themes\default\views\cart\addsuccess.cshtml" />
+    <Content Include="themes\default\views\cart\ajaxindex.cshtml" />
+    <Content Include="themes\default\views\cart\index.cshtml" />
+    <Content Include="themes\default\views\cart\snap.cshtml" />
+    <Content Include="themes\default\views\catalog\ajaxproductconsultlist.cshtml" />
+    <Content Include="themes\default\views\catalog\ajaxproductreviewlist.cshtml" />
+    <Content Include="themes\default\views\catalog\category.cshtml" />
+    <Content Include="themes\default\views\catalog\product.cshtml" />
+    <Content Include="themes\default\views\catalog\productconsultlist.cshtml" />
+    <Content Include="themes\default\views\catalog\productreviewlist.cshtml" />
+    <Content Include="themes\default\views\catalog\search.cshtml" />
+    <Content Include="themes\default\views\catalog\suit.cshtml" />
+    <Content Include="themes\default\views\catalog\topic.cshtml" />
+    <Content Include="themes\default\views\help\question.cshtml" />
+    <Content Include="themes\default\views\home\index.cshtml" />
+    <Content Include="themes\default\views\news\details.cshtml" />
+    <Content Include="themes\default\views\news\list.cshtml" />
+    <Content Include="themes\default\views\order\confirmorder.cshtml" />
+    <Content Include="themes\default\views\order\payresult.cshtml" />
+    <Content Include="themes\default\views\order\payshow.cshtml" />
+    <Content Include="themes\default\views\order\submitresult.cshtml" />
+    <Content Include="themes\default\views\shared\404.cshtml" />
+    <Content Include="themes\default\views\shared\error.cshtml" />
+    <Content Include="themes\default\views\shared\prompt.cshtml" />
+    <Content Include="themes\default\views\shared\_layout.cshtml" />
+    <Content Include="themes\default\views\ucenter\couponlist.cshtml" />
+    <Content Include="themes\default\views\ucenter\favoriteproductlist.cshtml" />
+    <Content Include="themes\default\views\ucenter\orderinfo.cshtml" />
+    <Content Include="themes\default\views\ucenter\orderlist.cshtml" />
+    <Content Include="themes\default\views\ucenter\paycreditloglist.cshtml" />
+    <Content Include="themes\default\views\ucenter\productconsultlist.cshtml" />
+    <Content Include="themes\default\views\ucenter\productreviewlist.cshtml" />
+    <Content Include="themes\default\views\ucenter\revieworder.cshtml" />
+    <Content Include="themes\default\views\ucenter\safeinfo.cshtml" />
+    <Content Include="themes\default\views\ucenter\safesuccess.cshtml" />
+    <Content Include="themes\default\views\ucenter\safeupdate.cshtml" />
+    <Content Include="themes\default\views\ucenter\safeverify.cshtml" />
+    <Content Include="themes\default\views\ucenter\shipaddresslist.cshtml" />
+    <Content Include="themes\default\views\ucenter\userinfo.cshtml" />
+    <Content Include="themes\default\views\cart\fullcutproductlist.cshtml" />
+    <Content Include="themes\default\views\cart\fullsendmainproductlist.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>27008</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:5848/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

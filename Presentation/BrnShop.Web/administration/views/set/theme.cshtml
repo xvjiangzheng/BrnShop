@@ -1,0 +1,120 @@
+﻿@model BrnShop.Web.Admin.Models.ThemeModel
+
+@section header{
+<title>主题管理</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 主题管理
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+<div class="table_top"><b>PC主题列表：</b></div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10" align="left" ></th>  
+    <th width="260" align="left" >预览</th>  
+    <th align="left" >名称</th>  
+    <th width="130" align="left" >作者</th>
+    <th width="100" align="left" >版本</th>
+    <th width="100" align="left" >支持版本</th>  
+    <th width="100" align="left" >默认主题</th>
+    <th width="80" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.PCThemeList.Rows)
+  {
+  <tr>
+    <td></td>
+    <td><div style=" margin:10px 0px;"><img width="200" height="100" src="/themes/@row["name"]/theme.png" /></div></td>
+    <td>@row["title"]</td>
+    <td>@row["author"]</td>
+    <td>@row["version"]</td>
+    <td>@row["supVersion"]</td>
+    <td>
+        @if (row["name"].ToString() == Model.DefaultPCTheme)
+        {
+        @:是
+        }
+        else
+        {
+        @:否
+        }
+    </td>
+    <td>
+        @if (row["name"].ToString() == Model.DefaultPCTheme)
+        {
+        @Html.ActionLink("[设为默认]", "defaulttheme", new { type = 0, name = row["name"] }, new { @class = "editOperate", disabled="disabled" })
+        }
+        else
+        {
+        @Html.ActionLink("[设为默认]", "defaulttheme", new { type = 0, name = row["name"] }, new { @class = "editOperate" })
+        }
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="table_bottom"></div>
+
+<div class="table_top"><b>移动主题列表：</b></div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10" align="left" ></th>  
+    <th width="260" align="left" >预览</th>  
+    <th align="left" >名称</th>  
+    <th width="130" align="left" >作者</th>
+    <th width="100" align="left" >版本</th>
+    <th width="100" align="left" >支持版本</th>  
+    <th width="100" align="left" >默认主题</th>
+    <th width="80" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.MobileThemeList.Rows)
+  {
+  <tr>
+    <td></td>
+    <td><div style=" margin:10px 0px;"><img width="200" height="100" src="/themes/@row["name"]/theme.png" /></div></td>
+    <td>@row["title"]</td>
+    <td>@row["author"]</td>
+    <td>@row["version"]</td>
+    <td>@row["supVersion"]</td>
+    <td>
+        @if (row["name"].ToString() == Model.DefaultMobileTheme)
+        {
+        @:是
+        }
+        else
+        {
+        @:否
+        }
+    </td>
+    <td>
+        @if (row["name"].ToString() == Model.DefaultMobileTheme)
+        {
+        @Html.ActionLink("[设为默认]", "defaulttheme", new { type = 1, name = row["name"] }, new { @class = "editOperate", disabled="disabled" })
+        }
+        else
+        {
+        @Html.ActionLink("[设为默认]", "defaulttheme", new { type = 1, name = row["name"] }, new { @class = "editOperate" })
+        }
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="table_bottom"></div>
+}

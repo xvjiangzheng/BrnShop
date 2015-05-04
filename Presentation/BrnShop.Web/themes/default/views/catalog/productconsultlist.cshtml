@@ -1,0 +1,270 @@
+﻿@model BrnShop.Web.Models.ProductConsultListModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@Model.ProductInfo.Name-咨询列表-@{@WorkContext.ShopConfig.SiteTitle}</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/content.css" rel="stylesheet" type="text/css" />
+    <script src="@{@WorkContext.ScriptCDN}/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/scripts/common.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/scripts/product.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        uid = @WorkContext.Uid;
+        pid = @Model.ProductInfo.Pid;
+        isGuestSC = @WorkContext.ShopConfig.IsGuestSC;
+        scSubmitType = @WorkContext.ShopConfig.SCSubmitType;
+    </script>
+</head>
+
+<body>
+
+<div id="headerBar" class="bigBox">
+<div class="box1210">
+欢迎访问 @WorkContext.ShopConfig.ShopName
+<div  class="headerLink">
+    @if (WorkContext.Uid < 1)
+    {
+        <a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">[登录]</a>
+        <a href="@Url.Action("register", "account")" class="A_b">[注册]</a>
+    }
+    else
+    {
+        @:您好: @WorkContext.NickName
+        <a href="@Url.Action("logout", "account")">[退出]</a>
+        if (WorkContext.AdminGid > 1)
+        {
+        <a href="@Url.Action("index", "home", new RouteValueDictionary { { "area", "admin" } })">[商城管理]</a>
+        }
+        <a href="@Url.Action("orderlist", "ucenter")">[我的订单]</a>
+    }
+</div>
+</div> 
+</div>
+
+
+<div id="header" class="bigBox">
+<div class="box1210" id="header1">
+<a href="#" class="logo left"><img src="@{@WorkContext.ImageCDN}/themes/default/images/logo.jpg" /></a>
+<div class="search left">
+<div class="searchCon">
+    <input type="text" id="keyword" name="keyword" class="Stext" autocomplete="off" onkeydown="javascript:if(event.keyCode==13) search(document.getElementById('keyword').value);" value="@WorkContext.SearchWord" />
+    <input name="" type="button" value="搜索" class="Sbutton" onclick="search(document.getElementById('keyword').value)" />
+<div class="clear"></div>
+</div>
+
+<div class="searchHot">热门搜索：
+ @{
+     List<AdvertInfo> searchWordAdvertList = Adverts.GetAdvertList(5);
+     }
+     @Html.Raw(searchWordAdvertList[0].Body)
+ </div>
+
+</div>
+
+
+<div class="shopping right" onmousemove="getCartSnap()" id="cartSnapBox" onmouseout="closeCartSnap(event)">
+<h2><a href="@Url.Action("index", "cart")">我的购物车<b id="cartSnapProudctCount">@WorkContext.CartProductCount</b></a></h2>
+<div id="cartSnap" class="shoppingList" style=" display:none;"><div class="loding"><img src="@{@WorkContext.ImageCDN}/themes/default/images/loading.gif" /><br />加载中，请稍候... </div></div>
+</div>
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div id="nav" class="bigBox">
+<div class="box1210">
+<!-- 分类导航 -->
+
+<div id="categorys" onmouseover="document.getElementById('categorysCon').className=''" onmouseout="document.getElementById('categorysCon').className='hide'">
+<h2>全部商品分类</h2>
+
+<div id="categorysCon" class="hide">
+
+@{
+    List<NavInfo> navList = Navs.GetNavList();
+    }
+@{
+    int layerFlag = 0;
+    foreach (NavInfo info in navList)
+    {
+        if (info.Layer == 1)
+        {
+            if (layerFlag == 1)
+            {
+               @:</div></div>
+            }
+            @:<div class="item" onmouseover="this.className='item hotItem'" onmouseout="this.className='item'"><h3><a href="javascript:void(0)">@info.Name</a></h3><div class="itmeSon">
+            layerFlag = 1;
+        }
+        else if (info.Layer == 2)
+        {
+            @:<dl><dt><a style="" href="javascript:void(0)">@info.Name</a></dt><dd>
+            foreach (NavInfo nav in navList.FindAll(x => x.Pid == info.Id))
+            {
+                 @:<em><a style="" href="@nav.Url">@nav.Name</a></em>
+            }
+            @:</dd><div class="clear"></div></dl>
+        }
+    }
+    @:</div></div>
+}
+
+</div>
+
+</div>
+
+<!-- 分类导航结束 -->
+
+<ul id="navItme">
+<li><a href="/">首页</a></li>
+<li><a href="@Url.Action("category", new RouteValueDictionary { { "cateId", 55 } })">电视专场</a></li>
+<li><a href="@Url.Action("category", new RouteValueDictionary { { "cateId", 65 } })">电脑专场</a></li>
+<li><a href="@Url.Action("category", new RouteValueDictionary { { "cateId", 71 } })">手机专场</a></li>
+</ul>
+</div>
+</div>
+
+@{
+    List<CategoryInfo> categoryList = Categories.GetCategoryList();
+    CategoryInfo categoryInfo2 = Categories.GetCategoryById(Model.CategoryInfo.ParentId, categoryList);
+    CategoryInfo categoryInfo1 = Categories.GetCategoryById(categoryInfo2.ParentId, categoryList);
+    }
+
+<div class="breadcrumb box1210">
+<strong><a href="#">@categoryInfo1.Name</a></strong>
+<span>&nbsp;&gt;&nbsp;<a href="#">@categoryInfo2.Name</a>&nbsp;&gt;&nbsp;<a href="@Url.Action("category", new RouteValueDictionary { { "cateId", Model.CategoryInfo.CateId } })">@Model.CategoryInfo.Name</a></span></div>
+
+
+<div id="ConInfo" class="box1210">
+
+<div id="infoL">
+<div class="itme">
+<h2>商品信息</h2>
+<div class="proList proList3">
+<ul>
+<li>
+<a href="@Url.Action("product", new RouteValueDictionary { { "pid", Model.ProductInfo.Pid } })"><img src="@{@WorkContext.ImageCDN}/upload/product/show/thumb190_190/@Model.ProductInfo.ShowImg" width="100%" />
+<em>@Model.ProductInfo.Name</em></a>
+<div class="i"><p>商城价:</p><b>¥@Model.ProductInfo.ShopPrice</b></div>
+<div class="i"><p>商品评分:</p><b><div class="star">
+<span class="star_yellow" style=" width:@Html.Raw((Model.ProductInfo.GetStarLevel() * 20).ToString())%;">&nbsp;</span>
+</div></b></div>
+<div class="i"><p>评价数:</p><span>@Model.ProductInfo.ReviewCount 条</span></div>
+<div class="i"><a href="javascript:void(0)" onclick="addProductToCart(@Model.ProductInfo.Pid, 1)" class="redBT">加入购物车</a></div>
+</li>
+</ul>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+
+<div id="infoR">
+<div class="infoRBox" style="border:0;">
+
+<h2 class="infoRT infoBT2">
+    <a href="@Url.Action("product", new RouteValueDictionary { { "pid", Model.ProductInfo.Pid } })" class="fbpl" style=" background-color:rgb(247, 247, 247); color:#005aa0;">返回商品页>></a>
+    <ul>
+        <li @if(Model.ConsultTypeId==0){<text>class="hot"</text>}><a href="@Url.Action("productconsultlist", new RouteValueDictionary { { "pid", Model.ProductInfo.Pid }, { "consultTypeId", 0 } })">全部购买咨询</a></li>
+        @foreach (ProductConsultTypeInfo info in Model.ProductConsultTypeList)
+        {
+        <li @if(Model.ConsultTypeId==info.ConsultTypeId){<text>class="hot"</text>}><a href="@Url.Action("productconsultlist", new RouteValueDictionary { { "pid", Model.ProductInfo.Pid }, { "consultTypeId", info.ConsultTypeId } })">@info.Title</a></li>
+        }
+        <div class="clear"></div>
+    </ul>
+</h2>
+@foreach (ProductConsultInfo info in Model.ProductConsultList)
+{
+<div class="askItme">
+    <h3><i>用　　户：@info.ConsultNickName</i> <em>@info.ConsultTime</em></h3>
+    <dl class="ask">
+        <dt>咨询内容：</dt>
+        <dd><a target="_blank" href="#">@info.ConsultMessage</a></dd>
+    </dl>
+    <dl class="answer">
+        <dt>商家回复：</dt>
+        <dd><a target="_blank" href="#">@info.ReplyMessage</a></dd>
+    </dl>
+</div>
+}
+
+@Html.WebPager(Model.PageModel)
+
+</div>
+<div class="Consult_Form">
+	<h5>发表咨询：</h5>
+    <a name="consult" class="hide" href="#">锚点</a>
+	<div class="Consult_Explain">声明：您可在购买前对产品包装、颜色、运输、库存等方面进行咨询，我们有专人进行回复！因厂家随时会更改一些产品的包装、颜色、产地等参数，所以该回复仅在当时对提问者有效，其他网友仅供参考！咨询回复的工作时间为：周一至周五，9:00至18:00，请耐心等待工作人员回复。</div>
+    <form name="consultProductFrom" action=""><ul><li id="pointType">
+			<span style="display: inline;">咨询类型：</span>
+            @foreach (ProductConsultTypeInfo info in Model.ProductConsultTypeList)
+            {
+			@:<input type="radio" value="@info.ConsultTypeId" name="consultTypeId">@info.Title  
+            }
+		</li><li><span>咨询内容：</span><textarea class="area1" name="consultMessage" style="font-size: 14px;"></textarea></li>
+		<li class="buttons"><a href="javascript:void(0)" onclick="consultProduct(@WorkContext.Uid,@Model.ProductInfo.Pid)" class="left" style="padding:0 10px 0 65px;"><img src="@{@WorkContext.ImageCDN}/themes/default/images/tj.jpg" ></a>@*&nbsp;<label><input name="isemail" type="checkbox" checked="checked" style="vertical-align:-3px;" /> &nbsp;将客服的回复发到我的邮箱</label>*@</li>
+	</ul></form>
+</div>
+ </div>
+<div class="clear"></div>
+</div>
+
+
+<div id="footer" class="bigBox">
+  <div class="box1210">
+
+    @{
+        int flag = 1;
+        foreach (HelpInfo info in WorkContext.HelpList)
+        {
+            if (info.Pid != 0)
+            {
+                if (info.Url.Length == 0)
+                {
+            <a href="@Url.Action("question", "help", new RouteValueDictionary { { "id", info.Id } })">@info.Title</a>
+                }
+                else
+                {
+            <a href="@info.Url">@info.Title</a>
+                }
+            }
+            else
+            {
+                if (flag != 1)
+                {
+                @:</div>
+            }
+            @:<div class="footerBox"><h3>@info.Title</h3>
+            flag++;
+            }
+        }
+        if (WorkContext.HelpList.Count > 0)
+        {
+        @:</div>
+    }
+    }
+
+  <div class="clear"></div>
+  </div>
+  <div class="bigBox footerB">
+    <div id="footerB">
+      <div class="links">
+        @foreach (FriendLinkInfo info in WorkContext.FriendLinkList)
+        {
+        <a href="@info.Url" target="@info.Target" title="@info.Title">@info.Name</a> @:|
+        }
+      </div>
+      <div>北京市公安局朝阳分局备案编号031143485246&nbsp;&nbsp;|&nbsp;&nbsp;京ICP证047722号&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" target="_blank">互联网药品信息服务资格证编号(京)-经营性-2012-0005</a>&nbsp;&nbsp;|&nbsp;&nbsp;新出发京零&nbsp;字第大145218号<br />石家庄蝶影软件开发有限公司 程序版本 @WorkContext.ShopVersion 版权所有 @WorkContext.ShopCopyright</div>
+      <div><a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_jy.gif"></a> <a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_kx.gif"></a> <a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_wj.png"></a> <a href="#"><img width="112" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_cx.png"></a></div>
+    </div>
+  </div>
+</div>
+@Html.Raw(WorkContext.ExecuteDetail)
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

@@ -1,0 +1,99 @@
+﻿@model BrnShop.Web.Models.ResetPwdModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>重置密码-@{@WorkContext.ShopConfig.SiteTitle}</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/account.css" rel="stylesheet" type="text/css" />
+    <script src="@{@WorkContext.ScriptCDN}/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/scripts/account.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<div id="loginTop" class="box">
+    <a href="/" class="left"><img src="@{@WorkContext.ImageCDN}/themes/default/images/logo.png" width="186" height="42" /></a>
+    <h2>设置新密码</h2>
+    <div class="clear"></div>
+</div>
+
+<div class="findPassword box">
+<div class="step">
+<ul>
+    <li><s>1</s>验证身份</li>
+    <li><s>2</s>选择找回方式</li>
+    <li class="hot"><s>4</s>设置新密码</li>
+    <li><s>4</s>完成</li>
+    <div class="clear"></div>
+</ul>
+</div>
+
+<form name="resetPwdForm" action="">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th width="190"><em>*</em>新密码：</th>
+    <td width="275"><input type="password" name="password" value="" class="text userName" /></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <th width="190"><em>*</em>确认密码：</th>
+    <td width="275"><input type="password" name="confirmPwd" value="" class="text userName" /></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td><a href="#" class="passBt redBT" onclick="resetPwd('@Model.V')">提交</a></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+</div>
+
+
+<div id="footer" class="bigBox">
+  <div class="box">
+
+    @{
+        int flag = 1;
+        foreach (HelpInfo info in WorkContext.HelpList)
+        {
+            if (info.Pid != 0)
+            {
+                if (info.Url.Length == 0)
+                {
+            <a href="@Url.Action("question", "help", new RouteValueDictionary { { "id", info.Id } })">@info.Title</a>
+                }
+                else
+                {
+            <a href="@info.Url">@info.Title</a>
+                }
+            }
+            else
+            {
+                if (flag != 1)
+                {
+                @:</div>
+            }
+            @:<div class="footerBox"><h3>@info.Title</h3>
+            flag++;
+            }
+        }
+        if (WorkContext.HelpList.Count > 0)
+        {
+        @:</div>
+    }
+    }
+
+  <div class="clear"></div>
+  </div>
+</div>
+@Html.Raw(WorkContext.ExecuteDetail)
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

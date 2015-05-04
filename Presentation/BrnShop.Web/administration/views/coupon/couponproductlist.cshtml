@@ -1,0 +1,107 @@
+﻿@model BrnShop.Web.Admin.Models.CouponProductListModel
+           
+@section header{
+    <title>优惠劵商品列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+}
+@section body{
+    <h1 class="rightH1">
+        优惠劵管理 &gt;&gt; 商品列表
+        <div class="right">
+            <a href="@Url.Action("couponproductlist", new { couponTypeId = Model.CouponTypeId })" class="menuBT">
+                <img src="/administration/content/images/goback.jpg" />商品列表</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+        <div class="table_top">
+    </div>
+ @using (Html.BeginForm())
+{
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="40" align="center"><input type="checkbox" id="allSelect" /></th>
+                    <th width="150" align="left">商品编号</th>
+                    <th align="left">商品名称</th>
+                    <th width="130" align="left">商品价格</th>
+                    <th width="72" align="left">管理操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.CouponProductList.Rows)
+                {
+                    <tr>
+                        <td align="center"><input type="checkbox" value="@row["recordid"]" selectItem="true" name="recordIdList"/></td>
+                        <td>@row["pid"]</td>
+                        <td>@row["name"]</td>
+                        <td>@row["shopprice"]</td>
+                        <td>
+                        <a href="#" url="@Url.Action("delcouponproduct", new { recordId = row["recordid"] })" class = "ajaxdeleteOperate" }>[删除]</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="dataListEdit">
+    <a href="#" delUrl="@Url.Action("delcouponproduct")" class="batch batchDel">批量删除</a>
+            <div class="page">
+                @Html.AdminPager(Model.PageModel)
+            </div>
+        </div>
+}
+     
+        <div>
+    @using (Html.BeginForm("addcouponproduct", "coupon"))
+    {
+        <input type="hidden" id="CouponTypeId" name="CouponTypeId" value="@Model.CouponTypeId" />
+        <div class="addTable" style="margin-left: 15px; margin-bottom: 10px; padding-top: 10px;
+            border: 2px solid #dbeffa">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="56px" align="right">
+                            商品：
+                        </td>
+                        <td>
+                            <div class="selectBt">
+                                <input type="button" value="选择商品" onclick="openProductSelectLayer(this)"/>
+                                <input type="hidden" class="Pid" id="Pid" name="Pid" value="0" />
+                                <input type="hidden" class="ProductName" id="ProductName" name="ProductName" value="选择商品" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                        </td>
+                        <td>
+                            <input type="image" id="addProduct" style="margin: 0px; padding: 0px;" src="/administration/content/images/s.jpg" />
+                            <script type="text/javascript">
+                                $("#addProduct").click(function () {
+                                    if (parseInt($("#Pid").val()) < 1) {
+                                        alert("请选择商品");
+                                        return false;
+                                    }
+                                    else {
+                                        $(this).parents("form").submit();
+                                        return false;
+                                    }
+                                })
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+    </div>
+}

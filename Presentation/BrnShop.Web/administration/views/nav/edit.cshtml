@@ -1,0 +1,88 @@
+﻿@model BrnShop.Web.Admin.Models.NavModel
+
+@section header{
+    <title>修改导航</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+导航管理 &gt;&gt; 修改导航
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+    <tr>
+    <td width="86px" align="right">父导航：</td>
+    <td>
+        <select data-val="true" data-val-number="字段 Pid 必须是一个数字。" data-val-range="请选择父导航" data-val-range-max="2147483647" data-val-range-min="0" data-val-required="Pid 字段是必需的。" id="Pid" name="Pid">
+        <option @if (0 == Model.Pid) {<text>selected="selected"</text>} value="0">顶级导航</option>
+        @foreach (NavInfo info in ViewData["navList"] as List<NavInfo>)
+        {
+            <option @if (info.Id == Model.Pid) {<text>selected="selected"</text>} value="@info.Id">@Html.Raw(CommonHelper.GetHtmlBS(info.Layer - 1)) @info.Name</option>
+        }
+        </select>
+        @Html.ValidationMessageFor(x => x.Pid)
+    </td>
+    </tr>
+ <tr>
+    <td align="right">导航名称：</td>
+    <td>@Html.TextBoxFor(x => x.NavName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.NavName)</td>
+    </tr>
+          <tr>
+    <td align="right">导航提示：</td>
+    <td>@Html.TextBoxFor(x => x.NavTitle, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.NavTitle)</td>
+    </tr>
+          <tr>
+    <td align="right">导航地址：</td>
+    <td>@Html.TextBoxFor(x => x.NavUrl, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.NavUrl)</td>
+    </tr>
+    <tr>
+        <td align="right">
+            打开目标：
+        </td>
+        <td>
+            <p>
+                <label>@Html.RadioButtonFor(x => x.Target, 0, new { @class = "checkbox" })本窗口</label>
+                <label>@Html.RadioButtonFor(x => x.Target, 1, new { @class = "checkbox" })新窗口</label>
+                <br />
+            </p>
+        </td>
+    </tr>
+
+      <tr>
+    <td align="right">排序：</td>
+    <td>@Html.TextBoxFor(x => x.DisplayOrder, new { @class="input",size="3"})@Html.ValidationMessageFor(x => x.DisplayOrder)</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+    }
+}

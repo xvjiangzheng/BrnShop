@@ -1,0 +1,72 @@
+﻿@model BrnShop.Web.Admin.Models.FriendLinkListModel
+
+@section header{
+<title>友情链接列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+友情链接管理 &gt;&gt; 友情链接列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+        <div class="table_top">
+        </div>
+@using (Html.BeginForm("list", "friendlink"))
+{
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="90" align="left" >图片</th>  
+    <th width="130" align="left" >名称</th>
+    <th  width="250" align="left" >地址</th>
+    <th align="left" >提示</th>
+    <th width="60" align="left" >目标</th>  
+    <th width="60" align="left" >排序</th>  
+    <th width="90" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (FriendLinkInfo info in Model.FriendLinkList)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@info.Id" selectItem="true" name="idList" /></td>
+    <td><img width="50" height="50" src="@WorkContext.ShopConfig.UploadServer/upload/friendlink/@info.Logo" /></td>
+    <td>@info.Name</td>
+    <td>@info.Url</td>
+    <td>@info.Title</td>
+    <td>
+        @if (info.Target == 0)
+        {
+            @:本窗口
+        }
+        else
+        {
+            @:新窗口
+        }
+            </td>
+    <td>@info.DisplayOrder</td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { id = info.Id }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "del", new { idList = info.Id }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+}
+<div class="dataListEdit">
+<a href="#" delUrl="@Url.Action("del")" class="batch batchDel">批量删除</a>
+</div>
+<div class="table_bottom"></div>
+}

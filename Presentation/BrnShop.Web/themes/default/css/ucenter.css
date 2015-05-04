@@ -1,0 +1,140 @@
+#footer{ margin-top:0px;}
+#member{ background:#f5f5f5; padding:15px 0;}
+#memberL{ background:#FFF; width:136px; float:left; padding:10px;}
+#memberR{background:#FFF; width:800px; padding:15px; padding-bottom:30px; float:right;}
+
+#memberL h2{ font-size:16px; color:#000; height:35px; line-height:35px;}
+#memberNav li a{padding-left:25px; position:relative; display:block; height:25px; line-height:25px;}
+#memberL #memberNav s{ position:absolute; left:10px; top:0; font-family:"宋体";}
+
+#memberNav li a:hover,#memberNav li a.hot{ color:#d23335; font-weight:bold;}
+
+
+#memberRT{ font-size:16px; position:relative; height:35px; line-height:35px; padding-bottom:10px;}
+#memberRT a{ font-size:12px; font-weight:normal; color:#005ea7;}
+#memberRT a:hover{text-decoration:underline;}
+#memberRT .searchList{ position:absolute; right:0; top:0;}
+#memberRT .searchList select{ float:left; margin-top:3px; margin-right:10px;}
+#memberRT .searchList .text{ padding:3px 5px; width:195px;float:left; margin-right:5px;}
+#memberRT .searchList .whiteBT{ font-size:13px; float:left; display:block; height:20px; line-height:20px; font-weight:normal;}
+#memberRT .searchList .whiteBT:hover{ border:1px solid #999; color:#333;}
+
+.dingdan{border-collapse: collapse;}
+.dingdan th{background: #e7e7e7;height: 32px;line-height: 32px;padding: 0 5px;text-align: center;font-weight: 400;}
+.dingdan td{ vertical-align: top;padding-top: 10px;border: 1px solid #f2f2f2;padding: 10px 5px;text-align:center; color:#333;}
+.dingdanTH td{background: #f5f5f5;line-height: 18px;color: #333;padding:8px 5px; text-align:left;}
+.dingdan .proList img{ float:left; border:1px solid #ddd; margin-right:10px;}
+.dingdan a{ color:#005ea7;}
+.dingdan .proList a{ color:#666;}
+.dingdan .proList a:hover{ text-decoration:underline;}
+.dingdan .star{ position:static;}
+#orderProductList{ width:250px;}
+#orderProductList a{float:left; display:block; margin-bottom:5px;}
+
+
+/*订单详细*/
+.DDstatus{height: 25px;background: #FFFCEB;line-height: 25px;border: 1px solid #EED97C; font-size:14px; padding:5px 10px; color:#000; margin-bottom:20px;}
+
+#DDcon{background: #FFF;border: 1px solid #EED97C; }
+#DDcon ul{ background:#FFFCEB;border-bottom: 1px solid #EED97C; height:35px;}
+#DDcon ul li{float:left; position:relative; margin-bottom:-1px;}
+#DDcon ul li a{  height:25px; line-height:25px;border-right:1px solid #EED97C; padding:5px 15px;_float:left; display:block;border-bottom: 1px solid #EED97C; font-size:14px; font-weight:bold;}
+#DDcon ul li a:hover{ color:#000;}
+#DDcon ul li a.hot{ background:#FFF;border-bottom: 1px solid #FFF; color:#000;}
+
+.ddgzTable thead th{ border-bottom:1px solid #ddd;}
+.ddgzTable td{ padding:5px 0;}
+
+
+#DDinfo{ margin-top:20px;border: 1px solid #DADADA;padding: 0 5px 10px;background: #EDEDED;}
+#DDinfo h2{ height:30px; line-height:30px; font-size:14px; padding-left:10px;}
+#DDinfoCon{ background:#FFF; padding:10px;}
+
+#DDinfoCon dl{ padding:10px 0; display:block;  border-bottom:1px solid #DDD;}
+#DDinfoCon dl dt{ color:#000; font-weight:bold; height:20px; line-height:20px;}
+#DDinfoCon dl dd{line-height:20px;}
+#DDinfoCon a{ color:#005ea7;}
+
+.DDsum{ font-size:14px; padding:15px 20px; color:#333; width:250px;}
+.DDsum p{ height:25px;}
+.DDsum span{ float:right; width:150px;text-align:right; }
+.DDsum i{ float:right;}
+.DDsum b{ font-size:16px; display:block;padding:10px 0 0 0;text-align:right;}
+.DDsum b em{ color:red; font-size:24px; font-family:Arial, Helvetica, sans-serif}
+
+
+.favT{ background:url(/themes/default/images/bgW.jpg) repeat-x bottom #FFF; height:34px; line-height:34px; position:relative; padding:0 15px; border:1px solid #ddd;}
+.favT input{ vertical-align:-2px; }
+.favTpage{ position:absolute; right:15px; top:0px; color:#000;}
+
+.memberStar .star{ position:static; float:left;}
+html body .proList .memberStar a{ float:left;color:#005ea7;}
+
+
+.tb-void{line-height:18px;text-align:center;border:1px solid #f2f2f2;border-top:0;color:#333;width:100%; border-collapse:collapse;}
+.tb-void td{border:1px solid #f2f2f2;padding:10px 5px}
+.tb-void th{background:#f5f5f5;height:32px;line-height:32px;padding:0 5px;text-align:center;font-weight:400}
+.tb-void a{color:#005ea7}
+
+.SHtitle{ padding:10px 0;}
+.SHtitle .greenBT{ font-size:14px; font-weight:bold; padding:3px 20px;}
+
+.SHtitle b{ color:#71b247;}
+
+
+.SHadress{ border:2px solid #ddd; padding:15px; margin:10px 0;}
+.SHadress:hover{ border:2px solid #ccc;}
+.SHadress h4{ font-size:14px; position:relative; color:#333;}
+.SHedit{ position:absolute; right:0; top:0}
+.SHedit a{ font-size:12px; font-weight:normal;}
+.SHadress ul{ padding-top:10px;}
+.SHadress ul li{ line-height:22px;}
+.SHadress ul li b{ float:left; display:block; width:70px; text-align:right; font-weight:normal; color:#999;}
+.SHadress ul li em{ float:left; width:600px;}
+.SHtable td{ padding:5px 0;}
+.SHtable td .text{ height:20px; line-height:20px; padding:5px; border:1px solid #ddd; width:500px;}
+.SHtable td select{ padding:5px; margin-right:5px; border:1px solid #ddd;}
+
+
+.SHtable th{ color:#999; text-align:left; font-weight:normal; font-size:14px;}
+.SHtable th em{ color:#e4393c;}
+
+.SHtable{background: #FFF;border:2px solid #bfd6af; padding:15px;}
+
+
+.memberTable td{ padding:5px 0;}
+.memberTable td .tip{ padding-left:10px;}
+.memberTable td .text{ height:20px; line-height:20px; padding:5px; border:1px solid #ddd; width:500px;}
+.memberTable td select{ padding:5px; margin-right:5px; border:1px solid #ddd;}
+.memberTable  .radio input,.memberTable  .checkbox input{ vertical-align:-2px;margin-right:5px;}
+.memberTable  .radio,.memberTable  .checkbox{ padding-right:10px;}
+
+.memberTable a{ color:#005ea7;}
+.succ_ok{ background:url(/themes/default/images/succ-ok.png) no-repeat right center;}
+.succ_error{ background:url(/themes/default/images/succ-error.png) no-repeat right center;}
+.memberTable th{ font-weight:normal; font-size:12px;}
+.memberTable th em{ color:#e4393c;}
+
+#reviewProductBlock .star{ float:left;}
+
+.safe { border-bottom:1px solid #ddd; position:relative; margin-bottom:20px; padding-bottom:10px;}
+.safe s{background:url(/themes/default/images/succ-ico.png) no-repeat;width: 32px;height: 33px; display:block; float:left; margin:0 15px;}
+.safe b{ display:block; float:left; width:110px; height:26px; font-size:18px; margin-top:5px; border-right:1px solid #ddd;}
+.safe p{ padding-left:20px; float:left; line-height:40px;}
+.safe .greenBT{ position:absolute; right:0px; padding:0px 10px; top:10px; width:50px; text-align:center;}
+
+.safe .ico1{ background-position: -64px 0;}
+.safe .ico2{ background-position: 0 0;}
+.safeInfo h2{ height:25px; line-height:25px; padding-bottom:10px; font-size:14px;}
+.safeInfo a{ color:#005ea7;}
+
+.step{ margin:20px 0 15px 150px;}
+.step li{ position:relative; border-top:5px solid #cccccc; width:160px; text-align:center; height:40px; line-height:40px; float:left;}
+.step li s{ width:20px; height:20px; background:#CCC; position:absolute; top:-13px; left:50%; margin-left:-10px; font-weight:bold; color:#FFF; line-height:20px;}
+.step li.hot{ border-top:5px solid #7abd54; color:#7abd54;}
+.step li.hot s{ background:#7abd54;}
+
+.safeYZ{ padding-left:90px; padding-bottom:60px;}
+.safeYZ table td .text{ width:100%;}
+
+.safeSuccessTip{ color:#7ABD54; font-size:24px;  margin-left:200px;}

@@ -1,0 +1,325 @@
+﻿@model BrnShop.Web.Models.OrderListModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>我的订单-@{@WorkContext.ShopConfig.SiteTitle}</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/ucenter.css" rel="stylesheet" type="text/css" />
+    <script src="@{@WorkContext.ScriptCDN}/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/scripts/common.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/scripts/ucenter.order.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        uid = @WorkContext.Uid;
+        isGuestSC = @WorkContext.ShopConfig.IsGuestSC;
+        scSubmitType = @WorkContext.ShopConfig.SCSubmitType;
+    </script>
+</head>
+
+<body>
+
+<div id="headerBar" class="bigBox">
+<div class="box">
+欢迎访问 @WorkContext.ShopConfig.ShopName
+<div  class="headerLink">
+    @if (WorkContext.Uid < 1)
+    {
+        <a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">[登录]</a>
+        <a href="@Url.Action("register", "account")" class="A_b">[注册]</a>
+    }
+    else
+    {
+        @:您好: @WorkContext.NickName
+        <a href="@Url.Action("logout", "account")">[退出]</a>
+        if (WorkContext.AdminGid > 1)
+        {
+        <a href="@Url.Action("index", "home", new RouteValueDictionary { { "area", "admin" } })">[商城管理]</a>
+        }
+        <a href="@Url.Action("orderlist", "ucenter")">[我的订单]</a>
+    }
+</div>
+</div> 
+</div>
+
+
+<div id="header" class="bigBox">
+<div class="box" id="header1">
+<a href="/" class="logo left"><img src="@{@WorkContext.ImageCDN}/themes/default/images/logo.jpg" /></a>
+<div class="search left">
+<div class="searchCon">
+    <input type="text" id="keyword" name="keyword" class="Stext" autocomplete="off" onkeydown="javascript:if(event.keyCode==13) search(document.getElementById('keyword').value);" value="@WorkContext.SearchWord" />
+    <input name="" type="button" value="搜索" class="Sbutton" onclick="search(document.getElementById('keyword').value)" />
+<div class="clear"></div>
+</div>
+
+<div class="searchHot">热门搜索：
+ @{
+     List<AdvertInfo> searchWordAdvertList = Adverts.GetAdvertList(5);
+     }
+     @Html.Raw(searchWordAdvertList[0].Body)
+ </div>
+
+</div>
+
+
+<div class="shopping right" onmousemove="getCartSnap()" id="cartSnapBox" onmouseout="closeCartSnap(event)">
+<h2><a href="@Url.Action("index", "cart")">我的购物车<b id="cartSnapProudctCount">@WorkContext.CartProductCount</b></a></h2>
+<div id="cartSnap" class="shoppingList" style=" display:none;"><div class="loding"><img src="@{@WorkContext.ImageCDN}/themes/default/images/loading.gif" /><br />加载中，请稍候... </div></div>
+</div>
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div id="nav" class="bigBox">
+<div class="box">
+<!-- 分类导航 -->
+
+<div id="categorys" onmouseover="document.getElementById('categorysCon').className=''" onmouseout="document.getElementById('categorysCon').className='hide'">
+<h2>全部商品分类</h2>
+
+<div id="categorysCon" class="hide">
+
+@{
+    List<NavInfo> navList = Navs.GetNavList();
+    }
+@{
+    int layerFlag = 0;
+    foreach (NavInfo info in navList)
+    {
+        if (info.Layer == 1)
+        {
+            if (layerFlag == 1)
+            {
+               @:</div></div>
+            }
+            @:<div class="item" onmouseover="this.className='item hotItem'" onmouseout="this.className='item'"><h3><a href="javascript:void(0)">@info.Name</a></h3><div class="itmeSon">
+            layerFlag = 1;
+        }
+        else if (info.Layer == 2)
+        {
+            @:<dl><dt><a style="" href="javascript:void(0)">@info.Name</a></dt><dd>
+            foreach (NavInfo nav in navList.FindAll(x => x.Pid == info.Id))
+            {
+                 @:<em><a style="" href="@nav.Url">@nav.Name</a></em>
+            }
+            @:</dd><div class="clear"></div></dl>
+        }
+    }
+    @:</div></div>
+}
+
+</div>
+
+</div>
+
+<!-- 分类导航结束 -->
+
+<ul id="navItme">
+<li><a href="/">首页</a></li>
+<li><a href="@Url.Action("category", "catalog", new RouteValueDictionary { { "cateId", 55 } })">电视专场</a></li>
+<li><a href="@Url.Action("category", "catalog", new RouteValueDictionary { { "cateId", 65 } })">电脑专场</a></li>
+<li><a href="@Url.Action("category", "catalog", new RouteValueDictionary { { "cateId", 71 } })">手机专场</a></li>
+</ul>
+</div>
+</div>
+
+<div class="bigBox" id="member">
+<div class="box">
+<div id="memberL">
+<h2>个人中心</h2>
+<ul id="memberNav">
+    <li><a href="@Url.Action("userinfo")"><s>&gt;</s>账户信息</a></li>
+    <li><a href="@Url.Action("safeinfo")"><s>&gt;</s>账户安全</a></li>
+    <li><a href="@Url.Action("orderlist")" class="hot"><s>&gt;</s>我的订单</a></li>
+    <li><a href="@Url.Action("shipaddresslist")"><s>&gt;</s>收货地址</a></li>
+    <li><a href="@Url.Action("favoriteproductlist")"><s>&gt;</s>收藏商品</a></li>
+    <li><a href="@Url.Action("paycreditloglist")"><s>&gt;</s>我的@{@WorkContext.PayCreditName}</a></li>
+    <li><a href="@Url.Action("couponlist")"><s>&gt;</s>优惠劵</a></li>
+    <li><a href="@Url.Action("productconsultlist")"><s>&gt;</s>购买咨询</a></li>
+    <li><a href="@Url.Action("productreviewlist")"><s>&gt;</s>商品评价</a></li>
+</ul>
+
+</div>
+<div id="memberR" style=" padding-bottom:0px;">
+<h2 id="memberRT">我的订单
+@*<div class="searchList"><select>
+  <option>最近3个月</option>
+  <option>今年内</option>
+</select>
+<select>
+<option>全部状态</option>
+<option>等待付款</option>
+<option>等待自提</option>
+<option>等待收货</option>
+<option>已完成</option>
+<option>已取消</option>
+</select>
+<input type="text" class="text" value="商品名称、商品编号、订单编号" /><a href="javascript:;" class="whiteBT">搜索</a>
+<div class="clear"></div>
+</div>*@
+</h2>
+<script type="text/javascript">
+    //处理取消订单的反馈信息
+    function cancelOrderResponse(data) {
+        var result = eval("(" + data + ")");
+        if (result.state == "success") {
+            document.getElementById("orderState" + result.content).innerHTML = "取消";
+            document.getElementById("cancelOrderBut" + result.content).parentNode.innerHTML = "<a href='" + document.getElementById("orderInfo" + result.content).href + "'>查看</a>";
+            alert("取消成功");
+        }
+        else {
+            alert(result.content);
+        }
+    }
+</script>
+<table width="100%" border="0" cellspacing="0" class="dingdan">
+<thead>
+  <tr>
+    <th>订单信息</th>
+    <th>收货人</th>
+    <th>订单金额</th>
+    <th>时间</th>
+    <th>订单状态</th>
+    <th>操作</th>
+  </tr>
+</thead>
+<tbody>
+  @foreach (DataRow row in Model.OrderList.Rows)
+  {
+      OrderState orderState = (OrderState)TypeHelper.ObjectToInt(row["orderstate"]);
+  <tr class="dingdanTH"><td colspan="6">订单编号:<a target="_blank" href="@Url.Action("orderinfo", new RouteValueDictionary { { "oid", TypeHelper.ObjectToInt(row["oid"]) } })">@row["osn"]</a>&nbsp;&nbsp;&nbsp;&nbsp;@row["shipfriendname"]&nbsp;&nbsp;&nbsp;&nbsp;@row["payfriendname"]</td></tr>
+  <tr>
+    <td id="orderProductList">
+        <div class="proList">
+            @foreach (OrderProductInfo info in Orders.GetOrderProductList(TypeHelper.ObjectToInt(row["oid"]), Model.OrderProductList))
+            {
+            <a href="@Url.Action("product", "catalog", new RouteValueDictionary { { "pid", info.Pid } })"><img src="@{@WorkContext.ImageCDN}/upload/product/show/thumb60_60/@info.ShowImg" width="50" height="50" /></a>
+            }
+            <div class="clear"></div>
+        </div>
+    </td>
+    <td>@row["consignee"]</td>
+    <td>￥@row["orderamount"]</td>
+    <td>@Html.Raw(TypeHelper.ObjectToDateTime(row["addtime"]).ToString("yyyy-MM-dd"))<br />@Html.Raw(TypeHelper.ObjectToDateTime(row["addtime"]).ToString("HH:mm:ss"))</td>
+    <td id="orderState@{@row["oid"]}">
+    @switch (orderState)
+    {
+        case OrderState.WaitPaying:
+            @:等待付款
+            break;
+        case OrderState.Confirming:
+            @:待确认
+            break;
+        case OrderState.Confirmed:
+            @:已确认
+            break;
+        case OrderState.PreProducting:
+            @:备货中
+            break;
+        case OrderState.Sended:
+            @:已发货
+            break;
+        case OrderState.Completed:
+            @:已完成
+            break;
+        case OrderState.Cancelled:
+            @:取消
+            break;
+        case OrderState.Returned:
+            @:退货
+            break;
+        case OrderState.Locked:
+            @:锁定
+            break;
+        default:
+            @:未知状态
+            break;
+    }
+    </td>
+    <td>
+        <a href="@Url.Action("orderinfo", new RouteValueDictionary { { "oid", TypeHelper.ObjectToInt(row["oid"]) } })" id="orderInfo@{@row["oid"]}">查看 </a>
+        @if (orderState == OrderState.WaitPaying && TypeHelper.ObjectToInt(row["paymode"]) == 1)
+        {
+        <a href="@Url.Action("payshow", "order", new RouteValueDictionary { { "oid", TypeHelper.ObjectToInt(row["oid"]) } })" id="payOrderBut@{@row["oid"]}">付款</a>
+        }
+        @if (orderState == OrderState.Completed && TypeHelper.ObjectToInt(row["isreview"]) == 0)
+        {
+        <a href="@Url.Action("revieworder", new RouteValueDictionary { { "oid", TypeHelper.ObjectToInt(row["oid"]) } })">评价</a>
+        }
+        @if (orderState == OrderState.WaitPaying || (orderState == OrderState.Confirming && TypeHelper.ObjectToInt(row["paymode"]) == 0))
+        {
+        <a href="javascript:cancelOrder(@row["oid"], 0)" id="cancelOrderBut@{@row["oid"]}">取消订单</a>
+        }
+    </td>
+  </tr>
+  }
+</tbody>
+</table>
+@Html.WebPager(Model.PageModel).ShowSummary(false)
+</div>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+
+
+<div id="footer" class="bigBox">
+  <div class="box">
+
+    @{
+        int flag = 1;
+        foreach (HelpInfo info in WorkContext.HelpList)
+        {
+            if (info.Pid != 0)
+            {
+                if (info.Url.Length == 0)
+                {
+            <a href="@Url.Action("question", "help", new RouteValueDictionary { { "id", info.Id } })">@info.Title</a>
+                }
+                else
+                {
+            <a href="@info.Url">@info.Title</a>
+                }
+            }
+            else
+            {
+                if (flag != 1)
+                {
+                @:</div>
+            }
+            @:<div class="footerBox"><h3>@info.Title</h3>
+            flag++;
+            }
+        }
+        if (WorkContext.HelpList.Count > 0)
+        {
+        @:</div>
+    }
+    }
+
+  <div class="clear"></div>
+  </div>
+  <div class="bigBox footerB">
+    <div id="footerB">
+      <div class="links">
+        @foreach (FriendLinkInfo info in WorkContext.FriendLinkList)
+        {
+        <a href="@info.Url" target="@info.Target" title="@info.Title">@info.Name</a> @:|
+        }
+      </div>
+      <div>北京市公安局朝阳分局备案编号031143485246&nbsp;&nbsp;|&nbsp;&nbsp;京ICP证047722号&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" target="_blank">互联网药品信息服务资格证编号(京)-经营性-2012-0005</a>&nbsp;&nbsp;|&nbsp;&nbsp;新出发京零&nbsp;字第大145218号<br />石家庄蝶影软件开发有限公司 程序版本 @WorkContext.ShopVersion 版权所有 @WorkContext.ShopCopyright</div>
+      <div><a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_jy.gif"></a> <a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_kx.gif"></a> <a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_wj.png"></a> <a href="#"><img width="112" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_cx.png"></a></div>
+    </div>
+  </div>
+</div>
+@Html.Raw(WorkContext.ExecuteDetail)
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>
+

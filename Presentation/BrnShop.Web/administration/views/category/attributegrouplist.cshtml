@@ -1,0 +1,53 @@
+﻿@model BrnShop.Web.Admin.Models.AttributeGroupListModel
+
+@section header{
+    <title>属性分组列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+分组管理 &gt;&gt; 分组列表
+<div class="right">
+<a href="@Url.Action("categorylist")" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回分类</a>
+<a href="@Url.Action("addattributegroup", new { cateId = Model.CateId })" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+    <div class="table_top"></div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10" align="left" ></th>
+    <th width="80" align="left" >编号</th>
+    <th width="250" align="left" >名称</th>
+    <th align="left" >所属分类</th>
+    <th width="80" align="left" >排序</th>  
+    <th width="100" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (AttributeGroupInfo info in Model.AttributeGroupList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.AttrGroupId</td>
+    <td>@info.Name</td>
+    <td>@Model.CategoryName</td>
+    <td>@info.DisplayOrder</td>
+    <td>
+        @Html.ActionLink("[编辑]", "editattributegroup", new { attrGroupId = info.AttrGroupId }, new { @class = "editOperate" })| 
+        @Html.ActionLink("[删除]", "delattributegroup", new { attrGroupId = info.AttrGroupId }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+    <div class="table_bottom"></div>
+
+}

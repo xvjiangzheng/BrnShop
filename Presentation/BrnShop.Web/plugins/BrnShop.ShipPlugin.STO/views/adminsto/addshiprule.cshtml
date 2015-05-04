@@ -1,0 +1,107 @@
+﻿@model BrnShop.ShipPlugin.STO.ShipRuleModel
+           
+<script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+<script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+<script type="text/javascript" src="/administration/scripts/region.js"></script>
+<script type="text/javascript">
+    provinceId = @ViewData["provinceId"]; //省id
+    cityId = @ViewData["cityId"]; //市id
+    countyId = @ViewData["countyId"]; //县或区id
+    $(function () {
+        var shipRuleType = @Model.Type;
+        if (shipRuleType == 1) {
+            $("#extCode1Title").html("单件商品费用：");
+            $("#extCode2Tr").hide();
+        }
+
+        $("input[name=Type]").click(function () {
+            if ($(this).val() == 0) {
+                $("#extCode1Title").html("1000克以内费用：");
+                $("#extCode2Tr").show();
+                $(".extCode1Class").val("0");
+            }
+            else {
+                $("#extCode1Title").html("单件商品费用：");
+                $("#extCode2Tr").hide();
+                $(".extCode1Class").val("0");
+            }
+        })
+    })
+</script>
+<h1 class="rightH1">
+插件管理 &gt;&gt; 添加配送规则
+<div class="right">
+<a href="@Url.Action("shiprulelist")" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="140px" align="right">规则名称：</td>
+    <td>@Html.TextBoxFor(x => x.Name, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Name)</td>
+    </tr>
+    <tr>
+    <td align="right">计费方式：</td>
+    <td>
+        <p>
+            <label>@Html.RadioButtonFor(x => x.Type, 0, new { @class = "checkbox" })按重量计算</label>
+            <label>@Html.RadioButtonFor(x => x.Type, 1, new { @class = "checkbox" })按商品件数计算</label>
+            <br />
+        </p>
+    </td>
+    </tr>
+    <tr>
+        <td align="right"><span id="extCode1Title">1000克以内费用：</span></td>
+        <td>@Html.TextBoxFor(x => x.ExtCode1, new { @class = "input extCode1Class", size = "3" })@Html.ValidationMessageFor(x => x.ExtCode1)</td>
+    </tr>
+    <tr id="extCode2Tr">
+        <td align="right">续重每1000克费用：</td>
+        <td>@Html.TextBoxFor(x => x.ExtCode2, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.ExtCode2)</td>
+    </tr>
+    <tr>
+        <td align="right">免费金额：</td>
+        <td>@Html.TextBoxFor(x => x.FreeMoney, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.FreeMoney)</td>
+    </tr>
+        <tr>
+        <td align="right">货到付款支付手续费：</td>
+        <td>@Html.TextBoxFor(x => x.CODPayFee, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.CODPayFee)</td>
+    </tr>
+    <tr>
+    <td align="right">所辖区域：</td>
+    <td>
+        <select class="provinceSelect" id="provinceSelect" name="provinceId">
+        <option selected="selected" value="-1">全国</option>
+        </select>
+        <select class="citySelect" id="citySelect" name="cityId">
+        <option selected="selected" value="-1">全部</option>
+        </select>
+        <select class="countySelect" id="countySelect" name="countyId">
+        <option selected="selected" value="-1">全部</option>
+        </select>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}

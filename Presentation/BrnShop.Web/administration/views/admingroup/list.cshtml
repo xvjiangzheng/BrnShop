@@ -1,0 +1,55 @@
+﻿@model BrnShop.Web.Admin.Models.AdminGroupListModel
+
+@section header{
+<title>管理员组列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+管理员组管理 &gt;&gt; 管理员组列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+        <div class="table_top"></div>
+@using (Html.BeginForm("list", "admingroup"))
+{
+  <div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10"></th>
+    <th width="60" align="left">编号</th>
+    <th align="left">名称</th>
+    <th width="90" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (AdminGroupInfo info in Model.AdminGroupList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.AdminGid</td>
+    <td>@info.Title</td>
+    <td>
+    @{
+      if (info.AdminGid > 2)
+      {
+        @Html.ActionLink("[编辑]", "edit", new { adminGid = info.AdminGid }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "del", new { adminGid = info.AdminGid }, new { @class = "deleteOperate" })
+      }
+        }
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+}
+<div class="table_bottom"></div>
+}

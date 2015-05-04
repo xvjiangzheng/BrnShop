@@ -1,0 +1,76 @@
+﻿@model BrnShop.Web.Admin.Models.BannedIPListModel
+
+@section header{
+<title>禁止IP列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+禁止IP &gt;&gt; 禁止IP列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("list", "bannedip"))
+{
+    
+    <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+    <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>
+          禁止IP：
+        </td>
+        <td width="130">
+          	@Html.TextBox("IP", Model.IP, new { height = "18" })
+        </td>
+       <td>
+       <input id="Searchbannedip" name="Searchbannedip" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="100" align="left" name="sortTitle" column="id" direction="DESC">编号</th>
+    <th align="left">IP地址</th>
+    <th width="180" align="left" name="sortTitle" column="liftbantime" direction="DESC">解禁时间</th>
+    <th width="92" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.BannedIPList.Rows)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@row["id"]" selectItem="true" name="idList" /></td>
+    <td>@row["id"]</td>
+    <td>@row["ip"]</td>
+    <td>@row["liftbantime"]</td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { id = row["id"] }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "del", new { idList = row["id"] }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

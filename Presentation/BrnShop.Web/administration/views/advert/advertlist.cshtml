@@ -1,0 +1,103 @@
+﻿@model BrnShop.Web.Admin.Models.AdvertListModel
+
+@section header{
+<title>广告列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+广告管理 &gt;&gt; 广告列表
+<div class="right">
+<a href="@Url.Action("addadvert")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("advertlist", "advert"))
+{
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>广告位置：</td>
+        <td width="130">@Html.DropDownListFor(x => x.AdPosId, ViewData["advertPositionList"] as List<SelectListItem>)</td>
+       <td>
+       <input id="Search" name="Search" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="4"></th>
+    <th align="left">标题</th>
+    <th width="220" align="left">位置</th>
+    <th width="60" align="left">类型</th>
+    <th width="140" align="left">开始时间</th>  
+    <th width="140" align="left">结束时间</th>  
+    <th width="60" align="left">排序</th>  
+    <th width="60" align="left">状态</th>  
+    <th width="76" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.AdvertList.Rows)
+  {
+  <tr>
+    <td></td>
+    <td>@row["atitle"]</td>
+    <td>@row["aptitle"].ToString().TrimEnd()</td>
+    <td>
+      @if (row["type"].ToString() == "0")
+      {
+          @:文字
+      }
+      else if (row["type"].ToString() == "1")
+      {
+            @:图片
+      }
+      else if (row["type"].ToString() == "2")
+      {
+            @:Flash
+      }
+      else
+      {
+            @:代码
+      }
+    </td>
+    <td>@row["starttime"]</td>
+    <td>@row["endtime"]</td>
+    <td>@row["displayorder"]</td>
+    <td>
+      @if (row["state"].ToString() == "0")
+      {
+          @:隐藏
+      }
+      else
+      {
+          @:展示
+      }
+    </td>
+    <td>
+        @Html.ActionLink("[编辑]", "editadvert", new { adId = row["adid"] }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "deladvert", new { adId = row["adid"] }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

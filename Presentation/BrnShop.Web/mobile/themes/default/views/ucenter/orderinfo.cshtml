@@ -1,0 +1,109 @@
+﻿@model BrnShop.Web.Mobile.Models.OrderInfoModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>订单信息-@{@WorkContext.ShopConfig.SiteTitle}触屏版</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/base.css" rel="stylesheet" type="text/css">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/ucenter.css" rel="stylesheet" type="text/css">
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+<header>
+  <div class="new-header">
+    <a href="javascript:pageBack()" class="new-a-back"><span>返回</span></a>
+    <h2>订单信息</h2>
+    <a href="javascript:navSH()" class="new-a-brn"><span>BRN键</span></a> 
+  </div>
+  <div class="new-brn-tab" id="nav" style=" display:none;">
+    <div class="new-tbl-type"> 
+    <a href="@Url.Action("index", "home")" class="new-tbl-cell"><span class="icon">首页</span><p style="color:#6e6e6e;">首页</p></a> 
+    <a href="@Url.Action("list", "category")" class="new-tbl-cell"><span class="icon2 on">分类搜索</span><p style="color:#6e6e6e;" class="on">分类搜索</p></a> 
+    <a href="@Url.Action("index", "cart")" class="new-tbl-cell"><span class="icon3">购物车</span><p style="color:#6e6e6e;">购物车</p></a> 
+    <a href="@Url.Action("index", "ucenter")" class="new-tbl-cell"><span class="icon4 on">个人中心</span><p style="color:#6e6e6e;" class="on">个人中心</p></a> 
+    </div>
+  </div>
+</header>
+
+<div class="pro">
+
+<div class="proI2">
+<p>订单编号：@Model.OrderInfo.OSN</p>
+<p>订单金额：￥@Model.OrderInfo.OrderAmount</p>
+<p>订单日期：@Model.OrderInfo.AddTime</p>
+
+<div class="proBt">
+<a href="@Url.Action("orderactionlist", new RouteValueDictionary { { "oid", Model.OrderInfo.Oid } })" class="redBt">订单跟踪</a>
+@if (Model.OrderInfo.OrderState == (int)OrderState.Completed && Model.OrderInfo.IsReview == 0)
+{
+<a class="redBt" href="@Url.Action("revieworder", new RouteValueDictionary { { "oid", Model.OrderInfo.Oid } })">满意度调查</a>
+}
+</div>
+</div>
+
+@foreach (OrderProductInfo info in Model.OrderProductList)
+{
+<div class="proItme">
+<a href="@Url.Action("product", "catalog", new RouteValueDictionary { { "pid", info.Pid } })"><img src="@{@WorkContext.ImageCDN}/upload/product/show/thumb60_60/@info.ShowImg"></a>
+<div class="order-msg"><p class="title">@info.Name</p><p class="price">¥@info.DiscountPrice</p><p>x @info.RealCount</p></div>
+</div>
+}
+
+<div class="proI2">
+<p class="i2Title">@Model.OrderInfo.Consignee<span>@Model.OrderInfo.Mobile</span></p>
+<div class="hr"></div>
+<p class="i2Title">@Model.RegionInfo.ProvinceName @Model.RegionInfo.CityName @Model.RegionInfo.Name @Model.OrderInfo.Address</p>
+</div>
+
+<div class="proI2">
+<p class="i2Title">付款方式:<span>@Model.OrderInfo.PayFriendName</span></p>
+<div class="hr"></div>
+<p>商品金额:<span class="price">￥@Model.OrderInfo.ProductAmount</span></p>
+<p>返现:<span class="price">￥@Model.OrderInfo.FullCut</span></p>
+<p>税费:<span class="price">￥@Model.OrderInfo.PayFee</span></p>
+<p>运费:<span class="price">￥@Model.OrderInfo.ShipFee</span></p>
+<div class="hr"></div>
+<p class="i2Title">应支付金额:<span class="price">@Model.OrderInfo.SurplusMoney</span></p>
+</div>
+
+<div class="proI2">
+<p class="i2Title">配送信息</p>
+<div class="hr"></div>
+<p class="i2Title">配送方式:@Model.OrderInfo.ShipFriendName</p>
+<p class="i2Title">配送时间:@Model.OrderInfo.ShipTime</p>
+</div>
+
+</div>
+
+
+<div class="viewport">
+  <footer>
+    <div class="footerTop">
+      @if (WorkContext.Uid < 1)
+      {
+      <div class="left"><a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">登录</a> | <a href="@Url.Action("register", "account")">注册</a></div>
+      }
+      else
+      {
+        <div class="left"><a href="@Url.Action("index", "ucenter")">@WorkContext.NickName</a> | <a href="@Url.Action("logout", "account")">退出</a></div>   
+      }
+      <div class="right"><a href="#top">回到顶部 </a></div>
+      <div class="clear"></div>
+    </div>
+    <div class="footerCon"><a href="@Url.Action("index", "home")" class="hot">触屏版</a><a href="/">电脑版</a></div>
+    <div class="copyright" align="center">www.brnshop.com </div>
+  </footer>
+</div>
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

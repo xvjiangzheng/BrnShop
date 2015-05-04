@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{311C5C3B-2427-4A8E-B623-2BAEB95B1D9E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BrnShop.Services</RootNamespace>
+    <AssemblyName>BrnShop.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\AdminActions.cs" />
+    <Compile Include="Admin\AdminAdverts.cs" />
+    <Compile Include="Admin\AdminBannedIPs.cs" />
+    <Compile Include="Admin\AdminBanners.cs" />
+    <Compile Include="Admin\AdminCredits.cs" />
+    <Compile Include="Admin\AdminNews.cs" />
+    <Compile Include="Admin\AdminOrderRefunds.cs" />
+    <Compile Include="Admin\AdminOrders.cs" />
+    <Compile Include="Admin\AdminFilterWords.cs" />
+    <Compile Include="Admin\AdminFriendLinks.cs" />
+    <Compile Include="Admin\AdminNavs.cs" />
+    <Compile Include="Admin\AdminPlugins.cs" />
+    <Compile Include="Admin\AdminProductConsults.cs" />
+    <Compile Include="Admin\AdminProductReviews.cs" />
+    <Compile Include="Admin\AdminHelps.cs" />
+    <Compile Include="Admin\AdminCategories.cs" />
+    <Compile Include="Admin\AdminCoupons.cs" />
+    <Compile Include="Admin\AdminOperateLogs.cs" />
+    <Compile Include="Admin\AdminBrands.cs" />
+    <Compile Include="Admin\AdminGroups.cs" />
+    <Compile Include="Admin\AdminProducts.cs" />
+    <Compile Include="Admin\AdminPromotions.cs" />
+    <Compile Include="Admin\AdminSearchHistories.cs" />
+    <Compile Include="Admin\AdminTopic.cs" />
+    <Compile Include="Admin\AdminUsers.cs" />
+    <Compile Include="Admin\AdminUserRanks.cs" />
+    <Compile Include="Adverts.cs" />
+    <Compile Include="Banners.cs" />
+    <Compile Include="Carts.cs" />
+    <Compile Include="DataBases.cs" />
+    <Compile Include="Asyn.cs" />
+    <Compile Include="BannedIPs.cs" />
+    <Compile Include="BrowseHistories.cs" />
+    <Compile Include="Credits.cs" />
+    <Compile Include="EventLogs.cs" />
+    <Compile Include="Favorites.cs" />
+    <Compile Include="Helps.cs" />
+    <Compile Include="Brands.cs" />
+    <Compile Include="Categories.cs" />
+    <Compile Include="Coupons.cs" />
+    <Compile Include="FilterWords.cs" />
+    <Compile Include="FriendLinks.cs" />
+    <Compile Include="IPSearch.cs" />
+    <Compile Include="LoginFailLogs.cs" />
+    <Compile Include="Emails.cs" />
+    <Compile Include="Navs.cs" />
+    <Compile Include="News.cs" />
+    <Compile Include="OAuths.cs" />
+    <Compile Include="OnlineUsers.cs" />
+    <Compile Include="OrderActions.cs" />
+    <Compile Include="OrderRefunds.cs" />
+    <Compile Include="Orders.cs" />
+    <Compile Include="Plugins.cs" />
+    <Compile Include="ProductConsults.cs" />
+    <Compile Include="ProductReviews.cs" />
+    <Compile Include="Products.cs" />
+    <Compile Include="ProductStats.cs" />
+    <Compile Include="Promotions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regions.cs" />
+    <Compile Include="Searches.cs" />
+    <Compile Include="SearchHistories.cs" />
+    <Compile Include="Sessions.cs" />
+    <Compile Include="ShipAddresses.cs" />
+    <Compile Include="ShopUtils.cs" />
+    <Compile Include="SMSes.cs" />
+    <Compile Include="PVStats.cs" />
+    <Compile Include="Topics.cs" />
+    <Compile Include="Users.cs" />
+    <Compile Include="UserRanks.cs" />
+    <Compile Include="Randoms.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BrnShop.Core\BrnShop.Core.csproj">
+      <Project>{253C5E59-316C-44C8-A8A1-2BC2BD64ADE5}</Project>
+      <Name>BrnShop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BrnShop.Data\BrnShop.Data.csproj">
+      <Project>{FBA18BB0-6644-401C-9833-04EEF2917FA9}</Project>
+      <Name>BrnShop.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

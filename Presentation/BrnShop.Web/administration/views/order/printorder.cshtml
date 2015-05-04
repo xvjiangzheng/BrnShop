@@ -1,0 +1,71 @@
+﻿@model BrnShop.Web.Admin.Models.PrintOrderModel
+@{
+    Layout = null;
+}
+<style type="text/css">
+body,td {font-size:13px;}
+</style>
+
+<h1 align="center">订单信息</h1>
+<table width="100%" cellpadding="1">
+    <tr>
+        <td width="8%">顾客名称：</td><td>@Model.OrderInfo.Consignee</td>
+        <td align="right">下单时间：</td><td>@Model.OrderInfo.AddTime</td>
+        <td align="right">订单编号：</td><td>@Model.OrderInfo.OSN</td>
+        <td align="right">支付方式：</td><td>@Model.OrderInfo.PaySystemName</td>
+    </tr>
+    <tr>
+        <td>付款时间：</td><td>@if (Model.OrderInfo.PaySN.Length == 0) { <text>未付款</text> } else { @Model.OrderInfo.PayTime }</td>
+        <td align="right">配送方式：</td><td>@Model.OrderInfo.ShipFriendName</td>
+        <td align="right">发货时间：</td><td>@if (Model.OrderInfo.ShipSN.Length == 0) { <text>未发货</text> } else { @Model.OrderInfo.ShipTime }</td>
+        <td align="right">发货单号：</td><td>@Model.OrderInfo.ShipSN</td>
+    </tr>
+    <tr>
+        <td>收货地址：</td>
+        <td colspan="7">
+        @Model.RegionInfo.ProvinceName  @Model.RegionInfo.CityName  @Model.RegionInfo.Name &nbsp; @Model.OrderInfo.Address &nbsp;
+        收货人：@Model.OrderInfo.Consignee &nbsp;
+        手机号：@Model.OrderInfo.Mobile&nbsp;
+        固定电话：@Model.OrderInfo.Phone&nbsp;
+        </td>
+    </tr>
+</table>
+<table width="100%" border="1" style="border-collapse:collapse;border-color:#000;">
+    <tr align="center">
+        <td bgcolor="#cccccc">商品名称</td>
+        <td bgcolor="#cccccc">货号</td>
+        <td bgcolor="#cccccc">价格</td>
+        <td bgcolor="#cccccc">数量</td>
+        <td bgcolor="#cccccc">小计</td>
+    </tr>
+    @foreach (OrderProductInfo info in Model.OrderProductList)
+    {
+    <tr>
+        <td>@info.Name</td>
+        <td>@info.PSN</td>
+        <td align="right">￥@info.ShopPrice</td>
+        <td align="right">@info.RealCount</td>
+        <td align="right">￥@Html.Raw((info.DiscountPrice * info.BuyCount).ToString())</td>
+    </tr>
+    }
+    <tr>
+        <td colspan="4"></td>
+        <td colspan="2" align="right">商品总金额：￥@Model.OrderInfo.ProductAmount</td>
+    </tr>
+</table>
+<table width="100%" border="0">
+    <tr align="right">
+        <td>配送费用：￥@Model.OrderInfo.ShipFee + 支付费用：￥@Model.OrderInfo.PayFee - 满减费用：￥@Model.OrderInfo.FullCut - 订单折扣：￥@Model.OrderInfo.Discount = 订单总金额：￥@Model.OrderInfo.OrderAmount</td>
+    </tr>
+    <tr align="right">
+        <td>= 应付款金额：￥@Model.OrderInfo.SurplusMoney</td>
+    </tr>
+</table>
+<table width="100%" border="0">
+    <tr>
+        <td>@WorkContext.ShopConfig.ShopName（@WorkContext.ShopConfig.SiteUrl)</td>
+    </tr>
+    <tr align="right">
+        <td>打印时间：@CommonHelper.GetDateTime() &nbsp;&nbsp;&nbsp;操作者：@Model.AdminRealName</td>
+    </tr>
+</table>

@@ -1,0 +1,74 @@
+﻿@model BrnShop.OAuthPlugin.QQ.ConfigModel
+           
+<script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+<script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+<h1 class="rightH1">
+插件管理 &gt;&gt; 插件配置
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("Config", "AdminQQOAuth"))
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="100px" align="right">验证URL：</td>
+    <td>
+    @Html.TextBoxFor(x => x.AuthUrl, new { @class = "input", size = "20" })
+    @Html.ValidationMessageFor(x => x.AuthUrl)
+    </td>
+    </tr>
+      <tr>
+    <td align="right">应用程序KEY：</td>
+    <td>
+    @Html.TextBoxFor(x => x.AppKey, new { @class = "input", size = "20" })
+    @Html.ValidationMessageFor(x => x.AppKey)
+    </td>
+    </tr>
+      <tr>
+    <td align="right">应用程序密钥：</td>
+    <td>
+    @Html.TextBoxFor(x => x.AppSecret, new { @class = "input", size = "20" })
+    @Html.ValidationMessageFor(x => x.AppSecret)
+    </td>
+    </tr>
+
+          <tr>
+    <td align="right">服务商：</td>
+    <td>
+    @Html.TextBoxFor(x => x.Server, new { @class = "input", size = "20" })
+    @Html.ValidationMessageFor(x => x.Server)
+    </td>
+    </tr>
+
+          <tr>
+    <td align="right">用户名前缀：</td>
+    <td>
+    @Html.TextBoxFor(x => x.UNamePrefix, new { @class = "input", size = "20" })
+    @Html.ValidationMessageFor(x => x.UNamePrefix)
+    </td>
+    </tr>
+
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+    <script type="text/javascript">
+        $(function () {
+            $("#sumbitBut").click(function () {
+                $("form:first").submit();
+                return false;
+            })
+        });
+    </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}

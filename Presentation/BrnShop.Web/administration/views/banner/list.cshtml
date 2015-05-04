@@ -1,0 +1,85 @@
+﻿@model BrnShop.Web.Admin.Models.BannerListModel
+
+@section header{
+<title>banner列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+Banner管理 &gt;&gt; Banner列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+        <div class="table_top">
+        </div>
+@using (Html.BeginForm("list", "banner"))
+{
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="100" align="left" >图片</th>  
+    <th width="260" align="left" >地址</th>
+    <th align="left" >标题</th>
+    <th width="50" align="left" >类型</th>  
+    <th width="50" align="left" >排序</th>  
+    <th width="50" align="left" >显示</th>
+    <th width="130" align="left" >显示时间</th>
+    <th width="76" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (BannerInfo info in Model.BannerList)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@info.Id" selectItem="true" name="idList" /></td>
+    <td><img width="80" height="50" src="/upload/banner/@info.Img" /></td>
+    <td>@info.Url</td>
+    <td>@info.Title</td>
+        <td>
+    @if (info.Type == 0)
+    {
+         @:PC
+    }
+    else
+    {
+        @:手机
+    }
+    </td>
+    <td>@info.DisplayOrder</td>
+    <td>
+    @if (info.IsShow == 1)
+    {
+         @:是
+    }
+    else
+    {
+        @:否 
+    }
+    </td>
+    <td>@info.StartTime <br /> @info.EndTime</td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { id = info.Id }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "del", new { idList = info.Id }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<a href="#" delUrl="@Url.Action("Del")" class="batch batchDel">批量删除</a>
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+<div class="table_bottom"></div>
+}
+}

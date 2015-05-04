@@ -1,0 +1,75 @@
+﻿@model BrnShop.Web.Admin.Models.SaleListModel
+
+@section header{
+    <title>销售明细</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+报表统计 &gt;&gt; 销售明细
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+<div class="dataListSearch">
+<table height="32">
+    <tbody>
+        <tr>
+            <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif" /></td>
+            <td>开始时间：</td>
+            <td width="130">
+          	@Html.TextBox("StartTime", Model.StartTime, new { height = "18", onfocus = "WdatePicker({el:'StartTime'})" })
+            </td>
+            <td>&nbsp;&nbsp;&nbsp;结束时间：</td>
+            <td width="130">
+          	@Html.TextBox("EndTime", Model.EndTime, new { height = "18", onfocus = "WdatePicker({el:'EndTime'})" })
+            </td>
+            <td><input id="Search" name="Search" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" /></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+    <thead>
+        <tr>
+            <th width="10" align="center"></th>
+            <th width="150" align="left">订单编号</th>
+            <th width="150" align="left">商品编号</th>
+            <th align="left">商品名称</th>
+            <th width="100" align="center">商品价格</th>
+            <th width="100" align="center">商品数量</th>
+            <th width="120" align="left">售出日期</th>
+        </tr>
+    </thead>
+  <tbody>
+  @foreach (DataRow row in Model.SaleProductList.Rows)
+  {
+  <tr>
+    <td align="center"></td>
+    <td>@row["osn"]</td>
+    <td>@row["psn"]</td>
+    <td>@row["name"]</td>
+    <td align="center">@row["shopprice"]</td>
+    <td align="center">@row["realcount"]</td>
+    <td>@row["addtime"]</td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

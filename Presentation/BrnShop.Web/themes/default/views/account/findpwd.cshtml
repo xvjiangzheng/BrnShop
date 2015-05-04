@@ -1,0 +1,111 @@
+﻿@model BrnShop.Web.Models.FindPwdModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>找回密码-@{@WorkContext.ShopConfig.SiteTitle}</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/account.css" rel="stylesheet" type="text/css" />
+    <script src="@{@WorkContext.ScriptCDN}/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/scripts/account.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        shadowName = "@Model.ShadowName";
+    </script>
+</head>
+
+<body>
+
+<div id="loginTop" class="box">
+    <a href="/" class="left"><img src="@{@WorkContext.ImageCDN}/themes/default/images/logo.png" width="186" height="42" /></a>
+    <h2>找回密码</h2>
+    <div class="clear"></div>
+</div>
+
+<div class="findPassword box">
+<div class="step">
+<ul>
+    <li class="hot"><s>1</s>验证身份</li>
+    <li><s>2</s>验证邮箱</li>
+    <li><s>4</s>设置新密码</li>
+    <li><s>4</s>完成</li>
+    <div class="clear"></div>
+</ul>
+</div>
+
+<form name="findPwdForm" action="">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th width="190"><em>*</em>账户名：</th>
+    <td width="275"><input type="text" name="@Model.ShadowName" value="" class="text userName" /></td>
+    <td>&nbsp;</td>
+  </tr>
+  @if (Model.IsVerifyCode)
+  { 
+  <tr>
+    <th><em>*</em>验证码：</th>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td width="132"><input type="text" name="verifyCode" autocomplete="off" class="YZM text" /></td>
+    <td><img id="verifyImage" width="100" height="36" style="margin-left:5px;" title="点击刷新验证码" onclick="this.src='/tool/verifyimage?time=' + new Date()" src="/tool/verifyimage" /></td>
+    </tr>
+    </table>
+    </td>
+    <td>@*<div class="tipBox"><a href="#">看不清？换一张</a></div>*@</td>
+  </tr>
+  }
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td><a href="#" class="passBt redBT" onclick="findPwd()">提交</a></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+</div>
+
+
+<div id="footer" class="bigBox">
+  <div class="box">
+
+    @{
+        int flag = 1;
+        foreach (HelpInfo info in WorkContext.HelpList)
+        {
+            if (info.Pid != 0)
+            {
+                if (info.Url.Length == 0)
+                {
+            <a href="@Url.Action("question", "help", new RouteValueDictionary { { "id", info.Id } })">@info.Title</a>
+                }
+                else
+                {
+            <a href="@info.Url">@info.Title</a>
+                }
+            }
+            else
+            {
+                if (flag != 1)
+                {
+                @:</div>
+            }
+            @:<div class="footerBox"><h3>@info.Title</h3>
+            flag++;
+            }
+        }
+        if (WorkContext.HelpList.Count > 0)
+        {
+        @:</div>
+    }
+    }
+
+  <div class="clear"></div>
+  </div>
+</div>
+@Html.Raw(WorkContext.ExecuteDetail)
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

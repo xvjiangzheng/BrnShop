@@ -1,0 +1,17 @@
+body{line-height: 1.25em; background:#fafafa}
+a{ color:#000;}
+.tbl-type {display: table;width: 100%;}
+.tbl-cell {display: table-cell;}
+
+
+.loginTable{ padding:20px;}
+.loginTable .itmeC{ margin:0; padding:0; width:100%; display:block; overflow:hidden; padding-bottom:10px;}
+.loginTable .text{ width:99%;height:38px;border-radius: 0;background: #fff;font-size: 12px;line-height: 24px;font-weight: normal;color: #bdbdbd;text-indent: 10px;vertical-align:center;-webkit-appearance: none; border:1px solid #ddd; padding:0;}
+.loginTable .itmeT{ font-size:14px; color:#333; padding-bottom:5px;}
+
+
+.otherLogin{ padding:10px 0; font-size:14px; color:#999;}
+.otherLogin p{ padding:5px 0;}
+.otherLogin a{text-align:center;}
+.otherLogin span{display: inline-block; }
+.select{  width:100%;height:38px; width:99%;}

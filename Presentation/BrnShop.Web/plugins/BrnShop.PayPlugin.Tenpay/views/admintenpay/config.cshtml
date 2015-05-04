@@ -1,0 +1,64 @@
+﻿@model BrnShop.PayPlugin.Tenpay.ConfigModel
+           
+<script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+<script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+<h1 class="rightH1">
+插件管理 &gt;&gt; 插件配置
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("config", "admintenpay"))
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="110px" align="right">财付通商户号：</td>
+    <td>
+    @Html.TextBoxFor(x => x.BargainorId, new { @class = "input", size = "20" })
+    @Html.ValidationMessageFor(x => x.BargainorId)
+    </td>
+    </tr>
+      <tr>
+    <td align="right">财付通密钥：</td>
+    <td>
+    @Html.TextBoxFor(x => x.TenpayKey, new { @class = "input", size = "20" })
+    @Html.ValidationMessageFor(x => x.TenpayKey)
+    </td>
+    </tr>
+          <tr>
+    <td align="right">支付手续费：</td>
+    <td>
+    @Html.TextBoxFor(x => x.PayFee, new { @class="input",size="20"})
+    @Html.ValidationMessageFor(x => x.PayFee)
+    </td>
+    </tr>
+      <tr>
+    <td align="right">免费金额：</td>
+    <td>
+    @Html.TextBoxFor(x => x.FreeMoney, new { @class="input",size="20"})
+    @Html.ValidationMessageFor(x => x.FreeMoney)
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}

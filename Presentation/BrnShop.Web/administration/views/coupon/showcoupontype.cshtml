@@ -1,0 +1,170 @@
+﻿@model BrnShop.Web.Admin.Models.CouponTypeModel
+
+@section header{
+    <title>优惠劵类型</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            if (@Model.SendModel != 0) {
+                $("#GetModel").parents("tr").hide();
+                $("#SendStartTime").parents("tr").hide();
+            }
+            else {
+                $("#GetModel").parents("tr").show();
+                $("#SendStartTime").parents("tr").show();
+            }
+
+            if (@Model.UseExpireTime == 0) {
+                $("#UseExpireTime").parents("tr").hide();
+                $("#UseStartTime").parents("tr").show();
+            }
+            else {
+                $("#UseExpireTime").parents("tr").show();
+                $("#UseStartTime").parents("tr").hide();
+            }
+
+        })
+    </script>
+
+}
+
+@section body{
+<h1 class="rightH1">
+优惠劵管理 &gt;&gt; 查看类型
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+<div class="addTable">
+@using (Html.BeginForm())
+{
+<table width="100%">
+
+                <tr>
+    <td width="106px" align="right">优惠劵名称：</td>
+    <td>@Html.TextBoxFor(x => x.CouponTypeName, new { @class = "input", size = "35", disabled = "disabled" })</td>
+    </tr>
+          <tr>
+    <td align="right">优惠劵金额：</td>
+    <td>@Html.TextBoxFor(x => x.Money, new { @class = "input", size = "3", disabled = "disabled" })元</td>
+    </tr>
+              <tr>
+    <td align="right">优惠劵数量：</td>
+    <td>@Html.TextBoxFor(x => x.Count, new { @class = "input", size = "3", disabled = "disabled" })</td>
+    </tr>
+                  <tr>
+    <td align="right">发放方式：</td>
+    <td><p>
+      <label>@Html.RadioButtonFor(x => x.SendModel, 0, new { @class = "checkbox", disabled = "disabled" }) 免费领取</label>
+      <label>@Html.RadioButtonFor(x => x.SendModel, 1, new { @class = "checkbox", disabled = "disabled" })手动发放</label>
+      <label>@Html.RadioButtonFor(x => x.SendModel, 2, new { @class = "checkbox", disabled = "disabled" })随活动发放</label>
+      <br />
+    </p></td>
+    </tr>
+                  <tr>
+    <td align="right">领取方式：</td>
+    <td><p>
+      <label>@Html.RadioButtonFor(x => x.GetModel, 0, new { @class = "checkbox", disabled = "disabled" })无限制</label>
+      <label>@Html.RadioButtonFor(x => x.GetModel, 1, new { @class = "checkbox", disabled = "disabled" })限领一张</label>
+      <label>@Html.RadioButtonFor(x => x.GetModel, 2, new { @class = "checkbox", disabled = "disabled" })每天限领一张</label>
+      <br />
+    </p></td>
+    </tr>
+                  <tr>
+    <td align="right">使用方式：</td>
+    <td><p>
+      <label>@Html.RadioButtonFor(x => x.UseModel, 0, new { @class = "checkbox", disabled = "disabled" }) 可以叠加</label>
+      <label>@Html.RadioButtonFor(x => x.UseModel, 1, new { @class = "checkbox", disabled = "disabled" }) 不可以叠加</label>
+      <br />
+    </p></td>
+    </tr>
+
+          <tr>
+    <td align="right">最小用户等级：</td>
+    <td>@Html.DropDownListFor(x => x.UserRankLower,ViewData["userRankList"] as List<SelectListItem>, new { disabled = "disabled" })</td>
+    </tr>
+
+              <tr>
+    <td align="right">最小订单金额：</td>
+    <td>@Html.TextBoxFor(x => x.OrderAmountLower, new { @class = "input", size = "3", disabled = "disabled" })元</td>
+    </tr>
+                 <tr>
+                    <td width="76px;" align="right">
+                        限制分类：
+                    </td>
+                    <td>
+                        <div class="selectBt" style="float: left;">
+                            <input type="button" value="@Model.LimitCateName"/>
+                            @Html.HiddenFor(x => x.LimitCateId, new { @class = "CateId" })
+                            <input type="hidden" class="CategoryName" id="LimitCateName" name="LimitCateName" value="@Model.LimitCateName" />
+                        </div>
+                    </td>
+                </tr>
+
+                    <tr>
+                    <td align="right">
+                        限制品牌：
+                    </td>
+                    <td>
+                        <div class="selectBt">
+                            <input type="button" value="@Model.LimitBrandName" />
+                            @Html.HiddenFor(x => x.LimitBrandId, new { @class = "BrandId" })
+        <input type="hidden" class="BrandName" id="LimitBrandName" name="LimitBrandName" value="@Model.LimitBrandName" />
+                        </div>
+                    </td>
+                </tr>
+
+                    <tr>
+    <td align="right">限制商品：</td>
+        <td><p>
+        <label>@Html.RadioButtonFor(x => x.LimitProduct, 0, new { @class = "checkbox", disabled = "disabled" })否</label>
+        <label>@Html.RadioButtonFor(x => x.LimitProduct, 1, new { @class = "checkbox", disabled = "disabled" })是</label>
+        <br />
+    </p></td>
+    </tr>
+                        <tr>
+                    <td align="right">
+                        发放时间：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.SendStartTime, new { @class = "input", size = "18", disabled = "disabled",  })
+                        至
+                        @Html.TextBoxFor(x => x.SendEndTime, new { @class = "input", size = "18", disabled = "disabled"})
+                    </td>
+                </tr>
+                            <tr>
+    <td align="right">使用时间类型：</td>
+        <td><p>
+        <label>@Html.RadioButtonFor(x => x.UseTimeType, 0, new { @class = "checkbox", disabled = "disabled" })绝对时间</label>
+        <label>@Html.RadioButtonFor(x => x.UseTimeType, 1, new { @class = "checkbox" , disabled = "disabled"})相对时间</label>
+        <br />
+    </p></td>
+    </tr>
+     <tr>
+    <td align="right">使用过期时间：</td>
+        <td>@Html.TextBoxFor(x => x.UseExpireTime, new { @class = "input", size = "3", disabled = "disabled" })天</td>
+    </tr>
+    <tr>
+        <td align="right">
+            使用时间段：
+        </td>
+        <td>
+            @Html.TextBoxFor(x => x.UseStartTime, new { @class = "input", size = "18", disabled = "disabled" })
+            至
+            @Html.TextBoxFor(x => x.UseEndTime, new { @class = "input", size = "18", disabled = "disabled" })
+        </td>
+    </tr>
+
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+}
+</div>
+}

@@ -1,0 +1,93 @@
+﻿@model BrnShop.Web.Admin.Models.EventListModel
+
+@section header{
+<title>事件列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+}
+
+@section body{
+<h1 class="rightH1">
+开发人员 &gt;&gt; 事件管理
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+        <div class="table_top">
+        </div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10" align="left" ></th>  
+    <th align="left" >事件名称</th>  
+    <th width="130" align="left" >执行时间</th>  
+    <th width="130" align="left" >上次执行时间</th>
+    <th width="80" align="left" >状态</th>
+    <th width="114" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (EventInfo info in Model.BSPEventList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.Title</td>
+    <td>
+        @{
+            if(info.TimeType==0)
+            {
+                @DateTime.Now.Date.AddMinutes(info.TimeValue).Hour
+                @:点
+                @DateTime.Now.Date.AddMinutes(info.TimeValue).Minute
+                @:分
+            }
+            else if(info.TimeType==1)
+            {
+                @:每间隔
+                @info.TimeValue
+                @:分
+            }
+            else
+            {
+                @:不支持类型
+            }
+            }
+    </td>
+    <td>
+                @{
+            if(info.LastExecuteTime == null)
+            {
+                @:未执行
+            }
+            else
+            {
+                @info.LastExecuteTime
+            }
+            }
+    </td>
+    <td>
+                    @{
+            if(info.Enabled == 0)
+            {
+                @:关闭
+            }
+            else
+            {
+                @:启动
+            }
+            }
+    </td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { key = info.Key }, new { @class = "editOperate" })
+        @Html.ActionLink("[手动执行]", "execute", new { key = info.Key }, new { @class = "editOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="table_bottom"></div>
+}

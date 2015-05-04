@@ -1,0 +1,210 @@
+﻿@model BrnShop.Web.Admin.Models.CreditModel
+
+@section header{
+    <title>积分设置</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".addTag li").click(function () {
+                $(".addTag li").removeClass("hot");
+                $(this).addClass("hot");
+                $(".addTable").hide().eq($(this).index()).show(0);
+
+            })
+
+            $(".addBt").click(function () {
+                $("form:first").submit();
+                return false;
+            })
+        });
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 积分设置
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+<ul class="addTag">
+    <li class="hot"><a href="javascript:;">支付积分</a></li>
+    <li><a href="javascript:;">等级积分</a></li>
+    <div class="clear"></div>
+</ul>
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+         <tr>
+    <td width="140px" align="right">名称：</td>
+    <td>
+    @Html.TextBoxFor(x => x.PayCreditName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.PayCreditName)
+    </td>
+    </tr>
+
+     <tr>
+    <td align="right">价格：</td>
+    <td>
+   @Html.TextBoxFor(x => x.PayCreditPrice, new { @class = "input", size = "35" })每100个折合成多少元 @Html.ValidationMessageFor(x => x.PayCreditPrice)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">注册：</td>
+    <td>
+   @Html.TextBoxFor(x => x.RegisterPayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.RegisterPayCredits)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">每天登陆：</td>
+    <td>
+   @Html.TextBoxFor(x => x.LoginPayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.LoginPayCredits)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">验证邮箱：</td>
+    <td>
+   @Html.TextBoxFor(x => x.VerifyEmailPayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.VerifyEmailPayCredits)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">验证手机：</td>
+    <td>
+   @Html.TextBoxFor(x => x.VerifyMobilePayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.VerifyMobilePayCredits)
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">完善用户信息：</td>
+    <td>
+   @Html.TextBoxFor(x => x.CompleteUserInfoPayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.CompleteUserInfoPayCredits)
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">完成订单：</td>
+    <td>
+   @Html.TextBoxFor(x => x.CompleteOrderPayCredits, new { @class = "input", size = "35" })以订单金额的百分比计算 @Html.ValidationMessageFor(x => x.CompleteOrderPayCredits)
+    </td>
+    </tr>
+
+                 <tr>
+    <td align="right">评价商品：</td>
+    <td>
+   @Html.TextBoxFor(x => x.ReviewProductPayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.ReviewProductPayCredits)
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">每天最大发放：</td>
+    <td>
+   @Html.TextBoxFor(x => x.DayMaxSendPayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.DayMaxSendPayCredits)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">每笔订单最大使用：</td>
+    <td>
+   @Html.TextBoxFor(x => x.OrderMaxUsePayCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.OrderMaxUsePayCredits)
+    </td>
+    </tr>
+
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut1" ><img src="/administration/content/images/submit.jpg" /></a>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+<div class="addTable hide">
+<table width="100%">
+         <tr>
+    <td width="110px" align="right">名称：</td>
+    <td>
+    @Html.TextBoxFor(x => x.RankCreditName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.RankCreditName)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">注册：</td>
+    <td>
+   @Html.TextBoxFor(x => x.RegisterRankCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.RegisterRankCredits)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">每天登陆：</td>
+    <td>
+   @Html.TextBoxFor(x => x.LoginRankCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.LoginRankCredits)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">验证邮箱：</td>
+    <td>
+   @Html.TextBoxFor(x => x.VerifyEmailRankCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.VerifyEmailRankCredits)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">验证手机：</td>
+    <td>
+   @Html.TextBoxFor(x => x.VerifyMobileRankCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.VerifyMobileRankCredits)
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">完善用户信息：</td>
+    <td>
+   @Html.TextBoxFor(x => x.CompleteUserInfoRankCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.CompleteUserInfoRankCredits)
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">完成订单：</td>
+    <td>
+   @Html.TextBoxFor(x => x.CompleteOrderRankCredits, new { @class = "input", size = "35" })以订单金额的百分比计算 @Html.ValidationMessageFor(x => x.CompleteOrderRankCredits)
+    </td>
+    </tr>
+
+                 <tr>
+    <td align="right">评价商品：</td>
+    <td>
+   @Html.TextBoxFor(x => x.ReviewProductRankCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.ReviewProductRankCredits)
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">每天最大发放：</td>
+    <td>
+   @Html.TextBoxFor(x => x.DayMaxSendRankCredits, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.DayMaxSendRankCredits)
+    </td>
+    </tr>
+
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut2" ><img src="/administration/content/images/submit.jpg" /></a>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

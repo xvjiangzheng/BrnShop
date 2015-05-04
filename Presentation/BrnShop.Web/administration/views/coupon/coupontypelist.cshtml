@@ -1,0 +1,96 @@
+﻿@model BrnShop.Web.Admin.Models.CouponTypeListModel
+
+@section header{
+<title>优惠劵类型列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+优惠劵管理 &gt;&gt; 类型列表
+<div class="right">
+<a href="@Url.Action("addcoupontype")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("coupontypelist", "coupon"))
+{
+
+<div class="dataListSearch">
+<table height="32">
+    <tbody>
+      <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>筛选分类：</td>
+        <td width="50">@Html.DropDownListFor(x => x.Type, ViewData["typeList"] as List<SelectListItem>)</td>
+        <td> &nbsp;&nbsp;&nbsp;&nbsp;类型名称：</td>
+        <td width="130">@Html.TextBox("CouponTypeName", Model.CouponTypeName, new { height = "18" })</td>
+        <td><input id="SearchCouponType" name="SearchCouponType" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" /></td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="40" align="left" >编号</th>
+    <th align="left" >名称</th>
+    <th width="70" align="left" >金额</th>
+    <th width="70" align="left" >数量</th>
+    <th width="70" align="left" >发放数量</th>
+    <th width="70" align="left" >激活数量</th>
+    <th width="70" align="left" >使用数量</th>
+    <th width="290" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.CouponTypeList.Rows)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@row["coupontypeid"]" selectItem="true" name="couponTypeIdList"/></td>
+    <td>@row["coupontypeid"]</td>
+    <td>@row["name"]</td>
+    <td>@row["money"]</td>
+    <td>@row["count"]</td>
+    <td>@row["sendcount"]</td>
+    <td>@row["activatecount"]</td>
+    <td>@row["usecount"]</td>
+    <td>
+        @Html.ActionLink("[查看]", "showcoupontype", new { couponTypeId = row["coupontypeid"] }, new { @class = "editOperate" })
+        @if (row["state"].ToString() == "0")
+        {
+        @Html.ActionLink("[打开]", "changecoupontypestate", new { couponTypeId = row["coupontypeid"], state = 1 }, new { @class = "editOperate" })
+        }
+        else
+        {
+        @Html.ActionLink("[关闭]", "changecoupontypestate", new { couponTypeId = row["coupontypeid"], state = 0 }, new { @class = "editOperate" })
+        }
+        @Html.ActionLink("[删除]", "delcoupontype", new { couponTypeIdList = row["coupontypeid"] }, new { @class = "deleteOperate" })
+        @Html.ActionLink("[优惠劵列表]", "couponlist", new { couponTypeId = row["coupontypeid"] }, new { @class = "editOperate" })
+        @if (row["limitproduct"].ToString() == "1")
+        {
+        @Html.ActionLink("[商品列表]", "couponproductlist", new { couponTypeId = row["coupontypeid"] }, new { @class = "editOperate" })
+        }
+        @if (row["sendmode"].ToString() == "1")
+        {
+        @Html.ActionLink("[发放]", "sendcoupon", new { couponTypeId = row["coupontypeid"] }, new { @class = "editOperate" })
+        }
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+         <div class="dataListEdit">
+    <a href="#" delUrl="@Url.Action("delcoupontype")" class="batch batchDel">批量删除</a>
+            <div class="page">
+                @Html.AdminPager(Model.PageModel)
+            </div>
+        </div>
+}
+}

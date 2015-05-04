@@ -1,0 +1,33 @@
+#helpL{ width:165px; float:left;border: 1px solid #b9e8f9;}
+#helpL dl{ cursor:pointer;}
+#helpL dt{background: #eff9fe;height: 32px;line-height: 32px;padding-left: 25px;color: #4a4a4a;font-size: 14px; font-weight:bold;border-bottom: 1px solid #b9e8f9; position:relative;}
+#helpL dt b{ position:absolute; right:10px; top:8px;width: 14px;height: 14px;margin-top: 1px;
+background: url(/themes/default/images/help_leftsz.gif) no-repeat right -14px;overflow: hidden;}
+#helpL dl.hot dt b{background: url(/themes/default/images/help_leftsz.gif) right 0;}
+#helpL dl.hot dd{ display:block;}
+#helpL dl.hot dt{ border-bottom:0px;}
+#helpL dd{background: url(/themes/default/images/helpcenter_icon1.gif) no-repeat 20px 10px;padding-left: 32px;height: 32px;line-height: 32px;overflow: hidden;border-top: 1px dotted #cbecf8; display:none;}
+#helpL dd a:hover{ text-decoration:underline;}
+#helpL dd.hot{background: url(/themes/default/images/helpcenter_icon2.gif) no-repeat 20px 10px;}
+#helpL dd.hot a{color:#cc0000;}
+
+#helpR{ width:815px; float:right;}
+.helpRT{background: url(/themes/default/images/newpp.png) repeat-x;
+height: 36px;line-height: 36px;padding-left: 9px;font-size: 16px;color: #138bc5; font-weight:bold; margin-bottom:10px;}
+
+.edit{ line-height:150%; color:#333;}
+
+
+#news{ min-height:400px; _height:400px; _overflow:visible; width:750px; border:1px solid #ddd; margin:10px 0 0 215px; padding:15px;}
+.newsTitle{ padding: 10px 0 15px;margin-bottom: 10px;height: 24px;text-align: center;border-bottom: 1px solid #EBEBEB;line-height: 24px;font-size: 20px; font-weight:normal;}
+.newsInfo{ text-align:center; color:#999; height:25px; line-height:25px; position:relative;}
+.beShare{ position:absolute; right:0; top:2px;}
+#news .edit{ padding:15px 5px;}
+
+.newsListT{ font-size:18px; height:35px; line-height:35px; border-bottom:1px solid #ddd;}
+.newsList { padding:10px 0;}
+.newsList li{ position:relative; display:block; height:30px; line-height:30px; padding:0 10px; background:url(/themes/default/images/helpcenter_icon2.gif) no-repeat left center; border-bottom:1px dotted #DDD;}
+.newsList li a{ color:#333;}
+.newsList li a:hover{ color:#005ea7; text-decoration:underline;}
+.newsList li span{ position:absolute; top:0; right:10px; display:block; height:30px; line-height:30px; color:#999;}
+

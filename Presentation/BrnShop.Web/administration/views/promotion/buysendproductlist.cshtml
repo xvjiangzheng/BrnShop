@@ -1,0 +1,158 @@
+﻿@model BrnShop.Web.Admin.Models.BuySendProductListModel
+           
+@section header{
+    <title>商品列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+}
+@section body{
+    <h1 class="rightH1">
+        买送促销 &gt;&gt; 商品列表
+        <div class="right">
+            <a href="@Url.Action("buysendproductlist", new { pmId = Model.PmId })" class="menuBT">
+                <img src="/administration/content/images/goback.jpg" />活动列表</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+
+ @using (Html.BeginForm())
+{
+    <div class="dataListSearch">
+        <table height="32">
+            <tbody>
+                <tr>
+                    <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif" /></td>
+                    <td>搜索商品：</td>
+                    <td width="100">
+                        <div class="selectBt">
+                            <input type="button" value="@Model.ProductName" onclick="openProductSelectLayer(this)" style="height:22px; line-height:22px;background:url(/administration/content/images/selectbgico.gif) no-repeat 6px center; padding-left:22px; padding-right:10px;">
+                            <input type="hidden" class="Pid" id="searchPid" name="Pid" value="@Model.Pid" />
+                            <input type="hidden" class="ProductName" id="searchProductName" name="ProductName" value="@Model.ProductName" />
+                        </div>
+                    </td>
+                    <td><input id="SearchProduct" name="SearchProduct" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="40" align="center">
+                        <input type="checkbox" id="allSelect" />
+                    </th>
+                    <th width="80" align="left">
+                        商品编号
+                    </th>
+                    <th align="left">
+                        商品名称
+                    </th>
+                    <th width="100" align="left">
+                        商品价格
+                    </th>
+                    <th width="100" align="left">
+                        商品状态
+                    </th>
+                    <th width="72" align="left">
+                        管理操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.BuySendProductList.Rows)
+                {
+                    <tr>
+                        <td align="center">
+                            <input type="checkbox" value="@row["recordid"]" selectItem="true" name="recordIdList"/>
+                        </td>
+                        <td>@row["pid"]
+                        </td>
+                        <td>
+                            @row["name"]
+                        </td>
+                        <td>
+                         @row["shopprice"]
+                        </td>
+                        <td>
+                        @{
+                            if(@row["state"].ToString()=="0")
+                            {
+                                @:上架
+                            }
+                            else
+                            {
+                                @:下架
+                            }
+                            }
+                        </td>
+                        <td>
+                        <a href="#" url="@Url.Action("delbuysendproduct", new { recordId=row["recordid"]})" class = "ajaxdeleteOperate" }>[删除]</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="dataListEdit">
+    <a href="#" delUrl="@Url.Action("delbuysendproduct")" class="batch batchDel">批量删除</a>
+            <div class="page">
+                @Html.AdminPager(Model.PageModel)
+            </div>
+        </div>
+}
+     
+        <div>
+    @using (Html.BeginForm("addbuysendproduct", "promotion"))
+    {
+        <input type="hidden" id="PmId" name="PmId" value="@Model.PmId" />
+        <div class="addTable" style="margin-left: 15px; margin-bottom: 10px; padding-top: 10px;
+            border: 2px solid #dbeffa">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="56px" align="right">
+                            商品：
+                        </td>
+                        <td>
+                            <div class="selectBt">
+                                <input type="button" value="选择商品" onclick="openProductSelectLayer(this)"/>
+                                <input type="hidden" class="Pid" id="addPid" name="Pid" value="0" />
+                                <input type="hidden" class="ProductName" id="addProductName" name="ProductName" value="选择商品" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                        </td>
+                        <td>
+                            <input type="image" id="addProduct" style="margin: 0px; padding: 0px;" src="/administration/content/images/a.jpg" />
+                            <script type="text/javascript">
+                                $("#addProduct").click(function () {
+                                    if (parseInt($("#addPid").val()) < 1) {
+                                        alert("请选择商品");
+                                        return false;
+                                    }
+                                    else {
+                                        $(this).parents("form").submit();
+                                        return false;
+                                    }
+                                })
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+    </div>
+}

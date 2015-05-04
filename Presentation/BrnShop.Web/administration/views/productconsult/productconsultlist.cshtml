@@ -1,0 +1,178 @@
+﻿@model BrnShop.Web.Admin.Models.ProductConsultListModel
+           
+@section header{
+    <title>商品咨询列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        /*状态*/
+        $(function () {
+            $(".updateState").click(function () {
+                var obj = $(this);
+                var state = obj.attr("state");
+                var message = "";
+                var url = "";
+                if (state == "0") {
+                    message = "您确认要显示此咨询吗？";
+                    url = obj.attr("url") + "&state=" + state + "&t=" + new Date();
+                }
+                else if (state == "1") {
+                    message = "您确认要屏蔽此咨询吗？";
+                    url = obj.attr("url") + "&state=" + state + "&t=" + new Date();
+                }
+                $.jBox.confirm(message, "提示", function (v, h, f) {
+                    if (v == 'ok') {
+                        $.jBox.tip("正在设置...", 'loading');
+                        $.get(url, function (data, textStatus) {
+                            if (data != "0") {
+                                if (state == "0") {
+                                    obj.attr("state", 1);
+                                    obj.html("[屏蔽]");
+                                    obj.parents("tr").find(".stateTd").html("显示");
+                                }
+                                else if (state == "1") {
+                                    obj.attr("state", 0);
+                                    obj.html("[显示]");
+                                    obj.parents("tr").find(".stateTd").html("屏蔽");
+                                }
+                                $.jBox.tip('设置成功！', 'success');
+                            } else {
+                                $.jBox.error('设置失败，请联系管理员！', '设置失败');
+                            }
+                        });
+                    }
+                    else if (v == 'cancel') {
+                        // 取消
+                    }
+
+                    return true; //close
+                });
+
+                return false;
+            });
+        })
+    </script>
+}
+@section body{
+<h1 class="rightH1">
+    商品咨询 &gt;&gt; 商品咨询列表
+    <div class="right"><div class="clear"></div></div>
+    <div class="clear"></div>
+</h1>
+@using (Html.BeginForm("productconsultlist", "productconsult"))
+{
+    <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+    <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+    <div class="dataListSearch">
+        <table height="32">
+            <tbody>
+                <tr>
+                    <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif" /></td>
+                     <td>账号：</td>
+                    <td>@Html.TextBox("AccountName", Model.AccountName, new { height = "28", size = "15" })</td>
+                    <td>&nbsp;&nbsp;&nbsp;商品：</td>
+                    <td>
+                        <div class="selectBt">
+                            <input type="button" value="@Model.ProductName" onclick="openProductSelectLayer(this)" style="height:22px; line-height:22px;background:url(/administration/content/images/selectbgico.gif) no-repeat 6px center; padding-left:22px; padding-right:10px;"/>
+                            <input type="hidden" class="Pid" id="Pid" name="Pid" value="@Model.Pid" />
+                            <input type="hidden" class="ProductName" id="ProductName" name="ProductName" value="@Model.ProductName" />
+                        </div>           
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;类型：</td>
+                    <td>
+                        @Html.DropDownListFor(x => x.ConsultTypeId, ViewData["productConsultTypeList"] as List<SelectListItem>)
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;咨询：</td>
+                    <td>@Html.TextBox("ConsultMessage", Model.ConsultMessage, new { height = "28", size = "15" })</td>
+                    <td>&nbsp;&nbsp;&nbsp;开始时间：</td>
+                    <td width="130">
+                        @Html.TextBox("ConsultStartTime", Model.ConsultStartTime, new { height = "18", onclick = "WdatePicker({el:'ConsultStartTime'})" })
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;结束时间：</td>
+                    <td width="130">
+                        @Html.TextBox("ConsultEndTime", Model.ConsultEndTime, new { height = "18", onclick = "WdatePicker({el:'ConsultEndTime'})" })
+                    </td>
+                    <td>
+                        <input id="SearchProductConsult" name="SearchProductConsult" type="image" class="searchBut submit"
+                            src="/administration/content/images/s.jpg" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="30" align="center"><input type="checkbox" id="allSelect" /></th>
+                    <th width="100" align="left">咨询人</th>
+                    <th width="150" align="left" name="sortTitle" column="consulttime" direction="DESC">咨询时间</th>
+                    <th width="200" align="left">咨询商品</th>
+                    <th align="left">咨询/回复</th>
+                    <th width="40" align="left" name="sortTitle" column="replyuid" direction="DESC">回复</th>
+                    <th width="40" align="left" name="sortTitle" column="state" direction="DESC">状态</th>
+                    <th width="124" align="left">管理操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ProductConsultInfo info in Model.ProductConsultList)
+                {
+                    <tr>
+                        <td align="center"><input type="checkbox" value="@info.ConsultId" selectItem="true" name="consultIdList" /></td>
+                        <td>@info.ConsultNickName</td>
+                        <td>@info.ConsultTime</td>
+                        <td>@info.PName</td>
+                        <td>
+                            <div>@info.ConsultMessage</div>
+                            <div>@info.ReplyMessage</div>
+                        </td>
+                        <td>
+                            @if (info.ReplyUid > 0)
+                            {
+                                @:是
+                            }
+                            else
+                            {
+                                @:否
+                            }
+                        </td>
+                        <td class="stateTd">
+                            @if (info.State == 0)
+                            {
+                                @:显示
+                            }
+                            else
+                            {
+                                @:屏蔽
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("[回复]", "reply", new { consultId = info.ConsultId }, new { @class = "editOperate" })
+                            @if (info.State == 0)
+                            {
+                            <a href="#" url="@Url.Action("updateproductconsultstate", new { consultId = info.ConsultId })" state="1" class="editOperate updateState">[屏蔽]</a>
+                            }
+                            else
+                            {
+                            <a href="#" url="@Url.Action("updateproductconsultstate", new { consultId = info.ConsultId })" state="0" class="editOperate updateState">[显示]</a>
+                            }
+                            @Html.ActionLink("[删除]", "delproductconsult", new { consultIdList = info.ConsultId }, new { @class = "deleteOperate" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+<div class="dataListEdit">
+<a href="#" delUrl="@Url.Action("delproductconsult")" class="batch batchDel">批量删除</a>
+    <div class="page">
+        @Html.AdminPager(Model.PageModel)
+    </div>
+</div>
+}
+}

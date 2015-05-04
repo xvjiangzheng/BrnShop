@@ -1,0 +1,17 @@
+﻿@model BrnShop.Web.Admin.Models.ConfigModel
+
+@section header{
+    <title>配置插件</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+}
+@section body{
+@if(Model.ConfigRouteValues == null)
+{
+    @Html.Action(Model.ConfigAction, Model.ConfigController)
+}
+else
+{
+    @Html.Action(Model.ConfigAction, Model.ConfigController, Model.ConfigRouteValues)
+}
+}

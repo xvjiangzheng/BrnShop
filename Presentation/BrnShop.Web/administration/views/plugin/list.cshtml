@@ -1,0 +1,100 @@
+﻿@model BrnShop.Web.Admin.Models.PluginListModel
+
+@section header{
+<title>插件列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //卸载按钮
+        $(".uninstall").click(function () {
+            if (!confirm("您确认卸载此插件吗？")) {
+                return false;
+            }
+        });
+
+        //安装按钮
+        $(".install").click(function () {
+            if (!confirm("您确认安装此插件吗？")) {
+                return false;
+            }
+        });
+    });
+</script>
+}
+
+@section body{
+<h1 class="rightH1">
+插件管理 &gt;&gt; 插件列表
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+        <div class="table_top">
+        </div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10"></th>
+    <th width="130" align="left" >插件名称</th>
+    <th align="left" >插件描述</th>
+    <th width="100" align="left" >插件作者</th>
+    <th width="80" align="left" >插件版本</th>
+    <th width="80" align="left" >兼容版本</th>
+    <th width="60" align="left" >排序</th>
+    <th width="174" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (PluginInfo info in Model.InstalledPluginList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.FriendlyName</td>
+    <td>@info.Description</td>
+    <td>@info.Author</td>
+    <td>@info.Version</td>
+    <td>@info.SupVersion</td>
+    <td>@info.DisplayOrder</td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { systemName = info.SystemName }, new { @class = "editOperate" })| 
+        @Html.ActionLink("[配置]", "config", new { systemName = info.SystemName }, new { @class = "editOperate" })| 
+        @Html.ActionLink("[卸载]", "uninstall", new { systemName = info.SystemName }, new { @class = "deleteOperate uninstall" })
+        @if(info.IsDefault == 0)
+        {
+        @Html.ActionLink("[设为默认]", "default", new { systemName = info.SystemName }, new { @class = "editOperate" })
+        }
+    </td>
+    </tr>
+  }
+
+    @foreach (PluginInfo info in Model.UninstalledPluginList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.FriendlyName</td>
+    <td>@info.Description</td>
+    <td>@info.Author</td>
+    <td>@info.Version</td>
+    <td>@info.SupVersion</td>
+    <td>@info.DisplayOrder</td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { systemName = info.SystemName }, new { @class = "editOperate" })| 
+        @Html.ActionLink("[配置]", "config", new { systemName = info.SystemName }, new { @class = "editOperate" })| 
+        @Html.ActionLink("[安装]", "install", new { systemName = info.SystemName }, new { @class = "deleteOperate install" })
+        @if(info.IsDefault == 0)
+        {
+        @Html.ActionLink("[设为默认]", "default", new { systemName = info.SystemName }, new { @class = "editOperate" })
+        }
+    </td>
+    </tr>
+  }
+
+</tbody>
+</table>
+</div>
+        <div class="table_bottom">
+        </div>
+}

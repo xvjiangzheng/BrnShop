@@ -1,0 +1,69 @@
+﻿@model BrnShop.Web.Admin.Models.TimeProductModel
+
+@section header{
+    <title>编辑定时商品</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <link rel="stylesheet" type="text/css"  href="/administration/content/jbox/Skins/Default/jbox.css"/>
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+定时商品管理 &gt;&gt; 编辑定时商品
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="76px" align="right">定时商品：</td>
+    <td>
+        <div class="selectBt">
+            <input type="button" value="@Model.ProductName" onclick="openProductSelectLayer(this)"/>
+            <input type="hidden" class="Pid" id="Pid" name="Pid" value="@Model.Pid" />
+            <input type="hidden" class="ProductName" id="ProductName" name="ProductName" value="@Model.ProductName" />
+        </div>
+        @Html.ValidationMessageFor(x => x.Pid)
+    </td>
+    </tr>
+    <tr>
+    <td align="right">上架时间：</td>
+    <td>@Html.TextBoxFor(x => x.OnSaleTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'OnSaleTime'})" })@Html.ValidationMessageFor(x => x.OnSaleTime)</td>
+    </tr>
+    <tr>
+    <td align="right">下架时间：</td>
+    <td>@Html.TextBoxFor(x => x.OutSaleTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'OutSaleTime'})" })@Html.ValidationMessageFor(x => x.OutSaleTime)</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+        <script type="text/javascript">
+            $(function () {
+                $("#sumbitBut").click(function () {
+                    $("form:first").submit();
+                    return false;
+                })
+            });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

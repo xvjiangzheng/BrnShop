@@ -1,0 +1,214 @@
+﻿@model BrnShop.Web.Admin.Models.CouponTypeModel
+
+@section header{
+    <title>添加优惠劵类型</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if (parseInt($("input[name=SendModel]").val()) != 0) {
+                $("#GetModel").parents("tr").hide();
+                $("#SendStartTime").parents("tr").hide();
+            }
+            else {
+                $("#GetModel").parents("tr").show();
+                $("#SendStartTime").parents("tr").show();
+            }
+
+            if (parseInt($("input[name=UseTimeType]").val()) == 0) {
+                $("#UseExpireTime").parents("tr").hide();
+                $("#UseStartTime").parents("tr").show();
+            }
+            else {
+                $("#UseExpireTime").parents("tr").show();
+                $("#UseStartTime").parents("tr").hide();
+            }
+
+            $("input[name=SendModel]").click(function () {
+                if (parseInt($(this).val()) != 0) {
+                    $("#GetModel").parents("tr").hide();
+                    $("#SendStartTime").parents("tr").hide();
+                }
+                else {
+                    $("#GetModel").parents("tr").show();
+                    $("#SendStartTime").parents("tr").show();
+                }
+            })
+
+            $("input[name=UseTimeType]").click(function () {
+                if ($(this).val() == "0") {
+                    $("#UseExpireTime").parents("tr").hide();
+                    $("#UseStartTime").parents("tr").show();
+                }
+                else {
+                    $("#UseExpireTime").parents("tr").show();
+                    $("#UseStartTime").parents("tr").hide();
+                }
+            })
+
+        })
+
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+优惠劵管理 &gt;&gt; 添加类型
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+<div class="addTable">
+@using (Html.BeginForm())
+{
+<table width="100%">
+  <tr>
+    <td width="106px" align="right">优惠劵名称：</td>
+    <td>@Html.TextBoxFor(x => x.CouponTypeName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.CouponTypeName)</td>
+    </tr>
+          <tr>
+    <td align="right">优惠劵金额：</td>
+    <td>@Html.TextBoxFor(x => x.Money, new { @class = "input", size = "3" })元 @Html.ValidationMessageFor(x => x.Money)</td>
+    </tr>
+              <tr>
+    <td align="right">优惠劵数量：</td>
+    <td>@Html.TextBoxFor(x => x.Count, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.Count)</td>
+    </tr>
+                  <tr>
+    <td align="right">发放方式：</td>
+    <td><p>
+      <label>@Html.RadioButtonFor(x => x.SendModel, 0, new { @class = "checkbox" })免费领取</label>
+      <label>@Html.RadioButtonFor(x => x.SendModel, 1, new { @class = "checkbox" })手动发放</label>
+      <label>@Html.RadioButtonFor(x => x.SendModel, 2, new { @class = "checkbox" })随活动发放</label>
+      <br />
+    </p></td>
+    </tr>
+                  <tr>
+    <td align="right">领取方式：</td>
+    <td><p>
+      <label>@Html.RadioButtonFor(x => x.GetModel, 0, new { @class = "checkbox" })无限制</label>
+      <label>@Html.RadioButtonFor(x => x.GetModel, 1, new { @class = "checkbox" })限领一张</label>
+      <label>@Html.RadioButtonFor(x => x.GetModel, 2, new { @class = "checkbox" })每天限领一张</label>
+      <br />
+    </p></td>
+    </tr>
+                  <tr>
+    <td align="right">使用方式：</td>
+    <td><p>
+      <label>@Html.RadioButtonFor(x => x.UseModel, 0, new { @class = "checkbox" }) 可以叠加</label>
+      <label>@Html.RadioButtonFor(x => x.UseModel, 1, new { @class = "checkbox" }) 不可以叠加</label>
+      <br />
+    </p></td>
+    </tr>
+
+          <tr>
+    <td align="right">最小用户等级：</td>
+    <td>@Html.DropDownListFor(x => x.UserRankLower, ViewData["userRankList"] as List<SelectListItem>) @Html.ValidationMessageFor(x => x.UserRankLower)</td>
+    </tr>
+
+              <tr>
+    <td align="right">最小订单金额：</td>
+    <td>@Html.TextBoxFor(x => x.OrderAmountLower, new { @class = "input", size = "3" })元 @Html.ValidationMessageFor(x => x.OrderAmountLower)</td>
+    </tr>
+    <tr>
+        <td width="76px;" align="right">
+            限制分类：
+        </td>
+        <td>
+            <div class="selectBt" style="float: left;">
+                <input type="button" value="@Model.LimitCateName" onclick="openCategorySelectLayer(this)" />
+                @Html.HiddenFor(x => x.LimitCateId, new { @class = "CateId" })
+                <input type="hidden" class="CategoryName" id="LimitCateName" name="LimitCateName" value="@Model.LimitCateName" />
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+    <td align="right">
+        限制品牌：
+    </td>
+    <td>
+        <div class="selectBt">
+            <input type="button" value="@Model.LimitBrandName" onclick="openBrandSelectLayer(this)" />
+            @Html.HiddenFor(x => x.LimitBrandId, new { @class = "BrandId" })
+            <input type="hidden" class="BrandName" id="LimitBrandName" name="LimitBrandName" value="@Model.LimitBrandName" />
+        </div>
+    </td>
+</tr>
+
+                    <tr>
+    <td align="right">限制商品：</td>
+        <td><p>
+        <label>@Html.RadioButtonFor(x => x.LimitProduct, 0, new { @class = "checkbox" })否</label>
+        <label>@Html.RadioButtonFor(x => x.LimitProduct, 1, new { @class = "checkbox" })是</label>
+        <br />
+    </p></td>
+    </tr>
+            <tr>
+        <td align="right">
+            发放时间：
+        </td>
+        <td>
+            @Html.TextBoxFor(x => x.SendStartTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'SendStartTime'})" })
+            至
+            @Html.TextBoxFor(x => x.SendEndTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'SendEndTime'})" })
+            @Html.ValidationMessageFor(x => x.SendStartTime)
+            @Html.ValidationMessageFor(x => x.SendEndTime)
+        </td>
+    </tr>
+    <tr>
+    <td align="right">使用时间类型：</td>
+        <td><p>
+        <label>@Html.RadioButtonFor(x => x.UseTimeType, 0, new { @class = "checkbox" })绝对时间</label>
+        <label>@Html.RadioButtonFor(x => x.UseTimeType, 1, new { @class = "checkbox" })相对时间</label>
+        <br />
+    </p></td>
+    </tr>
+     <tr>
+    <td align="right">使用过期时间：</td>
+        <td>@Html.TextBoxFor(x => x.UseExpireTime, new { @class = "input", size = "3" })天</td>
+    </tr>
+    <tr>
+        <td align="right">
+            使用时间段：
+        </td>
+        <td>
+            @Html.TextBoxFor(x => x.UseStartTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'UseStartTime'})" })
+            至
+            @Html.TextBoxFor(x => x.UseEndTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'UseEndTime'})" })
+            @Html.ValidationMessageFor(x => x.UseStartTime)
+            @Html.ValidationMessageFor(x => x.UseEndTime)
+        </td>
+    </tr>
+
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+}
+</div>
+}

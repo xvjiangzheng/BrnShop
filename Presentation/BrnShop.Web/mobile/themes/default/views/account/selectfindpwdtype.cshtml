@@ -1,0 +1,96 @@
+﻿@model BrnShop.Web.Mobile.Models.SelectFindPwdTypeModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>选择找回方式-@{@WorkContext.ShopConfig.SiteTitle}触屏版</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/base.css" rel="stylesheet" type="text/css">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/account.css" rel="stylesheet" type="text/css">
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/common.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/account.js" type="text/javascript"></script>
+</head>
+
+<body>
+<header>
+  <div class="new-header">
+    <a href="javascript:pageBack()" class="new-a-back"><span>返回</span></a>
+    <h2>选择找回方式</h2>
+    <a href="javascript:navSH()" class="new-a-brn"><span>BRN键</span></a> 
+  </div>
+  <div class="new-brn-tab" id="nav" style=" display:none;">
+    <div class="new-tbl-type"> 
+    <a href="@Url.Action("index", "home")" class="new-tbl-cell"><span class="icon">首页</span><p style="color:#6e6e6e;">首页</p></a> 
+    <a href="@Url.Action("list", "category")" class="new-tbl-cell"><span class="icon2 on">分类搜索</span><p style="color:#6e6e6e;" class="on">分类搜索</p></a> 
+    <a href="@Url.Action("index", "cart")" class="new-tbl-cell"><span class="icon3">购物车</span><p style="color:#6e6e6e;">购物车</p></a> 
+    <a href="@Url.Action("index", "ucenter")" class="new-tbl-cell"><span class="icon4 on">个人中心</span><p style="color:#6e6e6e;" class="on">个人中心</p></a> 
+    </div>
+  </div>
+</header>
+
+
+<div class="loginTable">
+    <div class="itmeT">@Model.PartUserInfo.NickName ，您好</div>
+    <div class="itmeC">
+        <select class="select" style=" width:90%; display:block; float:left;" onchange="selectTypeClick(this)">
+          @if (Model.PartUserInfo.VerifyMobile == 1)
+          {
+          <option value="0" selected="selected">通过手机号 @Html.Raw(CommonHelper.HideMobile(Model.PartUserInfo.Mobile))</option>
+          }
+          @if (Model.PartUserInfo.VerifyEmail == 1)
+          {
+          <option value="1" @if (Model.PartUserInfo.VerifyMobile == 0){<text>selected="selected"</text>}>通过邮箱 @Html.Raw(CommonHelper.HideEmail(Model.PartUserInfo.Email))</option>
+          }
+        </select>
+        <a href="javascript:sendFindPwdMobile(@Model.PartUserInfo.Uid)" class="redBt" style="display:block; float:right; margin-right:16px; padding:0; height:38px; width:8%; text-align:center; line-height:38px;">获取密码</a>
+        <div class="clear"></div>
+    </div>
+    <div id="mobileBut" @if (Model.PartUserInfo.VerifyMobile == 0){<text>style="display:none;"</text>}>
+    <div class="itmeC"><input type="text" id="moibleCode" class="text" placeholder="输入您收到的短信登录密码" /></div>
+    <div class="itmeC"><a href="javascript:verifyFindPwdMobile(@Model.PartUserInfo.Uid, document.getElementById('moibleCode').value)" class="redBt" style="display:block; padding:0; height:38px; width:99%; text-align:center; line-height:38px;">下一步</a></div>
+    </div>
+    <div id="emailBut" @if (Model.PartUserInfo.VerifyMobile == 1){<text>style="display:none;"</text>} class="itmeC"><a href="javascript:sendFindPwdEmail(@Model.PartUserInfo.Uid)" class="redBt" style="display:block; padding:0; height:38px; width:99%; text-align:center; line-height:38px;">发送验证邮件</a></div>
+</div>
+
+<script type="text/javascript">
+    function selectTypeClick(obj) {
+        var item = getSelectedOption(obj);
+        if (item.value == "0") {
+            document.getElementById("mobileBut").style.display = "block";
+            document.getElementById("emailBut").style.display = "none";
+        }
+        else {
+            document.getElementById("mobileBut").style.display = "none";
+            document.getElementById("emailBut").style.display = "block";
+        }
+    }
+</script>
+
+
+<footer>
+<div class="footerTop">
+      @if (WorkContext.Uid < 1)
+      {
+      <div class="left"><a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">登录</a> | <a href="@Url.Action("register", "account")">注册</a></div>
+      }
+      else
+      {
+        <div class="left"><a href="@Url.Action("index", "ucenter")">@WorkContext.NickName</a> | <a href="@Url.Action("logout", "account")">退出</a></div>   
+      }
+    <div class="right"><a href="#top">回到顶部 </a></div>
+    <div class="clear"></div>
+</div>
+<div class="footerCon"><a href="@Url.Action("index", "home")" class="hot">触屏版</a><a href="/">电脑版</a></div>
+<div class="copyright" align="center">www.brnshop.com </div>
+</footer>
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

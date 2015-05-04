@@ -1,0 +1,95 @@
+﻿@model BrnShop.Web.Admin.Models.AdminOperateLogListModel
+
+@section header{
+<title>后台日志列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+日志管理 &gt;&gt; 后台日志列表
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("adminoperateloglist", "log"))
+{
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>
+          管理员名称：
+        </td>
+        <td width="130">
+          	@Html.TextBox("accountName", Model.AccountName, new { height = "18" })
+        </td>
+                <td>
+          &nbsp;&nbsp;&nbsp;操作：
+        </td>
+        <td width="130">
+          	@Html.TextBox("Operation", Model.Operation, new { height = "18" })
+        </td>
+                        <td>
+          &nbsp;&nbsp;&nbsp;开始时间：
+        </td>
+        <td width="130">
+          	@Html.TextBox("StartTime", Model.StartTime, new { height = "18", onfocus = "WdatePicker({el:'StartTime'})" })
+        </td>
+                        <td>
+          &nbsp;&nbsp;&nbsp;结束时间：
+        </td>
+        <td width="130">
+          	@Html.TextBox("EndTime", Model.EndTime, new { height = "18", onfocus = "WdatePicker({el:'EndTime'})" })
+        </td>
+       <td>
+       <input id="SearchLog" name="SearchLog" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="80" align="left" >管理员</th>
+    <th width="100" align="left" >管理员组</th>
+    <th align="left" >操作描述</th>
+    <th width="120" align="left" >操作IP</th>
+    <th width="130" align="left" >操作时间</th>
+    <th width="60" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (AdminOperateLogInfo info in Model.AdminOperateLogList)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@info.LogId" selectItem="true" name="logIdList" /></td>
+    <td>@info.NickName</td>
+    <td>@info.AdminGTitle</td>
+    <td>@info.Operation</td>
+    <td>@info.IP</td>
+    <td>@info.OperateTime</td>
+    <td>
+        @Html.ActionLink("[删除]", "deladminoperatelog", new { logIdList = info.LogId }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<a href="#" delUrl="@Url.Action("deladminoperatelog")" class="batch batchDel">批量删除</a>
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

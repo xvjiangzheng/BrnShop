@@ -1,0 +1,70 @@
+﻿@model BrnShop.Web.Admin.Models.SignProductListModel
+
+@section header{
+    <title>签名商品列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+商品管理 &gt;&gt; 签名商品
+<div class="right">
+<a href="@Url.Action("addsignproduct")" class="menuBT"><img src="/administration/content/images/add.jpg" />添加签名商品</a> 
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+    
+<div class="dataListSearch">
+<table height="32">
+    <tbody>
+        <tr>
+            <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif" /></td>
+            <td>签名：</td>
+            <td width="180">@Html.TextBox("Sign", Model.Sign, new { height = "28", size = "30" })</td>
+            <td><input id="SearchProduct" name="SearchProduct" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" /></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+    <thead>
+        <tr>
+            <th width="10" align="center"></th>
+            <th width="150" align="left">签名</th>
+            <th align="left">名称</th>
+            <th width="100" align="left">价格</th>
+            <th width="62" align="left">管理操作</th>
+        </tr>
+    </thead>
+  <tbody>
+  @foreach (DataRow row in Model.SignProductList.Rows)
+  {
+  <tr>
+    <td align="center"></td>
+    <td align="left">@row["sign"]</td>
+    <td align="left">@row["name"]</td>
+    <td align="left">@row["shopprice"]</td>
+    <td>
+        <a href="#" url="@Url.Action("delsignproduct", new { recordId = row["recordid"], sign = row["sign"] })" class = "ajaxdeleteOperate" }>[删除]</a>
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

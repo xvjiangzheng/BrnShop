@@ -1,0 +1,150 @@
+﻿@model BrnShop.Web.Admin.Models.AccountModel
+
+@section header{
+    <title>账号设置</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+
+        var regType = "@CommonHelper.IntArrayToString(Model.RegType,"")";
+        var loginType = "@CommonHelper.IntArrayToString(Model.LoginType,"")";
+
+        $(function () {
+
+            if (regType != null && regType != "" && regType.length > 0) {
+                for (var i = 0; i < regType.length; i++) {
+                    $("input[name=RegType][value="+regType[i]+"]").attr("checked", true);
+                }
+            }
+
+            if (loginType != null && loginType != "" && loginType.length > 0) {
+                for (var i = 0; i < loginType.length; i++) {
+                    $("input[name=LoginType][value=" + loginType[i] + "]").attr("checked", true);
+                }
+            }
+
+            if ($("input:radio[name='IsWebcomeMsg']:checked").val() == "1") {
+                $("#WebcomeMsgTr").show();
+            }
+
+            $("input:radio[name='IsWebcomeMsg']").click(function () {
+                if ($(this).val() == "1") {
+                    $("#WebcomeMsgTr").show();
+                }
+                else {
+                    $("#WebcomeMsgTr").hide();
+                }
+            })
+        })
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 账号设置
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+
+   <tr>
+    <td width="110px" align="right">注册名类型：</td>
+    <td>
+    <p>
+        <label><input type="checkbox" name="RegType" value="1" class="checkbox" />用户名</label>
+        <label><input type="checkbox" name="RegType" value="2" class="checkbox" />邮箱</label>
+        <label><input type="checkbox" name="RegType" value="3" class="checkbox" />手机</label>
+    <br />
+    </p>
+    </td>
+   </tr>
+
+      <tr>
+    <td align="right">登陆名类型：</td>
+        <td>
+        <p>
+         <label><input type="checkbox" name="LoginType" value="1" class="checkbox" />用户名</label>
+        <label><input type="checkbox" name="LoginType" value="2" class="checkbox" />邮箱</label>
+        <label><input type="checkbox" name="LoginType" value="3" class="checkbox" />手机</label>
+    <br />
+    </p>
+    </td>
+    </tr>
+
+              <tr>
+    <td align="right">保留用户名：</td>
+    <td>@Html.TextAreaFor(x => x.ReservedName, new { cols = "20", rows = "10" })每一行代表一个用户名</td>
+    </tr>
+
+          <tr>
+    <td align="right">注册时间限制：</td>
+    <td>@Html.TextBoxFor(x => x.RegTimeSpan, new { @class = "input", size = "6" })单位为分钟 @Html.ValidationMessageFor(x => x.RegTimeSpan)</td>
+    </tr>
+
+              <tr>
+    <td align="right">影子登录名：</td>
+    <td>@Html.TextBoxFor(x => x.ShadowName, new { @class = "input", size = "6" }) </td>
+    </tr>
+
+                  <tr>
+    <td align="right">登陆失败次数：</td>
+    <td>@Html.TextBoxFor(x => x.LoginFailTimes, new { @class = "input", size = "6" })禁止时间为15分钟 @Html.ValidationMessageFor(x => x.LoginFailTimes)</td>
+    </tr>
+
+              <tr>
+    <td align="right">是否记住密码：</td>
+            <td><p>
+      <label>
+@Html.RadioButtonFor(x => x.IsRemember, 1, new { @class = "checkbox" })记住</label>
+      <label>
+@Html.RadioButtonFor(x => x.IsRemember, 0, new { @class = "checkbox" })不记住</label>
+ <br />
+    </p>
+</td>
+    </tr>
+
+          <tr>
+    <td align="right">发送欢迎信息：</td>
+            <td><p>
+      <label>
+@Html.RadioButtonFor(x => x.IsWebcomeMsg, 1, new { @class = "checkbox" })发送</label>
+      <label>
+@Html.RadioButtonFor(x => x.IsWebcomeMsg, 0, new { @class = "checkbox" })不发送</label>
+ <br />
+    </p>
+</td>
+    </tr>
+              <tr id="WebcomeMsgTr" style=" display:none;">
+    <td align="right">欢迎信息：</td>
+    <td>@Html.TextAreaFor(x => x.WebcomeMsg, new { cols = "40", rows = "10" })</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

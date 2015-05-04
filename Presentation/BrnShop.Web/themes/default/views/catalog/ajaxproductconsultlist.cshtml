@@ -1,0 +1,22 @@
+﻿@model BrnShop.Web.Models.AjaxProductConsultListModel
+@{
+    Layout = null;
+}
+@foreach (ProductConsultInfo info in Model.ProductConsultList)
+{
+<div class="askItme">
+    <h3><i>用　　户：@info.ConsultNickName</i> <em>@info.ConsultTime</em></h3>
+    <dl class="ask">
+        <dt>咨询内容：</dt>
+        <dd><a target="_blank" href="#">@info.ConsultMessage</a></dd>
+    </dl>
+    <dl class="answer">
+        <dt>商家回复：</dt>
+        <dd><a target="_blank" href="#">@info.ReplyMessage</a></dd>
+    </dl>
+</div>
+}
+@if (Model.PageModel.TotalCount > 0)
+{
+<div  class="askMore">共<b>@Model.PageModel.TotalCount</b>条&nbsp;&nbsp;&nbsp;<a href="@Url.Action("productconsultlist", new RouteValueDictionary { { "pid", Model.Pid } })">浏览所有咨询信息&gt;&gt;</a></div>
+}

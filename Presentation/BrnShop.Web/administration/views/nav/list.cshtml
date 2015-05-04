@@ -1,0 +1,47 @@
+﻿@model BrnShop.Web.Admin.Models.NavListModel
+
+@section header{
+<title>导航列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+导航管理 &gt;&gt; 导航列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+        <div class="table_top">
+        </div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th align="left" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称</th>
+    <th width="60" align="left" >排序</th>  
+    <th width="100" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (NavInfo info in Model.NavList)
+  {
+  <tr>
+    <td>@Html.Raw(CommonHelper.GetHtmlBS(info.Layer)) @info.Name</td>
+    <td>@info.DisplayOrder</td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { id = info.Id }, new { @class = "editOperate" })| 
+        @Html.ActionLink("[删除]", "del", new { id = info.Id }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+        <div class="table_bottom">
+        </div>
+}

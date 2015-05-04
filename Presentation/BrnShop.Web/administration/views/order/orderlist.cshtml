@@ -1,0 +1,117 @@
+﻿@model BrnShop.Web.Admin.Models.OrderListModel
+
+@section header{
+<title>订单列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+订单管理 &gt;&gt; 订单列表
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("orderlist", "order"))
+{
+    
+    <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+    <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>订单编号：</td>
+        <td width="130">@Html.TextBox("OSN", Model.OSN, new { height = "18" })</td>
+        <td>&nbsp;&nbsp;&nbsp;账号名称：</td>
+        <td width="130">@Html.TextBox("AccountName", Model.AccountName, new { height = "18" })</td>
+        <td>&nbsp;&nbsp;&nbsp;收货人：</td>
+        <td width="130">@Html.TextBox("Consignee", Model.Consignee, new { height = "18" })</td>
+        <td>&nbsp;&nbsp;&nbsp;订单状态：</td>
+        <td width="130">@Html.DropDownListFor(x => x.OrderState, ViewData["orderStateList"] as List<SelectListItem>)</td>
+       <td>
+       <input id="SearchOrder" name="SearchOrder" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="180" align="left">订单编号</th>
+    <th width="140" align="left">下单时间</th>
+    <th align="left">收货人</th>
+    <th width="80" align="left" name="sortTitle" column="orderamount" direction="ASC">订单金额</th>  
+    <th width="80" align="left" name="sortTitle" column="surplusmoney" direction="ASC">应付金额</th>  
+    <th width="80" align="left">订单状态</th>  
+    <th width="104" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.OrderList.Rows)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@row["oid"]" selectItem="true" name="oid" /></td>
+    <td>@row["osn"]</td>
+    <td><div>@row["username"]</div><div>@row["addtime"]</div></td>
+    <td><div>@row["consignee"] @row["mobile"]</div><div>@row["provincename"] @row["cityname"] @row["countyname"] @row["address"]</div></td>
+    <td>@row["orderamount"]</td>
+    <td>@row["surplusmoney"]</td>
+    <td>
+        @switch ((OrderState)TypeHelper.ObjectToInt(row["orderstate"]))
+        {
+            case OrderState.WaitPaying:
+            @:等待付款
+            break;
+            case OrderState.Confirming:
+            @:待确认
+            break;
+            case OrderState.Confirmed:
+            @:已确认
+            break;
+            case OrderState.PreProducting:
+            @:备货中
+            break;
+            case OrderState.Sended:
+            @:已发货
+            break;
+            case OrderState.Completed:
+            @:已完成
+            break;
+            case OrderState.Cancelled:
+            @:取消
+            break;
+            case OrderState.Returned:
+            @:退货
+            break;
+            case OrderState.Locked:
+            @:锁定
+            break;
+            default:
+            @:未知状态
+            break;
+        }
+    </td>
+    <td>
+        @Html.ActionLink("[详细信息]", "orderinfo", new { oid = row["oid"] }, new { @class = "editOperate" })
+        @Html.ActionLink("[打印]", "printorder", new { oid = row["oid"] }, new { @class = "editOperate", target = "_blank" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

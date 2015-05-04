@@ -1,0 +1,68 @@
+﻿@model BrnShop.Web.Admin.Models.RegionStatModel
+           
+@section header{
+    <title>地区统计</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css" />
+    <!--[if lte IE 8]><script type="text/javascript" src="/administration/scripts/excanvas.js"></script><![endif]-->
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.flot.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.flot.pie.js"></script>
+    <script type="text/javascript">
+     @{
+         if (Model.RegionStat.Rows.Count > 0)
+         {
+             StringBuilder dataset = new StringBuilder();
+             foreach (DataRow row in  Model.RegionStat.Rows)
+             {
+                 string provinceName = row["provincename"].ToString();
+                 if(string.IsNullOrWhiteSpace(provinceName))
+                 {
+                    provinceName = "未知";
+                 }
+                 dataset.AppendFormat("{0}label:'{1}',data:'{2}'{3},", "{", provinceName, row["totalcount"], "}");
+             }
+             @:var dataset = [@Html.Raw(dataset.Remove(dataset.Length - 1, 1).ToString())];
+         }
+         else
+         {
+         @:var dataset = [];
+         }
+     }
+     var options = {
+            series: {
+                pie: {
+                    show: true,               
+                    label: {
+                        show:true,
+                        radius: 0.8,
+                        background: {
+                            opacity: 0.6,
+                            color: '#000'
+                        }
+                    }
+                    }
+                }
+                };
+
+     $(function () {
+         $.plot($("#flot-placeholder"), dataset, options);
+     });
+    </script>
+}
+@section body{
+    <h1 class="rightH1">
+        报表统计 &gt;&gt; 地区统计
+        <div class="right">
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="dataListSearch">
+    <br />
+        <div id="flot-placeholder" style="width: 600px; height: 400px; margin-left: 100px;">
+        </div>
+    <br />
+    </div>
+}

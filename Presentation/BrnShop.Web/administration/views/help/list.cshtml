@@ -1,0 +1,73 @@
+﻿@model BrnShop.Web.Admin.Models.HelpListModel
+
+@section header{
+<title>帮助列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+<link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+帮助管理 &gt;&gt; 帮助列表
+<div class="right">
+<a href="@Url.Action("addhelp")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加帮助</a>
+<a href="@Url.Action("addhelpcategory")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加帮助分类</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+    
+            <div class="table_top">
+        </div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标题</th>
+    <th width="100" align="center">排序</th>  
+    <th width="100" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (HelpInfo info in Model.HelpList)
+  {
+  <tr>
+    <td>
+        @if(info.Pid==0)
+        {
+    @:&nbsp;&nbsp;&nbsp;&nbsp;@info.Title
+        }
+        else
+        {
+    @:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@info.Title
+        }
+    </td>
+    <td align="center">
+        <input type="text" url="@Url.Action("updatehelpdisplayorder", new { id = info.Id })" value="@info.DisplayOrder" class="sortinput unselectedsortinput" />
+    </td>
+    <td>
+        @{
+        if(info.Pid==0)
+        {
+    @Html.ActionLink("[编辑]", "edithelpcategory", new { id = info.Id }, new { @class = "editOperate" })@:| 
+        }
+        else
+        {
+   @Html.ActionLink("[编辑]", "edithelp", new { id = info.Id }, new { @class = "editOperate" })@:| 
+            
+        }
+        }
+        @Html.ActionLink("[删除]", "del", new { id = info.Id }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+        <div class="table_bottom">
+        </div>
+
+}

@@ -1,0 +1,209 @@
+﻿@model BrnShop.Web.Admin.Models.ProductImageListModel
+           
+@section header{
+    <title>商品图片列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <link href="/administration/content/css/uploadify.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        //防止chrome缓存jquery.uploadify.js文件，而引起chrome崩溃
+        document.write("<script type='text/javascript' "
+            + "src='/administration/scripts/jquery.uploadify.js?" + new Date()
+            + "'></s" + "cript>");  
+    </script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <script type="text/javascript">
+        delMessage = "如果图片为主图,请您重新设置另一张图片为主图,您确定要删除吗？";
+
+        $(function () {
+            $("#uploadify").uploadify({
+                'formData': { 'uid': '@WorkContext.Uid', 'password': '@WorkContext.EncryptPwd' },
+                'swf': '/administration/content/flashes/uploadify.swf',
+                'uploader': '@WorkContext.ShopConfig.UploadServer/admin/tool/upload?operation=uploadproductimage',
+                'buttonText': '上传图片',
+                'height': 24,
+                'width': 80,
+                'fileTypeDesc': 'Image Files',
+                'fileTypeExts': '@ViewData["allowImgType"]',
+                'fileSizeLimit': '@ViewData["maxImgSize"]',
+                'auto': true,
+                'multi': false,
+                'removeTimeout': 2,
+                'onUploadSuccess': function (file, data, response) {
+                    if (data == "-1")
+                        alert('上传图片不能为空');
+                    else if (data == "-2")
+                        alert('上传图片的类型不允许');
+                    else if (data == "-3")
+                        alert('上传图片超过系统允许的最大大小');
+                    else {
+                        $(".uploadPreview").empty().append("<img width=\"88\" height=\"88\" src=\"@WorkContext.ShopConfig.UploadServer/upload/product/show/thumb@{@ViewData["size"].ToString()}/" + data + "\"  />");
+                        $("#ShowImg").val(data);
+                        $(".upload span[htmlFor='ShowImg']").empty();
+                    }
+                }
+            });
+        });
+        /*主图*/
+        $(function () {
+            $(".mainimgspan").click(function () {
+                var mainimgspanobj = $(this);
+                if (mainimgspanobj.attr("ismain") == "0") {
+                    $.jBox.confirm("您确认要设置此图片为主图吗？", "提示", function (v, h, f) {
+                        if (v == 'ok') {
+                            $.jBox.tip("正在设置...", 'loading');
+                            $.get(mainimgspanobj.attr("url") + "&t=" + new Date(), function (data, textStatus) {
+                                if (data != "0") {
+                                    $(".mainimgspan").each(function (i) {
+                                        if ($(this).attr("ismain") == "1") {
+                                            $(this).html("否").attr("ismain", "0")
+                                            return;
+                                        }
+                                    });
+                                    mainimgspanobj.html("是").attr("ismain", "1");
+                                    $.jBox.tip('设置成功！', 'success');
+                                } else {
+                                    $.jBox.error('设置失败，请联系管理员！', '设置失败');
+                                }
+                            });
+                        }
+                        else if (v == 'cancel') {
+                            // 取消
+                        }
+
+                        return true; //close
+                    });
+                }
+            });
+        });
+    </script>
+}
+@section body{
+    <h1 class="rightH1">
+        商品管理 &gt;&gt; 图片列表
+        <div class="right">
+            <a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT">
+                <img src="/administration/content/images/goback.jpg" />返回列表</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="table_top">
+    </div>
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="40" align="center">
+                        <input type="checkbox" id="allSelect" />
+                    </th>
+                    <th width="80" align="left">
+                        编号
+                    </th>
+                    <th align="left">
+                        图片
+                    </th>
+                    <th width="60" align="center">
+                        主图
+                    </th>
+                    <th width="140" align="center">
+                        排序
+                    </th>
+                    <th width="60" align="left">
+                        管理操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                string thumbSize = ViewData["size"].ToString();
+                foreach (ProductImageInfo info in Model.ProductImageList)
+                {
+                    <tr>
+                        <td align="center">
+                            <input type="checkbox" value="@info.PImgId" />
+                        </td>
+                        <td>@info.PImgId
+                        </td>
+                        <td>
+                            <img height="40" width="40" src="@WorkContext.ShopConfig.UploadServer/upload/product/show/thumb@{@thumbSize}/@info.ShowImg" />
+                        </td>
+                        <td align="center">
+                            @{
+                    if (@info.IsMain==0)
+                    {
+                                <span style=" cursor:pointer" url="@Url.Action("setproductmianimage", new { pImgId = info.PImgId })" ismain="0" class="mainimgspan">否</span>
+                    }
+                    else
+                    {
+                                <span style=" cursor:pointer" url="@Url.Action("setproductmianimage", new { pImgId = info.PImgId })" ismain="1" class="mainimgspan">是</span>
+                    }
+                            }
+                        </td>
+                        <td align="center">
+                            <input type="text" url="@Url.Action("changeproductimagedisplayorder", new { pImgId = info.PImgId })" value="@info.DisplayOrder" class="sortinput unselectedsortinput" />
+                        </td>
+                        <td>
+                        <a href="#" url="@Url.Action("delproductimage", new { pImgId = info.PImgId })" class = "ajaxdeleteOperate" }>[删除]</a>
+                        </td>
+                    </tr>
+                }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="table_bottom">
+    </div>
+    @using (Html.BeginForm("addproductimage", "product"))
+    {
+        <div class="addTable" style="margin-left: 15px; margin-bottom: 10px; padding-top: 10px;
+            border: 2px solid #dbeffa">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="66px" align="right">商品图片：</td>
+                        <td>
+                            <input type="hidden" name="Pid" id="Pid" value="@Model.Pid"/>
+                            <div class="upload">
+                                <div class="uploadPreview">暂无图片</div>
+                                <div class="uploadProgressBar" id="uploadify-queue"></div>
+                                <div class="uploadBut"><input type="file" name="uploadify" id="uploadify" /></div>
+                                <input type="hidden" name="ShowImg" id="ShowImg" value=""/>
+                                <div style="position: absolute; top: 30px; left: 180px;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">排序：</td>
+                        <td><input type="text" name="DisplayOrder" id="DisplayOrder" value="0" class = "input" size = "10"/></td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                        </td>
+                        <td>
+                            <input type="image" id="addImg" style="margin: 0px; padding: 0px;" src="/administration/content/images/a.jpg" />
+                            <script type="text/javascript">
+                                $("#addImg").click(function () {
+                                    if ($("#ShowImg").val() == "") {
+                                        alert("商品图片不能为空");
+                                        return false;
+                                    }
+                                    else {
+                                        $(this).parents("form").submit();
+                                        return false;
+                                    }
+                                })
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}

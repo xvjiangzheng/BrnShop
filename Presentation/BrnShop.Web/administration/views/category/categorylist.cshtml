@@ -1,0 +1,89 @@
+﻿@model BrnShop.Web.Admin.Models.CategoryListModel
+
+@section header{
+    <title>分类列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <script type="text/javascript">
+        //分类树展开/关闭
+        function categoryTree(obj, layer) {
+            var state = $(obj).attr("class");
+            if (state == "open") {
+                $(obj).parent().parent().nextAll().each(function (index) {
+                    var flag = parseInt($(this).attr("layer")) - layer;
+                    if (flag == 1) {
+                        $(this).show();
+                    }
+                    else if (flag == 0) {
+                        return false;
+                    }
+                })
+                $(obj).removeClass("open").addClass("close");
+            }
+            else if (state == "close") {
+            $(obj).parent().parent().nextAll().each(function (index) {
+                if (parseInt($(this).attr("layer")) > layer) {
+                    $(this).hide();
+                    $(this).find("th span").each(function (i) {
+                        if ($(this).attr("class") != "") {
+                            $(this).removeClass("close").addClass("open");
+                        }
+                    })
+                }
+                else {
+                    return false;
+                }
+            })
+                $(obj).removeClass("close").addClass("open");
+            }
+        }
+    </script>
+}
+@section body{
+    <h1 class="rightH1">
+        分类管理 &gt;&gt; 分类列表
+        <div class="right"><a href="@Url.Action("addcategory")" class="menuBT"><img src="/administration/content/images/add.jpg" />添加</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+<div class="table_top"></div>
+
+<div id="categoryTree">
+<table width="100%">
+<thead>
+    <tr>
+      <th align="left">分类名称</th>
+      <th align="left">价格范围</th>
+      <th width="50" align="left">排序</th>
+      <th width="196" align="left">管理操作</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (CategoryInfo info in Model.CategoryList)
+    {
+    <tr layer="@info.Layer">
+      <th>
+         @Html.Raw(CommonHelper.GetHtmlSpan(info.Layer - 1)) 
+         <span  @if (info.HasChild == 1){ <text> class="close"</text>} onclick="categoryTree(this,@info.Layer)"></span>
+         @info.Name
+      </th>
+      <td>@info.PriceRange</td>
+      <td>@info.DisplayOrder</td>
+      <td>
+        <a href="@Url.Action("attributegrouplist", new { cateId = info.CateId })" class="editOperate">[属性分组]</a>
+        <a href="@Url.Action("attributelist", new { cateId = info.CateId })" class="editOperate">[属性列表]</a>
+        <a href="@Url.Action("editcategory", new { cateId = info.CateId })" class="editOperate">[修改]</a>
+        <a href="@Url.Action("delcategory", new { cateId = info.CateId })" class="deleteOperate">[删除]</a>
+      </td>
+    </tr>
+        }
+</tbody>
+</table>
+</div>
+
+<div class="table_bottom"></div>
+    }

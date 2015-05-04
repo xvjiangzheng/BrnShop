@@ -1,0 +1,160 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@{@WorkContext.ShopConfig.SiteTitle}触屏版</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/base.css" rel="stylesheet" type="text/css">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/home.css" rel="stylesheet" type="text/css">
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="viewport">
+  <div class="headerBar">
+    <div class="tbCell"><img src="@{@WorkContext.ImageCDN}/mobile/themes/default/images/logo.png" height="28" width="122"></div>
+    <div class="tbCell" style="width:80%">
+      <div class="search-textfile"><a href="javascript:search(document.getElementById('keyword').value)" class="searchBt"></a><input autocomplete="off" name="keyword" id="keyword" class="searchText"></div>
+    </div>
+    <div class="tbCell"><a href="@Url.Action("list", "category")" class="menu">分类</a></div>
+  </div>
+  
+  <div class="homeBanner floor">
+      @{
+        BannerInfo[] bannerList = Banners.GetHomeBannerList(1);
+    }
+    <div class="sliderBox">
+      <ul class="slider" id="bannerImgList">
+        @foreach (BannerInfo info in bannerList)
+        {
+        <li><a href="@info.Url"><img src="@{@WorkContext.ImageCDN}/upload/banner/@info.Img"></a></li>
+        }
+      </ul>
+      <div class="bannerBt" id="bannerTabList">
+        @for (int i = 0; i < bannerList.Length; i++)
+        {
+           <span class="point @if(i==0){<text>hot</text>}"></span> 
+        }
+      </div>
+    </div>
+    <nav class="app-nav">
+        <a href="@Url.Action("index", "cart")" class="app-link shopping-cart">购物车</a> 
+        <a href="#" class="app-link recharge">充值</a> 
+        <a href="#" class="app-link lottery">彩票</a> 
+        <a href="@Url.Action("index", "ucenter")" class="app-link my">个人中心</a> 
+    </nav>
+  </div>
+  <script type="text/javascript">
+      //首页切换图片需要计算：根据当前分辨率计算每个图片的宽度赋值给li（图片是根据li的宽度自适应的）
+      var width = document.body.getElementsByTagName("div")[0].clientWidth;
+      var liList = document.getElementById("bannerImgList").getElementsByTagName("li");
+      var spanList = document.getElementById("bannerTabList").getElementsByTagName("span");
+      for (var i = 0; i < liList.length; i++) {
+          liList[i].style.width = width + "px";
+      }
+      //banner滚动
+      var bannerImgIndex = 0;
+      var bannerImgCount = @bannerList.Length;
+      if(bannerImgCount > 1) {
+          window.setInterval(function () {
+              if (bannerImgIndex == (bannerImgCount - 1)) {
+                  bannerImgIndex = 0;
+              }
+              else {
+                  bannerImgIndex += 1;
+              }
+              for (var i = 0; i < liList.length; i++) {
+                  liList[i].style.display = "none";
+              }
+              for (var i = 0; i < spanList.length; i++) {
+                  spanList[i].className = "point";
+              }
+              liList[bannerImgIndex].style.display = "block";
+              spanList[bannerImgIndex].className = "point hot";
+          }, 3000)
+      }
+  </script>
+  
+  <div class="floorI floor">
+    <h2 class="title">12.12狂欢购</h2>
+    <div class="floorCon"> 
+        @{
+            List<AdvertInfo> floor1AdvertList = Adverts.GetAdvertList(34);
+        }
+        <a href="@floor1AdvertList[0].Url" class="itmeL left"><img src="@{@WorkContext.ImageCDN}/upload/advert/@floor1AdvertList[0].Body" border="0"></a> 
+        <a href="@floor1AdvertList[1].Url" class="itmeR itmeR1 right"><img src="@{@WorkContext.ImageCDN}/upload/advert/@floor1AdvertList[1].Body" width="100%" border="0"></a> 
+        <a href="@floor1AdvertList[2].Url" class="itmeR right"><img src="@{@WorkContext.ImageCDN}/upload/advert/@floor1AdvertList[2].Body" width="100%" border="0"></a>
+        <div class="clear"></div>
+    </div>
+  </div>
+  
+  <div class="floorI floor floorI2">
+    <h2 class="title">感恩回馈</h2>
+    <div class="floorCon">
+        @{
+            List<AdvertInfo> floor2AdvertList = Adverts.GetAdvertList(35);
+        }
+      <div class="left" style="width:50%">
+      <a href="@floor2AdvertList[0].Url" class="itmeR itmeR1"><img src="@{@WorkContext.ImageCDN}/upload/advert/@floor2AdvertList[0].Body" width="100%" border="0"></a> 
+      <a href="@floor2AdvertList[1].Url" class="itmeR"><img src="@{@WorkContext.ImageCDN}/upload/advert/@floor2AdvertList[1].Body" width="100%" border="0"></a>
+      </div>
+      <a href="@floor2AdvertList[2].Url" class="itmeL right"><img src="@{@WorkContext.ImageCDN}/upload/advert/@floor2AdvertList[2].Body" border="0"></a>
+      <div class="clear"></div>
+    </div>
+  </div>
+  
+  <div class="floorI floor">
+    <h2 class="title">十年店庆</h2>
+    <div class="floorCon"> 
+        @{
+            List<AdvertInfo> floor3AdvertList = Adverts.GetAdvertList(36);
+        }
+        <a href="@floor3AdvertList[0].Url" class="itme left"><img src="@{@WorkContext.ImageCDN}/upload/advert/@floor3AdvertList[0].Body" width="100%" border="0"></a>
+        <div class="clear"></div>
+    </div>
+  </div>
+  
+  <div class="floor">
+    <h2 class="title">主题馆（无限惊喜）</h2>
+    <div class="floorCon sortList">
+        @{
+            List<AdvertInfo> floor4AdvertList = Adverts.GetAdvertList(37);
+        }
+      <ul>
+        @foreach (AdvertInfo info in floor4AdvertList)
+        {
+        <li><a href="@info.Url"><b>@info.ExtField1</b><p>@info.ExtField2</p><img src="@{@WorkContext.ImageCDN}/upload/advert/@info.Body" width="100" height="100"> </a> </li>
+        }
+        <div class="clear"></div>
+      </ul>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="footerTop">
+      @if (WorkContext.Uid < 1)
+      {
+      <div class="left"><a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">登录</a> | <a href="@Url.Action("register", "account")">注册</a></div>
+      }
+      else
+      {
+        <div class="left"><a href="@Url.Action("index", "ucenter")">@WorkContext.NickName</a> | <a href="@Url.Action("logout", "account")">退出</a></div>   
+      }
+      <div class="right"><a href="#top">回到顶部 </a></div>
+      <div class="clear"></div>
+    </div>
+    <div class="footerCon"><a href="@Url.Action("index", "home")" class="hot">触屏版</a><a href="/">电脑版</a></div>
+    <div class="copyright" align="center">www.brnshop.com </div>
+  </footer>
+</div>
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>
+

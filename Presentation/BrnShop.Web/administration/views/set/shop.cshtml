@@ -1,0 +1,130 @@
+﻿@model BrnShop.Web.Admin.Models.ShopModel
+
+@section header{
+    <title>商城设置</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 商城设置
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+     <tr>
+    <td width="144px" align="right">游客使用购物车：</td>
+    <td>
+       <p>
+    <label>@Html.RadioButtonFor(x => x.IsGuestSC, 1)允许</label>
+    <label>@Html.RadioButtonFor(x => x.IsGuestSC, 0)不允许</label>
+    <br />
+    </p>
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">购物车的提交方式：</td>
+    <td>
+       <p>
+    <label>@Html.RadioButtonFor(x => x.SCSubmitType, 0)跳转到提示页面</label>
+    <label>@Html.RadioButtonFor(x => x.SCSubmitType, 1)跳转到列表页面</label>
+    <label>@Html.RadioButtonFor(x => x.SCSubmitType, 2)Ajax提交</label>
+    <br />
+    </p>
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">游客购物车商品数量：</td>
+    <td>
+   @Html.TextBoxFor(x => x.GuestSCCount, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.GuestSCCount)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">会员购物车商品数量：</td>
+    <td>
+   @Html.TextBoxFor(x => x.MemberSCCount, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.MemberSCCount)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">购物车过期时间：</td>
+    <td>
+   @Html.TextBoxFor(x => x.SCExpire, new { @class = "input", size = "35" })单位为天 @Html.ValidationMessageFor(x => x.SCExpire)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">订单编号格式：</td>
+    <td>
+   @Html.TextBoxFor(x => x.OSNFormat, new { @class = "input", size = "35" }){uid}代表用户id,{srid}代表配送地区id,{addtime}代表下单时间 @Html.ValidationMessageFor(x => x.OSNFormat)
+    </td>
+    </tr>
+
+                 <tr>
+    <td align="right">在线支付过期时间：</td>
+    <td>
+   @Html.TextBoxFor(x => x.OnlinePayExpire, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.OnlinePayExpire)
+    </td>
+    </tr>
+
+                 <tr>
+    <td align="right">线下支付过期时间：</td>
+    <td>
+   @Html.TextBoxFor(x => x.OfflinePayExpire, new { @class = "input", size = "35" })单位为小时 @Html.ValidationMessageFor(x => x.OfflinePayExpire)
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">浏览历史数量：</td>
+    <td>
+   @Html.TextBoxFor(x => x.BroHisCount, new { @class = "input", size = "35" })单位为天 @Html.ValidationMessageFor(x => x.BroHisCount)
+    </td>
+    </tr>
+
+                 <tr>
+    <td align="right">最大配送地址：</td>
+    <td>
+   @Html.TextBoxFor(x => x.MaxShipAddress, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.MaxShipAddress)
+    </td>
+    </tr>
+
+             <tr>
+    <td align="right">收藏夹最大容量：</td>
+    <td>
+   @Html.TextBoxFor(x => x.FavoriteCount, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.FavoriteCount)
+    </td>
+    </tr>
+
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

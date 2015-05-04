@@ -1,0 +1,54 @@
+﻿@model BrnShop.Web.Admin.Models.AdvertPositionListModel
+
+@section header{
+<title>广告位置列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+广告管理 &gt;&gt; 广告位置
+<div class="right">
+<a href="@Url.Action("addadvertposition")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("advertpositionlist", "advert"))
+{
+<div class="table_top"></div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10"></th>
+    <th width="60" align="left">编号</th>
+    <th align="left">标题</th>
+    <th width="76" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (AdvertPositionInfo info in Model.AdvertPositionList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.AdPosId</td>
+    <td>@info.Title</td>
+    <td>
+        @Html.ActionLink("[编辑]", "editadvertposition", new { adPosId = info.AdPosId }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "deladvertposition", new { adPosId = info.AdPosId }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

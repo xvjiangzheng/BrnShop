@@ -1,0 +1,83 @@
+﻿@model BrnShop.Web.Admin.Models.TimeProductListModel
+
+@section header{
+<title>定时商品列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+定时商品管理 &gt;&gt; 定时商品列表
+<div class="right">
+<a href="@Url.Action("addtimeproduct")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("timeproductlist", "product"))
+{
+<div class="dataListSearch">
+   <table height="32">
+     <tbody>
+      <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>商品名称：</td>
+        <td width="130">@Html.TextBox("ProductName", Model.ProductName, new { height = "18" })</td>
+        <td><input id="searchTimeProduct" name="searchTimeProduct" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" /></td>
+      </tr>
+     </tbody>
+   </table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="6" align="center"></th>
+    <th width="60" align="left">编号</th>
+    <th align="left">名称</th>
+    <th width="160" align="left">上架时间</th>  
+    <th width="160" align="left">下架时间</th>  
+    <th width="76" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @{
+    string noTime = new DateTime(1900, 1, 1).ToString();
+    foreach (DataRow row in Model.TimeProductList.Rows)
+    {
+  <tr>
+    <td align="center"></td>
+    <td>@row["pid"]</td>
+    <td>@row["name"]</td>
+    <td>
+    @if(row["onsaletime"].ToString() != noTime)
+    {
+         @row["onsaletime"]
+    }
+    </td>
+    <td>
+    @if (row["outsaletime"].ToString() != noTime)
+    {
+         @row["outsaletime"]
+    }
+    </td>
+    <td>
+        @Html.ActionLink("[编辑]", "edittimeproduct", new { recordId = row["recordid"] }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "deltimeproduct", new { recordId = row["recordid"] }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+    }
+}
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

@@ -1,0 +1,327 @@
+﻿@model BrnShop.Web.Admin.Models.OrderInfoModel
+
+@section header{
+    <title>订单信息</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <style type="text/css">
+    .addTable table{ border-right:1px solid #d1d1d1;border-bottom:1px solid #d1d1d1; margin-top:20px; margin-left:16px; } 
+    .addTable table th{ background:#dbeffa; font-weight:normal;height:26px; padding-left:4px;} 
+    .addTable table th a{ padding-left:8px;} 
+    .addTable table td{ border-left:1px solid #d1d1d1;border-top:1px solid #d1d1d1;height:26px; padding-left:10px;}
+    .addTable table td.pImg{ padding:10px; }
+    </style>
+}
+
+@section body{
+<h1 class="rightH1">
+订单管理 &gt;&gt; 订单信息
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="97%">
+  <tr><th colspan="4" align="left">基本信息</th></tr>
+  <tr>
+    <td width="150px">订单序号：</td>
+    <td width="320px">@Model.OrderInfo.Oid</td>
+    <td width="150px">订单编号：</td>
+    <td>@Model.OrderInfo.OSN</td>
+  </tr>
+  <tr>
+    <td width="150px">订单状态：</td>
+    <td>
+    @switch ((OrderState)Model.OrderInfo.OrderState)
+    {
+        case OrderState.WaitPaying:
+            @:等待付款
+            break;
+        case OrderState.Confirming:
+            @:待确认
+            break;
+        case OrderState.Confirmed:
+            @:已确认
+            break;
+        case OrderState.PreProducting:
+            @:备货中
+            break;
+        case OrderState.Sended:
+            @:已发货
+            break;
+        case OrderState.Completed:
+            @:已完成
+            break;
+        case OrderState.Cancelled:
+            @:取消
+            break;
+        case OrderState.Returned:
+            @:退货
+            break;
+        case OrderState.Locked:
+            @:锁定
+            break;
+        default:
+            @:未知状态
+            break;
+    }
+        </td>
+    <td>下单时间：</td>
+    <td>@Model.OrderInfo.AddTime</td>
+  </tr>
+</table>
+
+<table width="97%">
+  <tr><th colspan="4" align="left">用户信息</th></tr>
+  <tr>
+    <td width="150px">用户编号：</td>
+    <td width="320px">@Model.UserInfo.Uid</td>
+    <td width="150px">用户名：</td>
+    <td>@Model.UserInfo.UserName</td>
+  </tr>
+  <tr>
+    <td>真实姓名：</td>
+    <td>@Model.UserInfo.RealName</td>
+    <td>性别：</td>
+    <td>@{
+    switch (Model.UserInfo.Gender)
+    {
+        case 0:
+            @:未知
+            break;
+        case 1:
+            @:男
+            break;
+        case 2:
+            @:女
+            break;
+        default:
+            @:未知
+            break;
+    }
+        }</td>
+  </tr>
+  <tr>
+    <td>用户昵称：</td>
+    <td>@Model.UserInfo.NickName</td>
+    <td>用户等级：</td>
+    <td>@Model.UserRankInfo.Title</td>
+  </tr>
+  <tr>
+    <td>邮箱号：</td>
+    <td>@Model.UserInfo.Email</td>
+    <td>手机号：</td>
+    <td>@Model.UserInfo.Mobile</td>
+  </tr>
+</table>
+
+<table width="97%">
+  <tr><th colspan="4" align="left">配送信息</th></tr>
+  <tr>
+    <td width="150px">配送方式：</td>
+    <td width="320px">@Model.OrderInfo.ShipFriendName</td>
+    <td width="150px">配送时间：</td>
+    <td>
+    @if (Model.OrderInfo.ShipSN.Length == 0)
+    {
+        @:未配送
+    }
+    else
+    {
+        @Model.OrderInfo.ShipTime
+    }
+   </td>
+  </tr>
+  <tr>
+    <td>配送单号：</td>
+    <td>@Model.OrderInfo.ShipSN</td>
+    <td>配送费用：</td>
+    <td>@Model.OrderInfo.ShipFee</td>
+  </tr>
+</table>
+
+<table width="97%">
+  <tr><th colspan="4" align="left">支付信息</th></tr>
+  <tr>
+    <td width="150px">支付方式：</td>
+    <td width="320px">@Model.OrderInfo.PayFriendName</td>
+    <td width="150px">支付时间：</td>
+    <td>
+    @if (Model.OrderInfo.PaySN.Length == 0)
+    {
+        @:未支付
+    }
+    else
+    {
+        @Model.OrderInfo.PayTime
+    }
+   </td>
+  </tr>
+  <tr>
+    <td>支付单号：</td>
+    <td>@Model.OrderInfo.PaySN</td>
+    <td>手续费用：</td>
+    <td>@Model.OrderInfo.PayFee</td>
+  </tr>
+</table>
+
+<table width="97%">
+  <tr><th colspan="4" align="left">收货地址</th></tr>
+  <tr>
+    <td width="150px">收货人：</td>
+    <td width="320px">@Model.OrderInfo.Consignee</td>
+    <td width="150px">邮箱：</td>
+    <td>@Model.OrderInfo.Email</td>
+  </tr>
+  <tr>
+    <td>手机号：</td>
+    <td>@Model.OrderInfo.Mobile</td>
+    <td>固话号：</td>
+    <td>@Model.OrderInfo.Phone</td>
+  </tr>
+  <tr>
+    <td>邮编：</td>
+    <td>@Model.OrderInfo.ZipCode</td>
+    <td>最佳时间：</td>
+    <td>
+    @if (Model.OrderInfo.BestTime.Year > 2000)
+    {
+        @Model.OrderInfo.BestTime
+    }
+    </td>
+  </tr>
+  <tr>
+    <td>配送地址：</td>
+    <td colspan="3">@Model.RegionInfo.ProvinceName @Model.RegionInfo.CityName @Model.RegionInfo.Name @Model.OrderInfo.Address</td>
+  </tr>
+</table>
+
+<table width="97%">
+  <tr><th colspan="6" align="left">订单商品</th></tr>
+  <tr>
+    <td align="center" width="60">商品图片</td>
+    <td>商品名称</td>
+    <td width="140">货号</td>
+    <td width="80">价格</td>
+    <td width="50">数量</td>
+    <td width="80">小计</td>
+  </tr>
+    @foreach (OrderProductInfo info in Model.OrderProductList)
+    {
+    <tr>
+        <td align="center" class="pImg"><img width="60px" height="60px" src="/upload/product/show/thumb@{@ViewData["size"]}/@info.ShowImg" /></td>
+        <td>@info.Name</td>
+        <td>@info.PSN</td>
+        <td>@info.DiscountPrice</td>
+        <td>@info.BuyCount</td>
+        <td>@Html.Raw((info.DiscountPrice * info.BuyCount).ToString())</td>
+    </tr>
+    }
+</table>
+
+<table width="97%">
+  <tr><th colspan="4" align="left">订单金额</th></tr>
+  <tr>
+    <td width="150px">订单合计：</td>
+    <td width="320px">@Model.OrderInfo.OrderAmount</td>
+    <td width="150px">应付金额：</td>
+    <td>@Model.OrderInfo.SurplusMoney</td>
+  </tr>
+  <tr>
+    <td>商品合计：</td>
+    <td>@Model.OrderInfo.ProductAmount</td>
+    <td>满减：</td>
+    <td>@Model.OrderInfo.FullCut</td>
+  </tr>
+  <tr>
+    <td>积分数量：</td>
+    <td>@Model.OrderInfo.PayCreditCount</td>
+    <td>积分金额：</td>
+    <td>@Model.OrderInfo.PayCreditMoney</td>
+  </tr>
+    <tr>
+    <td>优惠劵金额：</td>
+    <td>@Model.OrderInfo.CouponMoney</td>
+    <td>订单折扣：</td>
+    <td>@Model.OrderInfo.Discount</td>
+  </tr>
+</table>
+
+<table width="97%">
+  <tr><th align="left">备注信息</th></tr>
+  <tr><td style="padding:0px 10px;">@Model.OrderInfo.BuyerRemark</td></tr>
+</table>
+
+<table width="97%">
+  <tr><th colspan="4" align="left">管理操作</th></tr>
+  <tr>
+    <td width="100px">
+    @{
+    OrderState orderState = (OrderState)Model.OrderInfo.OrderState;
+    if (orderState == OrderState.WaitPaying)
+    {
+        if (Model.OrderInfo.PayMode == 2)
+        {
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Pay })">付款</a>
+        }
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Lock })">锁定</a>
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Cancel })">取消</a>
+    }
+    else if (orderState == OrderState.Confirming)
+    {
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Confirm })">确认</a>
+        if (Model.OrderInfo.PayMode == 0)
+        {
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Lock })">锁定</a>
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Cancel })">取消</a>
+        }
+    }
+    else if (orderState == OrderState.Confirmed)
+    {
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.PreProduct })">备货</a>
+    }
+    else if (orderState == OrderState.PreProducting)
+    {
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Send })">发货</a>
+    }
+    else if (orderState == OrderState.Sended)
+    {
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Complete })">完成</a>
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Return })">退货</a>
+    }
+    else if (orderState == OrderState.Completed)
+    {
+    <a href="@Url.Action("operateorder", new { oid = Model.OrderInfo.Oid, actionType = (int)OrderActionType.Return })">退货</a>
+    }
+}
+    </td>
+  </tr>
+</table>
+
+<table width="97%">
+  <tr>
+    <td width="80px">操作人</td>
+    <td width="120px">管理员组</td>
+    <td width="150px">操作时间</td>
+    <td>操作备注：</td>
+  </tr>
+@foreach (OrderActionInfo info in Model.OrderActionList)
+{
+  <tr>
+    <td>@info.RealName</td>
+    <td>@info.AdminGTitle</td>
+    <td>@info.ActionTime</td>
+    <td>@info.ActionDes</td>
+  </tr>
+}
+</table>
+
+<br />
+</div>    
+}
+}

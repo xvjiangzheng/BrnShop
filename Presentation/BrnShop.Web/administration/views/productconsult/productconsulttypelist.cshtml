@@ -1,0 +1,49 @@
+﻿@model BrnShop.Web.Admin.Models.ProductConsultTypeListModel
+           
+@section header{
+<title>商品咨询类型列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+商品咨询类型 &gt;&gt; 商品咨询类型列表
+<div class="right">
+<a href="@Url.Action("addproductconsulttype")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+<div class="table_top"></div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10"></th>
+    <th width="50" align="left">编号</th>
+    <th align="left">名称</th>
+    <th width="80" align="left" >排序</th>
+    <th width="94" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (ProductConsultTypeInfo info in Model.ProductConsultTypeList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.ConsultTypeId</td>
+    <td>@info.Title</td>
+    <td>@info.DisplayOrder</td>
+    <td>
+        @Html.ActionLink("[编辑]", "editproductconsulttype", new { consultTypeId = info.ConsultTypeId }, new { @class = "editOperate" })|
+        @Html.ActionLink("[删除]", "delproductconsulttype", new { consultTypeId = info.ConsultTypeId }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="table_bottom"></div>
+}

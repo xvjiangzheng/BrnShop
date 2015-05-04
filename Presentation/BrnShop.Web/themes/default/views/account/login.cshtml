@@ -1,0 +1,123 @@
+﻿@model BrnShop.Web.Models.LoginModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>用户登陆-@{@WorkContext.ShopConfig.SiteTitle}</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/account.css" rel="stylesheet" type="text/css" />
+    <script src="@{@WorkContext.ScriptCDN}/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/scripts/account.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        returnUrl = "@Model.ReturnUrl";
+        shadowName = "@Model.ShadowName";
+    </script>
+</head>
+
+<body>
+
+<div id="loginTop" class="box">
+    <a href="/" class="left"><img src="@{@WorkContext.ImageCDN}/themes/default/images/logo.png" width="186" height="42" /></a>
+    <h2>欢迎登陆</h2>
+    <div class="clear"></div>
+</div>
+
+
+<div class="box login">
+<a href="@Url.Action("register")" class="loginREG">免费注册</a>
+
+ @{
+     List<AdvertInfo> loginAdvertList = Adverts.GetAdvertList(7);
+     }
+<img src="@{@WorkContext.ImageCDN}/upload/advert/@loginAdvertList[0].Body" width="461" height="355" class="left" />
+
+<div class="right">
+  <form name="loginForm" action="">
+
+  <dl>
+      <dt>邮箱/用户名/已验证手机</dt>
+      <dd><input type="text" name="@Model.ShadowName" class="userName text" value=""/></dd>
+  </dl>
+  
+  <dl>
+      <dt>密码</dt>
+      <dd><input type="password" name="password" class="passWord text" value=""/></dd>
+  </dl>
+
+  @if (Model.IsVerifyCode)
+  { 
+  <dl>
+      <dt>验证码</dt>
+      <dd><input type="text" name="verifyCode" autocomplete="off" class="YZM text left" /><img id="verifyImage" style="cursor:hand" title="点击刷新验证码" onclick="this.src='/tool/verifyimage?time=' + new Date()" src="/tool/verifyimage" height="34" class="left" /><div class="clear"></div></dd>
+  </dl>
+  }
+  
+  <div class="loginBt">
+    @if (Model.IsRemember)
+    {
+        <label><input name="isRemember" type="checkbox" style="vertical-align:-2px; margin-right:3px;" value="1" />自动登陆 &nbsp; &nbsp; </label>
+    }
+        <a href="@Url.Action("findpwd")">忘记密码?</a>
+        <a href="javascript:void(0)" class="redBT loginIn" onclick="login()">登 &nbsp; 陆</a>
+  </div>
+
+  <div class="openID">
+      <h4>使用合作网站账号登录：</h4>
+      @foreach (PluginInfo info in Model.OAuthPluginList)
+      {
+        IOAuthPlugin instance = (IOAuthPlugin)info.Instance;
+        <a href="@Url.Action(instance.LoginAction, instance.LoginController)">@info.FriendlyName</a> @:&nbsp;&nbsp;
+      }
+  </div>
+
+  </form>
+</div>
+<div class="clear"></div> 
+</div>
+
+<div id="footer" class="bigBox">
+  <div class="box">
+
+    @{
+        int flag = 1;
+        foreach (HelpInfo info in WorkContext.HelpList)
+        {
+            if (info.Pid != 0)
+            {
+                if (info.Url.Length == 0)
+                {
+            <a href="@Url.Action("question", "help", new RouteValueDictionary { { "id", info.Id } })">@info.Title</a>
+                }
+                else
+                {
+            <a href="@info.Url">@info.Title</a>
+                }
+            }
+            else
+            {
+                if (flag != 1)
+                {
+                @:</div>
+            }
+            @:<div class="footerBox"><h3>@info.Title</h3>
+            flag++;
+            }
+        }
+        if (WorkContext.HelpList.Count > 0)
+        {
+        @:</div>
+    }
+    }
+
+  <div class="clear"></div>
+  </div>
+</div>
+@Html.Raw(WorkContext.ExecuteDetail)
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

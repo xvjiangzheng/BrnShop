@@ -1,0 +1,156 @@
+﻿@model BrnShop.Web.Mobile.Models.ShipAddressModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加配送地址-@{@WorkContext.ShopConfig.SiteTitle}触屏版</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/base.css" rel="stylesheet" type="text/css">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/buy.css" rel="stylesheet" type="text/css">
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/common.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/region.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/mobile/scripts/ucenter.user.js" type="text/javascript"></script>
+</head>
+
+<body>
+<header>
+  <div class="new-header">
+    <a href="javascript:pageBack()" class="new-a-back"><span>返回</span></a>
+    <h2>添加配送地址</h2>
+    <a href="javascript:navSH()" class="new-a-brn"><span>BRN键</span></a> 
+  </div>
+  <div class="new-brn-tab" id="nav" style=" display:none;">
+    <div class="new-tbl-type"> 
+    <a href="@Url.Action("index", "home")" class="new-tbl-cell"><span class="icon">首页</span><p style="color:#6e6e6e;">首页</p></a> 
+    <a href="@Url.Action("list", "category")" class="new-tbl-cell"><span class="icon2 on">分类搜索</span><p style="color:#6e6e6e;" class="on">分类搜索</p></a> 
+    <a href="@Url.Action("index", "cart")" class="new-tbl-cell"><span class="icon3">购物车</span><p style="color:#6e6e6e;">购物车</p></a> 
+    <a href="@Url.Action("index", "ucenter")" class="new-tbl-cell"><span class="icon4 on">个人中心</span><p style="color:#6e6e6e;" class="on">个人中心</p></a> 
+    </div>
+  </div>
+</header>
+
+<form name="shipAddressForm" action="">
+<div class="allCon">
+<div class="title">收货人地址</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>收货人：</span>
+<p><input type="text" name="consignee" class="text" value="" /></p>
+</div>
+<div class="tip" style="display:block;"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>手机号：</span>
+<p><input type="text" name="mobile" class="text" value="" /></p>
+</div>
+<div class="tip" style="display:block;"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>所在省：</span>
+<p>
+    <select id="provinceId" name="provinceId" class="select" style="width:100%; padding:4px;">
+    <option selected="selected" value="-1">请选择</option>
+    </select>
+</p>
+</div>
+<div class="tip"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>所在市：</span>
+<p>
+    <select id="cityId" name="cityId" class="select" style="width:100%; padding:4px;">
+    <option selected="selected" value="-1">请选择</option>
+    </select>
+</p>
+</div>
+<div class="tip"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>所在县：</span>
+<p>
+    <select id="regionId" name="regionId" class="select" style="width:100%; padding:4px;">
+    <option selected="selected" value="-1">请选择</option>
+    </select>
+</p>
+</div>
+<div class="tip"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>详细地址：</span>
+<p><input type="text" name="address" class="text" value="" /></p>
+</div>
+<div class="tip" style="display:block;"></div>
+</div>
+
+</div>
+<a href="javascript:void(0)" onclick="javascript:addShipAddress()" class="redBt subOrder">提交</a>
+</form>
+
+
+<div class="viewport">
+  <footer>
+    <div class="footerTop">
+      @if (WorkContext.Uid < 1)
+      {
+      <div class="left"><a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">登录</a> | <a href="@Url.Action("register", "account")">注册</a></div>
+      }
+      else
+      {
+        <div class="left"><a href="@Url.Action("index", "ucenter")">@WorkContext.NickName</a> | <a href="@Url.Action("logout", "account")">退出</a></div>   
+      }
+      <div class="right"><a href="#top">回到顶部 </a></div>
+      <div class="clear"></div>
+    </div>
+    <div class="footerCon"><a href="@Url.Action("index", "home")" class="hot">触屏版</a><a href="/">电脑版</a></div>
+    <div class="copyright" align="center">www.brnshop.com </div>
+  </footer>
+</div>
+<script type="text/javascript">
+    //绑定省列表的改变事件
+    Event.addHandler(document.getElementById("provinceId"), "change", function (event) {
+        var selectedProvinceId = getSelectedOption(this).value;
+        if (selectedProvinceId > 0) {
+            document.getElementById("regionId").innerHTML = "<option value='-1'>请选择</option>";
+            bindCityList(selectedProvinceId, document.getElementById("cityId"));
+        }
+    })
+
+
+    //绑定市列表的改变事件
+    Event.addHandler(document.getElementById("cityId"), "change", function (event) {
+        var selectedCityId = getSelectedOption(this).value;
+        if (selectedCityId > 0) {
+            bindCityList(selectedCityId, document.getElementById("regionId"));
+        }
+    })
+
+    //绑定省列表
+    bindProvinceList(document.getElementById("provinceId"), provinceId);
+
+    if (cityId > 0) {
+        bindCityList(provinceId, document.getElementById("cityId"), cityId);
+        bindCountyList(cityId, document.getElementById("regionId"), countyId);
+    }
+</script>
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

@@ -1,0 +1,137 @@
+﻿@model BrnShop.Web.Admin.Models.EmailModel
+
+@section header{
+    <title>邮箱设置</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <link rel="stylesheet" href="/administration/content/ueditor/themes/default/css/ueditor.css"/> 
+    <script type="text/javascript" src="/administration/content/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="/administration/content/ueditor/ueditor.all.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 邮箱设置
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+         <tr>
+    <td width="106px" align="right">邮箱主机：</td>
+    <td>
+    @Html.TextBoxFor(x => x.Host, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x=>x.Host)
+    </td>
+    </tr>
+
+  <tr>
+    <td align="right">邮箱端口：</td>
+    <td>
+    @Html.TextBoxFor(x => x.Port, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Port)
+    </td>
+    </tr>
+
+      <tr>
+    <td align="right">发送邮箱：</td>
+    <td>
+@Html.TextBoxFor(x => x.From, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.From)
+    </td>
+        </tr>
+
+                  <tr>
+    <td align="right">发件人名：</td>
+    <td>
+@Html.TextBoxFor(x => x.FromName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.FromName)
+    </td>
+        </tr>
+
+     <tr>
+    <td align="right">邮箱账号：</td>
+    <td>
+   @Html.TextBoxFor(x => x.UserName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.UserName)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">邮箱密码：</td>
+    <td>
+   @Html.PasswordFor(x => x.Password, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Password)
+    </td>
+    </tr>
+
+                          <tr>
+    <td align="right">找回密码内容：</td>
+    <td>
+         <textarea name="FindPwdBody" id="FindPwdBody">@Model.FindPwdBody</textarea>
+         {shopname}代表商城名称,{siteurl}代表站点网址,{username}代表用户名,{deadline}代表截止时间,{url}代表验证url
+         @Html.ValidationMessageFor(x => x.FindPwdBody)
+         <script type="text/javascript">
+             UE.getEditor('FindPwdBody');
+        </script>
+    </td>
+    </tr>
+
+                  <tr>
+    <td align="right">验证邮箱内容：</td>
+    <td>
+    <br />
+         <textarea name="SCVerifyBody" id="SCVerifyBody">@Model.SCVerifyBody</textarea>
+         {shopname}代表商城名称,{siteurl}代表站点网址,{username}代表用户名,{deadline}代表截止时间,{url}代表验证url
+         <script type="text/javascript">
+             UE.getEditor('SCVerifyBody');
+        </script>
+    </td>
+    </tr>
+
+              <tr>
+    <td align="right">更新邮箱内容：</td>
+    <td>
+    <br />
+         <textarea name="SCUpdateBody" id="SCUpdateBody">@Model.SCUpdateBody</textarea>
+         {shopname}代表商城名称,{siteurl}代表站点网址,{username}代表用户名,{deadline}代表截止时间,{url}代表验证url
+         <script type="text/javascript">
+             UE.getEditor('SCUpdateBody');
+        </script>
+    </td>
+    </tr>
+
+                  <tr>
+    <td align="right">注册欢迎内容：</td>
+    <td>
+    <br />
+         <textarea name="WebcomeBody" id="WebcomeBody">@Model.WebcomeBody</textarea>
+         {shopname}代表商城名称,{regtime}代表注册时间,{email}代表注册邮箱
+         <script type="text/javascript">
+             UE.getEditor('WebcomeBody');
+        </script>
+    </td>
+    </tr>
+
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

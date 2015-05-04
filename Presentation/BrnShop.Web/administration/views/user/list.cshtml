@@ -1,0 +1,104 @@
+﻿@model BrnShop.Web.Admin.Models.UserListModel
+
+@section header{
+<title>用户列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+用户管理 &gt;&gt; 用户列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("list", "user"))
+{
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+         <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>
+          会员等级：
+        </td>
+        <td width="110">
+          @Html.DropDownListFor(x => x.UserRid, ViewData["userRankList"] as List<SelectListItem>)
+        </td>
+        <td>
+          &nbsp;&nbsp;管理员组：
+        </td>
+        <td width="110">
+          @Html.DropDownListFor(x => x.AdminGid, ViewData["adminGroupList"] as List<SelectListItem>)
+        </td>
+        <td>
+          用户名：
+        </td>
+        <td width="130">
+          	@Html.TextBox("UserName", Model.UserName, new { height = "18" })
+        </td>
+        <td>
+          &nbsp;&nbsp;&nbsp;邮箱：
+        </td>
+        <td width="130">
+          	@Html.TextBox("Email", Model.Email, new { height = "18" })
+        </td>
+        <td>
+          &nbsp;&nbsp;&nbsp;手机：
+        </td>
+        <td width="130">
+          	@Html.TextBox("Mobile", Model.Mobile, new { height = "18" })
+        </td>
+       <td>
+       <input id="SearchUser" name="SearchUser" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="140" align="left">用户名</th>
+    <th width="180" align="left">邮箱手机</th>
+    <th align="left">昵称</th>
+    <th width="80" align="left">支付积分</th>
+    <th width="140" align="left">权限</th>
+    <th width="150" align="left">注册访问</th>
+    <th width="100" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.UserList.Rows)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@row["uid"]" selectItem="true" name="uidList" /></td>
+    <td>@row["username"]</td>
+    <td>@row["email"]<br />@row["mobile"]</td>
+    <td>@row["nickname"]</td>
+    <td>@row["paycredits"]</td>
+    <td>@row["utitle"]<br />@row["atitle"]</td>
+    <td>@row["registertime"]<br />@row["lastvisittime"]</td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { uid = row["uid"] }, new { @class = "editOperate" })| 
+        @Html.ActionLink("[删除]", "del", new { uidList = row["uid"] }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<a href="#" delUrl="@Url.Action("del")" class="batch batchDel">批量删除</a>
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

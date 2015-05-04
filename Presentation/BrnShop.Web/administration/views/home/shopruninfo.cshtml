@@ -1,0 +1,57 @@
+﻿@model BrnShop.Web.Admin.Models.ShopRunInfoModel
+
+@section header{
+<title>BrnShop管理中心</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<style type="text/css">
+.dataList table td,.dataList table th{ padding-left:10px;}
+</style>
+}
+
+@section body{
+<h1 class="rightH1">
+BrnShop管理中心
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+<br />
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr><th align="left" colspan="4">订单统计</th></tr>
+</thead>
+  <tbody>
+  <tr><td align="left" width="80px">待确认:</td><td align="left" width="300px">@Model.WaitConfirmCount</td><td align="left" width="80px">待备货:</td><td align="left">@Model.WaitPreProductCount</td></tr>
+  <tr><td align="left" width="80px">待发货:</td><td align="left" width="300px">@Model.WaitSendCount</td><td align="left" width="80px">待付款:</td><td align="left">@Model.WaitPayCount</td></tr>
+</tbody>
+</table>
+</div>
+<br />
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr><th align="left" colspan="4">访问统计</th></tr>
+</thead>
+  <tbody>
+  <tr><td align="left" width="80px">在线游客:</td><td align="left" width="300px">@Model.OnlineGuestCount</td><td align="left" width="80px">在线会员:</td><td align="left">@Model.OnlineMemberCount</td></tr>
+</tbody>
+</table>
+</div>
+<br />
+<div class="dataList">
+<table width="100%">
+<thead>
+    <tr><th align="left" colspan="4">系统环境</th></tr>
+</thead>
+  <tbody>
+    <tr><td align="left" width="80px">商城版本:</td><td align="left" width="300px">@Model.ShopVersion</td><td align="left" width="80px">NET框架:</td><td align="left">@Model.NetVersion</td></tr>
+    <tr><td align="left" width="80px">操作系统:</td><td align="left" width="300px">@Model.OSVersion</td><td align="left" width="80px">运行时间:</td><td align="left">@Model.TickCount 分钟</td></tr>
+    <tr><td align="left" width="80px">CPU数量:</td><td align="left" width="300px">@Model.ProcessorCount 个</td><td align="left" width="80px">内存数:</td><td align="left">@Model.WorkingSet M</td></tr>
+</tbody>
+</table>
+</div>
+<br />
+}

@@ -1,0 +1,73 @@
+﻿@model BrnShop.Web.Admin.Models.FilterWordListModel
+
+@section header{
+<title>筛选词列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+筛选词 &gt;&gt; 列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("list", "filterword"))
+{
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+              <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>
+          匹配词：
+        </td>
+        <td>
+          	@Html.TextBox("SearchFilterWord", Model.SearchFilterWord, new { size = "40", height = "18" })
+        </td>
+       <td>
+       <input id="SearchFilterWord" name="SearchFilterWord" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="80" align="left">编号</th>
+    <th align="left" >匹配词</th>
+    <th width="400" align="left" >替换词</th>  
+    <th width="90" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (FilterWordInfo info in Model.FilterWordList)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@info.Id" selectItem="true" name="idList" /></td>
+    <td>@info.Id</td>
+    <td>@info.Match</td>
+    <td>@info.Replace</td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { id = info.Id }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "del", new { idList = info.Id }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<a href="#" delUrl="@Url.Action("del")" class="batch batchDel">批量删除</a>
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

@@ -1,0 +1,102 @@
+﻿@model BrnShop.Web.Admin.Models.CategoryModel
+           
+@section header{
+    <title>修改商品分类</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+}
+@section body{
+    <h1 class="rightH1">
+        分类管理 &gt;&gt; 修改分类
+        <div class="right">
+            <a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT">
+                <img src="/administration/content/images/goback.jpg" />返回列表</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="addTable">
+        @using (Html.BeginForm())
+        {
+            <table width="100%">
+                <tr>
+                    <td width="76px" align="right">
+                        分类名称：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.CategroyName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.CategroyName)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        所属分类：
+                    </td>
+                        <td>
+    <select data-val="true" data-val-number="字段 ParentCateId 必须是一个数字。" data-val-range="请选择分类" data-val-range-max="2147483647" data-val-range-min="0" data-val-required="ParentCateId 字段是必需的。" id="ParentCateId" name="ParentCateId">
+    <option @if (0 == Model.ParentCateId){<text>selected="selected"</text>} value="0">顶层分类</option>
+    @foreach (CategoryInfo info in ViewData["categoryList"] as List<CategoryInfo>)
+    {
+        <option @if (info.CateId == Model.ParentCateId){<text>selected="selected"</text>} value="@info.CateId">@Html.Raw(CommonHelper.GetHtmlBS(info.Layer - 1)) @info.Name</option>
+    }
+    </select>
+    @Html.ValidationMessageFor(x => x.ParentCateId)
+    </td>
+                </tr>
+                      <tr>
+                    <td align="right">
+                        价格区间：
+                    </td>
+                    <td>
+                    <div class="left">@Html.TextAreaFor(x => x.PriceRange, new { cols = "25", rows = "10" })</div>
+                    <div class="left">
+                            <br />
+                            <br />
+                            @Html.ValidationMessageFor(x => x.PriceRange)
+                            <br />
+                            (1)：每一行为一个价格筛选，用回车分隔
+                            <br />
+                            (2)：价格筛选有两种格式。一种为“开始价格-结束价格”用"-"分隔；另一种为只有“开始价格”
+                    </div>
+                    <div class="clear"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">
+                        排序：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.DisplayOrder, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.DisplayOrder)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        <a href="" class="addBt" id="sumbitBut">
+                            <img src="/administration/content/images/submit.jpg" /></a>
+                        <script type="text/javascript">
+                            $(function () {
+                                $("#sumbitBut").click(function () {
+                                    $("form:first").submit();
+                                    return false;
+                                })
+                            });
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}

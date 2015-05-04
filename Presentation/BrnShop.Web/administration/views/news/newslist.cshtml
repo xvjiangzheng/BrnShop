@@ -1,0 +1,110 @@
+﻿@model BrnShop.Web.Admin.Models.NewsListModel
+
+@section header{
+<title>新闻列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+新闻管理 &gt;&gt; 新闻列表
+<div class="right">
+<a href="@Url.Action("addnews")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加新闻</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("newslist", "news"))
+{
+    
+    <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+    <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>新闻类型：</td>
+        <td width="90">@Html.DropDownListFor(x => x.NewsTypeId, ViewData["newsTypeList"] as List<SelectListItem>)</td>        
+        <td>新闻标题：</td>
+        <td width="130">@Html.TextBox("NewsTitle", Model.NewsTitle, new { height = "18" })</td>
+       <td>
+       <input id="SearchNews" name="SearchNews" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="60" align="left" name="sortTitle" column="newsid" direction="DESC">编号</th>
+    <th width="150" align="left" name="sortTitle" column="newstypeid" direction="DESC">类型</th>
+    <th align="left">标题</th>
+    <th width="60" align="left" name="sortTitle" column="isshow" direction="DESC">显示</th>
+    <th width="60" align="left" name="sortTitle" column="istop" direction="DESC">置顶</th>
+    <th width="60" align="left" name="sortTitle" column="ishome" direction="DESC">置首</th>
+    <th width="60" align="left" name="sortTitle" column="displayorder" direction="ASC">排序</th>  
+    <th width="96" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.NewsList.Rows)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@row["newsid"]" selectItem="true" name="newsIdList" /></td>
+    <td>@row["newsid"]</td>
+    <td>@row["name"]</td>
+    <td>@row["title"]</td>
+    <td>
+      @if (row["isshow"].ToString() == "0")
+      {
+          @:否
+      }
+      else
+      {
+            @:是
+      }
+    </td>
+    <td>
+      @if (row["istop"].ToString() == "0")
+      {
+          @:否
+      }
+      else
+      {
+            @:是
+      }
+    </td>
+    <td>
+      @if (row["ishome"].ToString() == "0")
+      {
+          @:否
+      }
+      else
+      {
+            @:是
+      }
+    </td>
+    <td>@row["displayorder"]</td>
+    <td>
+        @Html.ActionLink("[编辑]", "editnews", new { newsId = row["newsid"] }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "delnews", new { newsIdList = row["newsid"] }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<a href="#" delUrl="@Url.Action("delnews")" class="batch batchDel">批量删除</a>
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

@@ -1,0 +1,118 @@
+﻿@model BrnShop.Web.Admin.Models.AdminGroupModel
+
+@section header{
+    <title>添加管理员组</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <style type="text/css">
+        .actionDiv{ width:110px; float:left;}
+    </style>
+    <script type="text/javascript">
+    @{
+            StringBuilder sb = new StringBuilder();
+            if(Model.ActionList!=null)
+            {
+            foreach (string action in Model.ActionList)
+            {
+                sb.AppendFormat("\"{0}\",",action);
+            }
+            }
+            if (sb.Length > 0)
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+    }
+        var actionArray = new Array(@Html.Raw(sb.ToString()));
+        $(function () {
+            for (var i = 0; i < actionArray.length; i++) {
+                $("#" + actionArray[i]).attr("checked", true);
+            }
+        })
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+管理员组管理 &gt;&gt; 添加管理员组
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="86px" align="right">名称：</td>
+    <td>@Html.TextBoxFor(x => x.AdminGroupTitle, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.AdminGroupTitle)</td>
+    </tr>
+    @{
+        List<AdminActionInfo> adminActionTree = ViewData["adminActionTree"] as List<AdminActionInfo>;
+        int temp = 0;
+        foreach (AdminActionInfo info in adminActionTree)
+        {
+            if (info.ParentId == 0)
+            {
+                if (temp == 0)
+                {
+                    <text>
+                    <tr>
+                    <td align="right">@info.Title：</td>
+                    <td>
+                    </text>
+                }
+                else
+                {
+                    @:</td>
+                    @:</tr>
+                    <text>
+                    <tr>
+                    <td align="right">@info.Title：</td>
+                    <td>
+                    </text>
+                }
+            }
+            else
+            {
+                <div class="actionDiv">
+                    <label><input type="checkbox" name="ActionList" value="@info.Action" id="@info.Action" class="checkbox" />@info.Title</label>
+                </div>
+            }
+            
+            temp++;
+            
+            if (temp == adminActionTree.Count)
+            {
+                    @:</td>
+                    @:</tr>
+            }
+        }
+     }
+
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

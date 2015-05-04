@@ -1,0 +1,114 @@
+﻿@model BrnShop.Web.Admin.Models.ProductReviewReplyListModel
+
+@section header{
+    <title>商品评价回复列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript">
+        /*状态*/
+        $(function () {
+            $(".changeState").click(function () {
+                var obj = $(this);
+                var state = obj.attr("state");
+                var message = "";
+                var url = "";
+                if (state == "1") {
+                    message = "您确认要屏蔽此评价回复吗？";
+                    url = obj.attr("url") + "&state=1" + "&t=" + new Date();
+                }
+                else {
+                    message = "您确认要显示此评价回复吗？";
+                    url = obj.attr("url") + "&state=0" + "&t=" + new Date();
+                }
+                $.jBox.confirm(message, "提示", function (v, h, f) {
+                    if (v == 'ok') {
+                        $.jBox.tip("正在设置...", 'loading');
+                        $.get(url, function (data, textStatus) {
+                            if (data != "0") {
+                                if (state == "1") {
+                                    obj.attr("state", 0);
+                                    obj.html("[显示]");
+                                    obj.parents("tr").find(".stateTd").html("屏蔽");
+                                }
+                                else {
+                                    obj.attr("state", 1);
+                                    obj.html("[屏蔽]");
+                                    obj.parents("tr").find(".stateTd").html("显示");
+                                }
+                                $.jBox.tip('设置成功！', 'success');
+                            } else {
+                                $.jBox.error('设置失败，请联系管理员！', '设置失败');
+                            }
+                        });
+                    }
+                    else if (v == 'cancel') {
+                        // 取消
+                    }
+                    return true; //close
+                });
+                return false;
+            });
+        })
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+商品评价 &gt;&gt; 商品评价回复列表
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+<div class="table_top"></div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10"></th>
+    <th width="100" align="left" >回复人</th>
+    <th align="left" >回复内容</th>
+    <th width="50" align="left" >状态</th>  
+    <th width="140" align="left" >回复时间</th>
+    <th width="90" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.ProductReviewReplyList.Rows)
+  {
+  <tr>
+    <td></td>
+    <td>@row["nickname"]</td>
+    <td>@row["message"]</td>
+    <td class="stateTd">
+      @if (row["state"].ToString() == "0")
+      {
+        @:显示
+      }
+      else
+      {
+        @:屏蔽
+      }
+    </td>
+    <td>@row["reviewtime"]</td>
+    <td>
+      @if (row["state"].ToString() == "0")
+      {
+        <a href="#" url="@Url.Action("changeproductreviewstate", new { reviewId = row["reviewid"] })" state="1" class="editOperate changeState">[屏蔽]</a>
+      }
+      else
+      {
+        <a href="#" url="@Url.Action("changeproductreviewstate", new { reviewId = row["reviewid"] })" state="0" class="editOperate changeState">[显示]</a>
+      }
+      @Html.ActionLink("[删除]", "delproductreview", new { reviewId = row["reviewid"] }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="table_bottom"></div>
+}

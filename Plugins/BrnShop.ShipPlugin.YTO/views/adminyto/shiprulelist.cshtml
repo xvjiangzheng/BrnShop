@@ -1,0 +1,48 @@
+﻿@model BrnShop.ShipPlugin.YTO.ShipRuleListModel
+
+<h1 class="rightH1">
+插件管理 &gt;&gt; 插件配置
+<div class="right"><a href="@Url.Action("config", "plugin", new { configController = "AdminYTO", configAction = "AddShipRule" })" class="menuBT"><img src="/Administration/Content/Images/add.jpg" />添加配送规则</a>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+<div class="table_top"></div>
+<div class="dataList">
+<table width="100%">
+<thead>
+<tr>
+<th width="10"></th>
+<th width="150" align="left">名称</th>
+<th width="150" align="left">类型</th>
+<th align="left">所辖地区</th>
+<th width="76" align="left">管理操作</th>
+</tr>
+</thead>
+<tbody>
+    @foreach (BrnShop.ShipPlugin.YTO.ShipRuleInfo info in Model.ShipRuleList)
+    {
+<tr>
+<td></td>
+<td>@info.Name</td>
+<td>
+@if(info.Type==0)
+{
+    @:按重量计算
+}
+else
+{
+    @:按商品件数计算
+}
+</td>
+<td>@info.RegionTitle</td>
+<td>
+   @Html.ActionLink("[编辑]", "config", "plugin", new { configController = "AdminYTO", configAction = "EditShipRule", shipRuleName = info.Name }, new { @class = "editOperate" })
+   @Html.ActionLink("[删除]", "delshiprule", new { shipRuleName = info.Name }, new { @class = "deleteOperate" })
+</td>
+</tr>
+    }
+</tbody>
+</table>
+</div>
+<div class="table_bottom"></div>

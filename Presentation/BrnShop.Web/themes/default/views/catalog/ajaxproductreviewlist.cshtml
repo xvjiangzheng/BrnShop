@@ -1,0 +1,84 @@
+﻿@model BrnShop.Web.Models.AjaxProductReviewListModel
+@{
+    Layout = null;
+}
+@foreach (DataRow row in Model.ProductReviewList.Rows)
+{
+<div class="itme">
+  <div class="user">
+    @{
+    string avatar = row["avatar"].ToString();
+    if (string.IsNullOrWhiteSpace(avatar))
+    {
+      <img src="@{@WorkContext.ImageCDN}/themes/default/images/user-avatar.gif" width="50" height="50" /> 
+    }
+    else
+    {
+      <img src="@{@WorkContext.ImageCDN}/upload/user/thumb50_50/@row["avatar"]" width="50" height="50" /> 
+    }
+    }
+      <div class="userName">@row["nickname"]</div>
+      <div class="userLV">@row["title"]</div>
+  </div>
+<div class="user_i">
+    <div class="itmeSJ"></div>
+    <div class="user_i_t"><div class="star"><span class="star_yellow" style=" width:@Html.Raw((TypeHelper.ObjectToInt(row["star"]) * 20).ToString())%;">&nbsp;</span></div><i>@row["reviewtime"]</i></div>
+    <dl>
+      <dt>心得：</dt>
+      <dd>@row["message"]</dd>
+      <div class="clear"></div>
+    </dl>
+    <dl>
+      <dt>购买时间：</dt>
+      <dd>@row["buytime"]</dd>
+      <div class="clear"></div>
+    </dl>
+@*
+    <dl>
+  <dt>型号：</dt>
+  <dd>联通3G双卡版-630</dd>
+  <div class="clear"></div>
+    </dl>
+    *@
+</div>
+</div>
+}
+@if (Model.PageModel.TotalPages > 1)
+{
+<div>
+<a href="@Url.Action("productreviewlist", new RouteValueDictionary { { "pid", Model.Pid } })" style=" display:block; float:left; margin-left:130px; padding-top:10px; color:#005aa0;" >[查看全部评价]</a>
+<div style=" float:right;">
+<div class="page">
+@if (Model.PageModel.HasPrePage)
+{
+<a href="javascript:getProductReviewList(@Model.Pid,@Model.ReviewType,@Model.PageModel.PrePageNumber)" class="up">上一页</a>
+}
+else
+{
+<a href="javascript:void(0)" class="up">上一页</a>
+}
+@for (int i = 1; i <= Model.PageModel.TotalPages; i++)
+{
+    if (i == @Model.PageModel.PageNumber)
+    {
+    <a href="javascript:void(0)" class="hot">@i</a>
+    }
+    else
+    { 
+    <a href="javascript:getProductReviewList(@Model.Pid,@Model.ReviewType,@i)">@i</a>
+    }
+}
+@if (Model.PageModel.HasNextPage)
+{
+<a href="javascript:getProductReviewList(@Model.Pid,@Model.ReviewType,@Model.PageModel.NextPageNumber)" class="down">下一页</a>
+}
+else
+{
+<a href="javascript:void(0)" class="down">下一页</a>
+}
+</div>
+</div>
+<div class="clear"></div>
+</div>
+}
+<div id="productReviewCount" style=" display:none;">(已有 @Model.PageModel.TotalCount 人评价)</div>

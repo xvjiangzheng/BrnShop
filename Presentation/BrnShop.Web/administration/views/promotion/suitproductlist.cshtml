@@ -1,0 +1,208 @@
+﻿@model BrnShop.Web.Admin.Models.SuitProductListModel
+           
+@section header{
+    <title>商品列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+    <script type="text/javascript">
+        /*数量*/
+        var packagenumbertempvalue = 0;
+        $(function () {
+            $(".packagenumberinput").focus(function () {
+                var packagenumberinputobj = $(this);
+                packagenumberinputtempvalue = packagenumberinputobj.val();
+                packagenumberinputobj.val("");
+                packagenumberinputobj.attr("class", "selectedsortinput");
+            });
+            $(".packagenumberinput").blur(function () {
+                var packagenumberinputobj = $(this);
+                if (packagenumberinputobj.val() == "") {
+                    packagenumberinputobj.val(packagenumberinputtempvalue)
+                }
+                else {
+                    var reg = /^-?\d+$/;
+                    if (!reg.test(packagenumberinputobj.val())) {
+                        packagenumberinputobj.val(packagenumberinputtempvalue).attr("class", "selectedsortinput");
+                        alert("只能输入数字！")
+                        return;
+                    }
+                    else {
+                        if (packagenumberinputtempvalue != packagenumberinputobj.val()) {
+                            $.jBox.tip("正在更新...", 'loading');
+                            $.get(packagenumberinputobj.attr("url") + "&number=" + packagenumberinputobj.val(), function (data, textStatus) {
+                                if (data != "0") {
+                                    $.jBox.tip('更新成功！', 'success');
+                                } else {
+                                    packagenumberinputobj.val(packagenumberinputtempvalue);
+                                    $.jBox.error('更新失败，请联系管理员！', '更新失败');
+                                }
+                            });
+                        }
+                    }
+                }
+                packagenumberinputobj.attr("class", "unselectedsortinput");
+            });
+
+
+            //折扣
+            var discountinputtempvalue = 0;
+            $(".discountinput").focus(function () {
+                var discountinputobj = $(this);
+                discountinputtempvalue = discountinputobj.val();
+                discountinputobj.val("");
+                discountinputobj.attr("class", "selectedsortinput");
+            });
+            $(".discountinput").blur(function () {
+                var discountinputobj = $(this);
+                if (discountinputobj.val() == "") {
+                    discountinputobj.val(discountinputtempvalue)
+                }
+                else {
+                    var reg = /^\d+(\.\d{1,2})?$/;
+                    if (!reg.test(discountinputobj.val())) {
+                        discountinputobj.val(discountinputtempvalue).attr("class", "selectedsortinput");
+                        alert("只能输入正数且最多两位小数！")
+                        return;
+                    }
+                    else {
+                        if (discountinputtempvalue != discountinputobj.val()) {
+                            $.jBox.tip("正在更新...", 'loading');
+                            $.get(discountinputobj.attr("url") + "&discount=" + discountinputobj.val(), function (data, textStatus) {
+                                if (data != "0") {
+                                    $.jBox.tip('更新成功！', 'success');
+                                } else {
+                                    discountinputobj.val(discountinputtempvalue);
+                                    $.jBox.error('更新失败，请联系管理员！', '更新失败');
+                                }
+                            });
+                        }
+                    }
+                }
+                discountinputobj.attr("class", "unselectedsortinput");
+            });
+
+        });
+
+
+    </script>
+}
+@section body{
+    <h1 class="rightH1">
+        套装管理 &gt;&gt; 商品列表
+        <div class="right">
+            <a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT">
+                <img src="/administration/content/images/goback.jpg" />返回列表</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="table_top">
+    </div>
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="10" align="center"></th>
+                    <th width="80" align="left">商品编号</th>
+                    <th align="left">商品名称</th>
+                    <th width="100" align="left">商城价格</th>
+                    <th width="80" align="center">折扣</th>
+                    <th width="80" align="center">数量</th>
+                    <th width="72" align="left">管理操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ExtSuitProductInfo info in Model.ExtSuitProductList)
+                {
+                    <tr>
+                        <td align="center"></td>
+                        <td>@info.Pid</td>
+                        <td>@info.Name</td>
+                        <td>@info.ShopPrice</td>
+                       <td align="center">
+                            <input type="text" url="@Url.Action("updatesuitproductdiscountvalue", new { pmId = Model.PmId, pid = info.Pid })" value="@info.Discount" class="discountinput unselectedsortinput" />
+                        </td>
+                        <td align="center">
+                            <input type="text" url="@Url.Action("updatesuitproductnumber", new { pmId = Model.PmId, pid = info.Pid })" value="@info.Number" class="packagenumberinput unselectedsortinput" />
+                        </td>
+                        <td>
+                        <a href="#" url="@Url.Action("delsuitproduct", new { pmId = Model.PmId, pid = info.Pid })" class = "ajaxdeleteOperate" }>[删除]</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="table_bottom">
+    </div>
+    @using (Html.BeginForm("addsuitproduct", "promotion"))
+    {
+        <input type="hidden" id="PmId" name="PmId" value="@Model.PmId" />
+        <div class="addTable" style="margin-left: 15px; margin-bottom: 10px; padding-top: 10px;
+            border: 2px solid #dbeffa">
+            <table width="100%">
+                <tbody>
+                     <tr>
+                        <td width="56px" align="right">
+                            商品：
+                        </td>
+                        <td>
+                            <div class="selectBt">
+                                <input type="button" value="选择商品" onclick="openProductSelectLayer(this)"/>
+                                <input type="hidden" class="Pid" id="Pid" name="Pid" value="0" />
+                                <input type="hidden" class="ProductName" id="ProductName" name="ProductName" value="选择商品" />
+                            </div>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td align="right">折扣：</td>
+                        <td>
+                            <input type="text" id="discount" name="discount" value="0" class = "input" size = "5"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            数量：
+                        </td>
+                        <td>
+                            <input type="text" id="number" name="number" value="1" class = "input" size = "5"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                        </td>
+                        <td>
+                            <input type="image" id="addProduct" style="margin: 0px; padding: 0px;" src="/administration/content/images/a.jpg" />
+                            <script type="text/javascript">
+                                $("#addProduct").click(function () {
+                                    if (parseInt($("#Pid").val()) < 1) {
+                                        alert("请选择商品");
+                                        return false;
+                                    }
+                                    else if (parseInt($("#discount").val()) < 0) {
+                                        alert("折扣不能小于0");
+                                        return false;
+                                    }
+                                    else if (parseInt($("#number").val()) < 1) {
+                                        alert("数量必须大于0");
+                                        return false;
+                                    }
+                                    else {
+                                        $(this).parents("form").submit();
+                                        return false;
+                                    }
+                                })
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}

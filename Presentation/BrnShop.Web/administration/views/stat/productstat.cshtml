@@ -1,0 +1,99 @@
+﻿@model BrnShop.Web.Admin.Models.ProductStatModel
+
+@section header{
+    <title>商品统计</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <link rel="stylesheet" type="text/css"  href="/administration/content/jbox/Skins/Default/jbox.css"/>
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+报表统计 &gt;&gt; 商品统计
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+    
+    <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+    <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+<div class="dataListSearch">
+<table height="32">
+                <tbody>
+                    <tr>
+                        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif" /></td>
+                        <td>商品分类：</td>
+                        <td width="100">
+                            <div class="selectBt">
+                                <input type="button" value="@Model.CategoryName" onclick="openCategorySelectLayer(this)" style="height:22px; line-height:22px;background:url(/administration/content/images/selectbgico.gif) no-repeat 6px center; padding-left:22px; padding-right:10px;"/>
+                                <input type="hidden" class="CateId" id="CateId" name="CateId" value="@Model.CateId" />
+                                <input type="hidden" class="CategoryName" id="CategoryName" name="CategoryName" value="@Model.CategoryName" />
+                            </div>
+                        </td>
+                        <td>商品品牌：</td>
+                        <td width="80">
+                            <div class="selectBt">
+                                <input type="button" value="@Model.BrandName" onclick="openBrandSelectLayer(this)" style="height:22px; line-height:22px;background:url(/administration/content/images/selectbgico.gif) no-repeat 6px center; padding-left:22px; padding-right:10px;"/>
+                                <input type="hidden" class="BrandId" id="BrandId" name="BrandId" value="@Model.BrandId" />
+                                <input type="hidden" class="BrandName" id="BrandName" name="BrandName" value="@Model.BrandName" />
+                            </div>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商品名称：</td>
+                        <td width="180">@Html.TextBox("ProductName", Model.ProductName, new { height = "28", size = "30" })</td>
+                        <td><input id="SearchProduct" name="SearchProduct" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" /></td>
+                    </tr>
+                </tbody>
+     </table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+                <thead>
+                    <tr>
+                        <th width="10" align="center"></th>
+                        <th width="150" align="left">商品编号</th>
+                        <th align="left">商品名称</th>
+                        <th width="100" align="left">商品价格</th>
+                        <th width="100" align="center" name="sortTitle" column="reviewcount" direction="DESC">评价数量</th>
+                        <th width="100" align="center" name="sortTitle" column="visitcount" direction="DESC">访问数量</th>
+                        <th width="100" align="center" name="sortTitle" column="salecount" direction="DESC">购买数量</th>
+                        <th width="100" align="center">访问购买率</th>
+                    </tr>
+                </thead>
+  <tbody>
+  @foreach (DataRow row in Model.ProductList.Rows)
+  {
+  <tr>
+    <td align="center"></td>
+    <td>@row["psn"]</td>
+    <td>@row["name"]</td>
+    <td>@row["shopprice"]</td>
+    <td align="center">@row["reviewcount"]</td>
+    <td align="center">@row["visitcount"]</td>
+    <td align="center">@row["salecount"]</td>
+    @if ((int)row["visitcount"] != 0)
+    {
+    <td align="center">@Math.Round((decimal)((int)row["salecount"] / (int)row["visitcount"]), 2)%</td>
+    }
+    else
+    { 
+    <td align="center">0%</td>
+    }
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

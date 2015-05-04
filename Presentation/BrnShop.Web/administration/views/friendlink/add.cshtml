@@ -1,0 +1,139 @@
+﻿@model BrnShop.Web.Admin.Models.FriendLinkModel
+
+@section header{
+    <title>添加友情链接</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <link href="/administration/content/css/uploadify.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        //防止chrome缓存jquery.uploadify.js文件，而引起chrome崩溃
+        document.write("<script type='text/javascript' "
+            + "src='/administration/scripts/jquery.uploadify.js?" + new Date()
+            + "'></s" + "cript>");  
+    </script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+     <script type="text/javascript">
+         $(function () {
+             $("#uploadify").uploadify({
+                'formData': { 'uid': '@WorkContext.Uid', 'password': '@WorkContext.EncryptPwd' },
+                 'swf': '/administration/content/flashes/uploadify.swf',
+                 'uploader': '@WorkContext.ShopConfig.UploadServer/admin/tool/upload?operation=uploadfriendlinklogo',
+                 'buttonText': '上传图片',
+                 'height': 24,
+                 'width': 80,
+                 'fileTypeDesc': 'Image Files',
+                 'fileTypeExts': '@ViewData["allowImgType"]',
+                 'fileSizeLimit': '@ViewData["maxImgSize"]',
+                 'auto': true,
+                 'multi': false,
+                 'removeTimeout': 2,
+                 'onUploadSuccess': function (file, data, response) {
+                     if (data == "-1")
+                         alert('上传图片不能为空');
+                     else if (data == "-2")
+                         alert('上传图片的类型不允许');
+                     else if (data == "-3")
+                         alert('上传图片超过系统允许的最大大小');
+                     else {
+                         $(".uploadPreview").empty().append("<img width=\"88\" height=\"88\" src=\"@WorkContext.ShopConfig.UploadServer/upload/friendlink/" + data + "\"  />");
+                         $("#FriendLinkLogo").val(data);
+                         $(".upload span[htmlFor='FriendLinkLogo']").empty();
+                     }
+                 }
+             });
+         });
+    
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+友情链接管理 &gt;&gt; 添加友情链接
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="80px" align="right">链接名称：</td>
+    <td>@Html.TextBoxFor(x => x.FriendLinkName, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.FriendLinkName)</td>
+    </tr>
+          <tr>
+    <td align="right">链接提示：</td>
+    <td>@Html.TextBoxFor(x => x.FriendLinkTitle, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.FriendLinkTitle)</td>
+    </tr>
+          <tr>
+    <td align="right">链接地址：</td>
+    <td>@Html.TextBoxFor(x => x.FriendLinkUrl, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.FriendLinkUrl)</td>
+    </tr>
+        <tr>
+    <td align="right">Logo地址：</td>
+    <td>
+
+      <div class="upload">
+        <div class="uploadPreview">
+         @{
+    if (!string.IsNullOrEmpty(Model.FriendLinkLogo))
+    {
+            <img width="88" height="88" src="@WorkContext.ShopConfig.UploadServer/upload/friendlink/@Model.FriendLinkLogo" /> 
+    }
+    else
+    {
+                                @:暂无图片
+        }
+}
+        </div>
+        <div class="uploadProgressBar" id="uploadify-queue"></div>
+        <div class="uploadBut"><input type="file" name="uploadify" id="uploadify" /></div>
+        @Html.TextBoxFor(x => x.FriendLinkLogo, new { @class = "hide" })
+        <div style="position:absolute; top:30px; left:180px;">@Html.ValidationMessageFor(x => x.FriendLinkLogo)</div>
+      </div>
+
+    </td>
+    </tr>
+                <tr>
+                    <td align="right">
+                        打开目标：
+                    </td>
+                    <td>
+                        <p>
+                            <label>@Html.RadioButtonFor(x => x.Target, 0, new { @class = "checkbox" })本窗口</label>
+                            <label>@Html.RadioButtonFor(x => x.Target, 1, new { @class = "checkbox" })新窗口</label>
+                            <br />
+                        </p>
+                    </td>
+                </tr>
+
+      <tr>
+    <td align="right">排序：</td>
+    <td>@Html.TextBoxFor(x => x.DisplayOrder, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.DisplayOrder)</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

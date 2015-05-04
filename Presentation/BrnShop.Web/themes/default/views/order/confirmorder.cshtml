@@ -1,0 +1,560 @@
+﻿@model BrnShop.Web.Models.ConfirmOrderModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>确认订单-@{@WorkContext.ShopConfig.SiteTitle}</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/buy.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@{@WorkContext.ScriptCDN}/scripts/utils.js"></script>
+    <script type="text/javascript" src="@{@WorkContext.ScriptCDN}/scripts/order.js"></script>
+    <script type="text/javascript" src="@{@WorkContext.ScriptCDN}/scripts/region.js"></script>
+</head>
+
+<body>
+
+<div id="headerBar" class="bigBox">
+<div class="box">
+欢迎访问 @WorkContext.ShopConfig.ShopName
+<div  class="headerLink">
+    @if (WorkContext.Uid < 1)
+    {
+        <a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">[登录]</a>
+        <a href="@Url.Action("register", "account")" class="A_b">[注册]</a>
+    }
+    else
+    {
+        @:您好: @WorkContext.NickName
+        <a href="@Url.Action("logout", "account")">[退出]</a>
+        if (WorkContext.AdminGid > 1)
+        {
+        <a href="@Url.Action("index", "home", new RouteValueDictionary { { "area", "admin" } })">[商城管理]</a>
+        }
+        <a href="@Url.Action("orderlist", "ucenter")">[我的订单]</a>
+    }
+</div>
+</div> 
+</div>
+
+<div id="buyTop" class="box">
+    <a href="/"><img src="@{@WorkContext.ImageCDN}/themes/default/images/logo.jpg" width="202" height="53" /></a>
+    <div class="buyStep">
+        <ul>
+            <li><s>1</s>1.我的购物车</li>
+            <li class="hot"><s>2</s>2.填写核对订单信息</li>
+            <li><s>3</s>3.成功提交订单</li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+</div>
+
+<div id="order" class="box">
+<h1>填写并核对订单信息</h1>
+<dl class="orderItme">
+<dt>收货人信息<a href="javascript:getShipAddressList()" class="shrSelectBt">[修改]</a></dt>
+<dd class="showOrder" id="shipAddressShowBlock">
+    @if (Model.DefaultFullShipAddressInfo != null)
+    {
+    <p> @Model.DefaultFullShipAddressInfo.Consignee @Model.DefaultFullShipAddressInfo.Mobile </p>
+    <p> @Model.DefaultFullShipAddressInfo.ProvinceName @Model.DefaultFullShipAddressInfo.CityName @Model.DefaultFullShipAddressInfo.CountyName @Model.DefaultFullShipAddressInfo.Address </p>
+    }
+    else
+    { 
+       <text><p>您还没有配送地址，请先添加。<a href="javascript:void(0)" onclick="getShipAddressList()">点击添加</a><p></text>
+    }
+</dd>
+<dd class="shrSelect" id="shipAddressListBlock"></dd>
+<form name="addShipAddressForm" action="">
+<div id="addShipAddressBlock" style="display:none;">
+<dd class="shrEdit">
+
+<div class="shrCell">
+<span><em>*</em>昵称：</span>
+<div class="cellCon"><input type="text" name="alias" value="" class="text" /></div>
+</div>
+
+<div class="shrCell @*shrCellError*@">
+<span><em>*</em>收货人：</span>
+<div class="cellCon"><input type="text" name="consignee" value="" class="text" /></div>
+@*<div class="error">请您填写收货人姓名</div>*@
+</div>
+
+<div class="shrCell">
+<span><em>*</em>所在地区：</span>
+<div class="cellCon">
+            <select id="provinceId" name="provinceId">
+            <option selected="selected" value="-1">请选择</option>
+            </select>
+            <select id="cityId" name="cityId">
+            <option selected="selected" value="-1">请选择</option>
+            </select>
+            <select id="regionId" name="regionId">
+            <option selected="selected" value="-1">请选择</option>
+            </select>
+      @*<i>标“*”的为支持货到付款的地区,<a href="#">查看货到付款地区</a></i>*@
+</div>
+</div>
+
+<div class="shrCell">
+<span><em>*</em>详细地址：</span>
+<div class="cellCon"><input type="text" name="address" value="" class="text" /></div>
+</div>
+
+<div class="shrCell">
+<span><em>*</em>手机号码：</span>
+<div class="cellCon"><input type="text" name="mobile" value="" class="text" /> &nbsp;&nbsp;或 &nbsp;&nbsp;固定电话：<input type="text" name="phone" value="" class="text" /></div>
+</div>
+
+<div class="shrCell">
+<span><em></em>电子邮箱：</span>
+<div class="cellCon"><input type="text" name="email" value="" class="text" /> 
+&nbsp;&nbsp;用来接收订单提醒邮件，便于您及时了解订单状态</div>
+</div>
+
+<div class="shrCell">
+<span><em></em>邮政编码：</span>
+<div class="cellCon"><input type="text" name="zipcode" value="" class="text" /></div>
+</div>
+
+</dd>
+<dd>
+<div class="shrBT">
+<a href="javascript:void(0)" onclick="javascript:addShipAddress()" class="redBT">保存收货人信息</a>
+</div>
+</dd>
+</div>
+</form>
+</dl>
+
+<dl class="orderItme">
+<dt>支付方式<a href="javascript:void(0)" onclick="showPayPluginList()" class="shrSelectBt">[修改]</a></dt>
+<dd class="showOrder" id="payPluginShowBlock">
+    @if (Model.DefaultPayPluginInfo != null)
+    {
+        <p> @Model.DefaultPayPluginInfo.FriendlyName  @Model.DefaultPayPluginInfo.Description </p>
+    }
+    else
+    {
+        <text><p>请选择支付方式。<a href="javascript:void(0)" onclick="showPayPluginList()">点击选择</a></p></text>
+    }
+</dd>
+<dd class="zffs" id="payPluginListBlock" style=" display:none;">
+<ul class="zffsList">
+    @foreach (PluginInfo info in Model.PayPluginList)
+    { 
+        <li><label><b><input type="radio" class="radio" name="payPluginItem" onclick="selectPayPlugin('@info.SystemName', '@info.FriendlyName')" />@info.FriendlyName</b><i>@info.Description</i></label></li>
+    }
+</ul>
+</dd>
+</dl>
+
+<dl class="orderItme">
+<dt>配送方式<a href="javascript:void(0)" onclick="showShipPluginList()" class="shrSelectBt">[修改]</a></dt>
+<dd class="showOrder" id="shipPluginShowBlock">
+    @if (Model.DefaultShipPluginInfo != null)
+    {
+        <p> @Model.DefaultShipPluginInfo.FriendlyName  @Model.DefaultShipPluginInfo.Description </p>
+    }
+    else
+    {
+        <text><p>请选择配送方式。<a href="javascript:void(0)" onclick="getShipPluginList()">点击选择</a></p></text>
+    }
+</dd>
+<dd class="zffs" id="shipPluginListBlock" style=" display:none;">
+<ul class="zffsList">
+    @foreach (PluginInfo info in Model.ShipPluginList)
+    { 
+        <li><label><b><input type="radio" class="radio" name="payPluginItem" onclick="selectShipPlugin('@info.SystemName', '@info.FriendlyName')"/>@info.FriendlyName</b><i>@info.Description</i></label></li>
+    }
+</ul>
+</dd>
+</dl>
+
+<dl class="orderItme">
+<dt><div class="left">商品清单</div><div class="right"><a href="@Url.Action("index", "cart")">返回修改购物车</a></div><div class="clear"></div></dt>
+<dd style="padding-left:0;">
+<div id="buyDT">
+<ul>
+    <li class="checkT">&nbsp;</li>
+    <li class="productT">商品</li>
+    <li class="priceT">价格</li>
+    <li class="promotionT">优惠</li>
+    <li class="numberT">数量</li>
+</ul>
+</div>
+    @foreach (CartItemInfo info in Model.CartItemList)
+    {
+    <div class="buyItme">
+        @if (info.Type == 0)
+        {
+            CartProductInfo cartProductInfo = (CartProductInfo)info.Item;
+            if (cartProductInfo.Selected)
+            {
+                <div class="buyItmeC">
+                <div class="cell checkC">&nbsp;</div>
+                <div class="cell productC">
+                <div class="productC1">
+                    <img src="@{@WorkContext.ImageCDN}/upload/product/show/thumb60_60/@cartProductInfo.OrderProductInfo.ShowImg" width="50" height="50" />
+                    <a href="@Url.Action("product", "catalog", new RouteValueDictionary { { "pid", cartProductInfo.OrderProductInfo.Pid } })">@cartProductInfo.OrderProductInfo.Name</a>
+                    <div class="clear"></div>
+                </div>
+                @if (cartProductInfo.GiftList.Count > 0)
+                {
+                <div class="productC2">
+                @foreach (OrderProductInfo gift in cartProductInfo.GiftList)
+                {
+                <p>[赠品] @gift.Name</p>
+                }
+                </div>
+                }
+                </div>
+                <div class="cell priceC">¥@cartProductInfo.OrderProductInfo.DiscountPrice</div>
+                @if (cartProductInfo.OrderProductInfo.PayCredits > 0 && cartProductInfo.OrderProductInfo.CouponTypeId == 0)
+                {
+                    <div class="priceC1 ">赠积分：<em>@cartProductInfo.OrderProductInfo.PayCredits</em></div>
+                }
+                else if (cartProductInfo.OrderProductInfo.PayCredits == 0 && cartProductInfo.OrderProductInfo.CouponTypeId > 0)
+                {
+                    <div class="priceC1 ">赠优惠劵</div>
+                }
+                else if (cartProductInfo.OrderProductInfo.PayCredits > 0 && cartProductInfo.OrderProductInfo.CouponTypeId > 0)
+                {
+                    <div class="priceC1 ">赠京豆(@cartProductInfo.OrderProductInfo.PayCredits)和优惠劵</div>
+                }
+                else
+                {
+                    <div class="nopriceC1"></div> 
+                }
+                <div class="cell numberC">@cartProductInfo.OrderProductInfo.RealCount</div>
+                <div class="clear"></div>
+                </div>
+            }
+        }
+        else if (info.Type == 1)
+        {
+            CartSuitInfo cartSuitInfo = (CartSuitInfo)info.Item;
+            if (cartSuitInfo.Checked)
+            {
+                <div class="buyItmeC">
+                <div class="cell checkC">&nbsp;</div>
+                <div class="cell productC">
+                @foreach (CartProductInfo cartProductInfo in cartSuitInfo.CartProductList)
+                {
+                <div class="cartSuitItem">                                    
+                <div class="productC1">
+                    <img src="@{@WorkContext.ImageCDN}/upload/product/show/thumb60_60/@cartProductInfo.OrderProductInfo.ShowImg" width="50" height="50" />
+                    <a href="@Url.Action("product", "catalog", new RouteValueDictionary { { "pid", cartProductInfo.OrderProductInfo.Pid } })">@cartProductInfo.OrderProductInfo.Name</a>
+                    <div class="clear"></div>
+                </div>
+                @if (cartProductInfo.GiftList.Count > 0)
+                {
+                <div class="productC2">
+                @foreach (OrderProductInfo gift in cartProductInfo.GiftList)
+                {
+                <p>[赠品] @gift.Name</p>
+                }
+                </div>
+                }
+                </div>
+                }
+                </div>
+                <div class="cell priceC">¥@cartSuitInfo.SuitPrice</div>
+                <div class="nopriceC1"></div> 
+                <div class="cell numberC">@cartSuitInfo.BuyCount</div>
+                <div class="clear"></div>
+                </div> 
+            }
+        }
+        else if (info.Type == 2)
+        {
+            CartFullSendInfo cartFullSendInfo = (CartFullSendInfo)info.Item;
+            if (cartFullSendInfo.IsEnough)
+            {
+                if (cartFullSendInfo.FullSendMinorOrderProductInfo != null)
+                {
+                <div class="buyItme_header"><div class="info"><s>满赠</s>活动商品已购满 @cartFullSendInfo.FullSendPromotionInfo.LimitMoney 元,您已经换购了商品</div></div>
+                <div class="buyItme_header fullSendProductTitle"><div class="info">[换购商品]@cartFullSendInfo.FullSendMinorOrderProductInfo.Name</div></div>
+                }
+                else if (cartFullSendInfo.FullSendPromotionInfo != null)
+                {
+                <div class="buyItme_header"><div class="info"><s>满赠</s>活动商品已购满 @cartFullSendInfo.FullSendPromotionInfo.LimitMoney 元,再加 @cartFullSendInfo.FullSendPromotionInfo.AddMoney 元换购</div></div>
+                }
+            }
+            foreach (CartProductInfo cartProductInfo in cartFullSendInfo.FullSendMainCartProductList)
+            {
+                if (cartProductInfo.Selected)
+                {
+                    <div class="buyItmeC">
+                    <div class="cell checkC">&nbsp;</div>
+                    <div class="cell productC">
+                    <div class="productC1">
+                        <img src="@{@WorkContext.ImageCDN}/upload/product/show/thumb60_60/@cartProductInfo.OrderProductInfo.ShowImg" width="50" height="50" />
+                        <a href="@Url.Action("product", "catalog", new RouteValueDictionary { { "pid", cartProductInfo.OrderProductInfo.Pid } })">@cartProductInfo.OrderProductInfo.Name</a>
+                        <div class="clear"></div>
+                    </div>
+                    @if (cartProductInfo.GiftList.Count > 0)
+                    {
+                    <div class="productC2">
+                    @foreach (OrderProductInfo gift in cartProductInfo.GiftList)
+                    {
+                    <p>[赠品] @gift.Name</p>
+                    }
+                    </div>
+                    }
+                    </div>
+                    <div class="cell priceC">¥@cartProductInfo.OrderProductInfo.DiscountPrice</div>
+                    @if (cartProductInfo.OrderProductInfo.PayCredits > 0 && cartProductInfo.OrderProductInfo.CouponTypeId == 0)
+                    {
+                        <div class="priceC1 ">赠积分：<em>@cartProductInfo.OrderProductInfo.PayCredits</em></div>
+                    }
+                    else if (cartProductInfo.OrderProductInfo.PayCredits == 0 && cartProductInfo.OrderProductInfo.CouponTypeId > 0)
+                    {
+                        <div class="priceC1 ">赠优惠劵</div>
+                    }
+                    else if (cartProductInfo.OrderProductInfo.PayCredits > 0 && cartProductInfo.OrderProductInfo.CouponTypeId > 0)
+                    {
+                        <div class="priceC1 ">赠京豆(@cartProductInfo.OrderProductInfo.PayCredits)和优惠劵</div>
+                    }
+                    else
+                    {
+                        <div class="nopriceC1"></div> 
+                    }
+                    <div class="cell numberC">@cartProductInfo.OrderProductInfo.RealCount</div>
+                    <div class="clear"></div>
+                    </div> 
+                }
+            }
+        }
+        else if (info.Type == 3)
+        {
+            CartFullCutInfo cartFullCutInfo = (CartFullCutInfo)info.Item;
+            if (cartFullCutInfo.IsEnough)
+            {
+               <div class="buyItme_header"><div class="info"><s>满减</s>活动商品已购满 @cartFullCutInfo.LimitMoney 元,优惠 @cartFullCutInfo.CutMoney 元</div><div class="price">&nbsp;</div><s>返现：¥@cartFullCutInfo.CutMoney</s></div>
+            }
+            else
+            {
+               <div class="buyItme_header"><div class="info"><s>满减</s>活动商品购满 @cartFullCutInfo.LimitMoney 元,即可享受满减 @cartFullCutInfo.CutMoney 元</div></div>
+            }
+            foreach (CartProductInfo cartProductInfo in cartFullCutInfo.FullCutCartProductList)
+            {
+                if (cartProductInfo.Selected)
+                {
+                    <div class="buyItmeC">
+                    <div class="cell checkC">&nbsp;</div>
+                    <div class="cell productC">
+                    <div class="productC1">
+                        <img src="@{@WorkContext.ImageCDN}/upload/product/show/thumb60_60/@cartProductInfo.OrderProductInfo.ShowImg" width="50" height="50" />
+                        <a href="@Url.Action("product", "catalog", new RouteValueDictionary { { "pid", cartProductInfo.OrderProductInfo.Pid } })">@cartProductInfo.OrderProductInfo.Name</a>
+                        <div class="clear"></div>
+                    </div>
+                    @if (cartProductInfo.GiftList.Count > 0)
+                    {
+                    <div class="productC2">
+                    @foreach (OrderProductInfo gift in cartProductInfo.GiftList)
+                    {
+                    <p>[赠品] @gift.Name</p>
+                    }
+                    </div>
+                    }
+                    </div>
+                    <div class="cell priceC">¥@cartProductInfo.OrderProductInfo.DiscountPrice</div>
+                    @if (cartProductInfo.OrderProductInfo.PayCredits > 0 && cartProductInfo.OrderProductInfo.CouponTypeId == 0)
+                    {
+                        <div class="priceC1 ">赠积分：<em>@cartProductInfo.OrderProductInfo.PayCredits</em></div>
+                    }
+                    else if (cartProductInfo.OrderProductInfo.PayCredits == 0 && cartProductInfo.OrderProductInfo.CouponTypeId > 0)
+                    {
+                        <div class="priceC1 ">赠优惠劵</div>
+                    }
+                    else if (cartProductInfo.OrderProductInfo.PayCredits > 0 && cartProductInfo.OrderProductInfo.CouponTypeId > 0)
+                    {
+                        <div class="priceC1 ">赠京豆(@cartProductInfo.OrderProductInfo.PayCredits)和优惠劵</div>
+                    }
+                    else
+                    {
+                        <div class="nopriceC1"></div> 
+                    }
+                    <div class="cell numberC">@cartProductInfo.OrderProductInfo.RealCount</div>
+                    <div class="clear"></div>
+                    </div> 
+                }
+            }
+        }
+    </div>
+    }
+    <div style="border-top:1px solid #ddd;"></div>
+</dd>
+
+<dd>
+<div class="orderSum">
+<ul>
+<li><em>@Model.TotalCount 件商品，总商品金额：</em><b>￥@Model.ProductAmount</b></li>
+<li><em>运费：</em><b>￥<span id="shipFeeShowBlock">@Model.ShipFee</span></b></li>
+<li><em>税率：</em><b>￥<span id="payFeeShowBlock">@Model.PayFee</span></b></li>
+<li><em>返现：</em><b>￥@Model.FullCut</b></li>
+<li><em>应付总额：</em><b>￥<span id="orderAmountShowBlock1">@Model.OrderAmount</span></b></li>
+</ul>
+<div class="clear"></div>
+</div>
+</dd>
+</dl>
+
+<div class="orderSum1 borDDD" style="border-top:0;">
+<div class="itme">
+<h3><a href="javascript:;" onclick="openCoupon(this)">使用优惠券抵消部分总额</a></h3>
+<div class="sumCon" id="couponBlock">
+<ul class="tag"><li><a href="javascript:;">可用优惠卷（<em id="validCouponCount">0</em>）</a></li></ul>
+<div class="itmeCon" id="validCouponList">
+@*<p>有优惠券兑换码？ <a href="#">[点击输入兑换码]</a></p>*@
+@*<p>共使用了 <font color="red">0</font> 张优惠券　可以优惠<font color="red">0.00</font> 元</p>*@
+</div>
+</div>
+<script type="text/javascript">
+    function openCoupon(obj) {
+        if (obj.className == "down") {
+            obj.className = "";
+            document.getElementById("couponBlock").style.display = "none";
+        }
+        else {
+            obj.className = "down";
+            document.getElementById("couponBlock").style.display = "block";
+            getValidCouponList();
+        }
+    }
+</script>
+</div>
+
+<div class="itme">
+<h3><a href="javascript:;" onclick="openPayCredit(this)">使用 @Model.PayCreditName</a></h3>
+<div class="sumCon" id="payCreditSumCon">
+<div class="itmeCon">
+<p>本次使用 <input type="text" class="text" size="10" id="payCreditCount" name="payCreditCount" onblur="verifyPayCredit(@Model.UserPayCredits, @Model.MaxUsePayCredits )" />个 @Model.PayCreditName</p>
+<p>您有 @Model.PayCreditName<strong style="color:000;">@Model.UserPayCredits</strong>个，本次可用<strong style="color:#ff6600">@Model.MaxUsePayCredits</strong>个</p>
+</div>
+</div>
+<script type="text/javascript">
+    function openPayCredit(obj) {
+        if (obj.className == "down") {
+            obj.className = "";
+            document.getElementById("payCreditSumCon").style.display = "none";
+        }
+        else {
+            obj.className = "down";
+            document.getElementById("payCreditSumCon").style.display = "block";
+        }
+    }
+</script>
+</div>
+
+<div class="itme">
+<h3><a href="javascript:;" onclick="openBuyerRemark(this)">添加订单备注</a></h3>
+<div class="sumCon" id="buyerRemarkSumCon">
+<div class="itmeCon">
+<p><input type="text" name="buyerRemark" class="text" style="width:890px;" value="" /></p><p>提示：请勿填写与支付、发票、收货方面的信息</p>
+</div>
+</div>
+<script type="text/javascript">
+    function openBuyerRemark(obj) {
+        if (obj.className == "down") {
+            obj.className = "";
+            document.getElementById("buyerRemarkSumCon").style.display = "none";
+        }
+        else {
+            obj.className = "down";
+            document.getElementById("buyerRemarkSumCon").style.display = "block";
+        }
+    }
+</script>
+</div>
+</div>
+
+    @if (Model.IsVerifyCode)
+    { 
+    <div style="float:right; margin-top:14px;"><input type="text" name="verifyCode" id="verifyCode" autocomplete="off" style=" padding:6px 0px;"/></div>
+    <div style="float:right; margin-top:18px;"><img id="verifyImage" style="cursor:hand;" height="24" title="点击刷新验证码" onclick="this.src='/tool/verifyimage?time=' + new Date()" src="/tool/verifyimage" /></div>
+    }
+    <input type="hidden" id="selectedCartItemKeyList" value="@Model.SelectedCartItemKeyList" />
+    <input type="hidden" id="payFee" value="@Model.PayFee" />
+    <input type="hidden" id="shipFee" value="@Model.ShipFee" />
+    <input type="hidden" id="fullCut" value="@Model.FullCut" />
+    <input type="hidden" id="orderAmount" value="@Model.OrderAmount" />
+    @if (Model.DefaultFullShipAddressInfo != null)
+    {
+    <input type="hidden" value="@Model.DefaultFullShipAddressInfo.SAId" name="saId" id="saId" />
+    }
+    else
+    { 
+    <input type="hidden" value="0" name="saId" id="saId" />
+    }
+    @if (Model.DefaultPayPluginInfo != null)
+    {
+        <input type="hidden" value="@Model.DefaultPayPluginInfo.SystemName" name="payName" id="payName" />
+    }
+    else
+    {
+        <input type="hidden" value="" name="payName" id="payName" />
+    }
+    @if (Model.DefaultShipPluginInfo != null)
+    {
+        <input type="hidden" value="@Model.DefaultShipPluginInfo.SystemName" name="shipName" id="shipName" />
+    }
+    else
+    {
+        <input type="hidden" value="" name="shipName" id="shipName" />
+    }
+<div class="buySumBt borDDD" style="border-top:0px;">总计（不含运费）： <b>¥<span id="orderAmountShowBlock2">@Model.OrderAmount</span></b><a href="javascript:submitOrder()" class="redBT">去结算</a> </div>
+</div>
+
+
+<div id="footer" class="bigBox">
+  <div class="bigBox footerB">
+    <div id="footerB">
+      <div class="links">
+        @foreach (FriendLinkInfo info in WorkContext.FriendLinkList)
+        {
+        <a href="@info.Url" target="@info.Target" title="@info.Title">@info.Name</a> @:|
+        }
+      </div>
+      <div>北京市公安局朝阳分局备案编号031143485246&nbsp;&nbsp;|&nbsp;&nbsp;京ICP证047722号&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" target="_blank">互联网药品信息服务资格证编号(京)-经营性-2012-0005</a>&nbsp;&nbsp;|&nbsp;&nbsp;新出发京零&nbsp;字第大145218号<br />石家庄蝶影软件开发有限公司 程序版本 @WorkContext.ShopVersion 版权所有 @WorkContext.ShopCopyright</div>
+      <div><a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_jy.gif"></a> <a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_kx.gif"></a> <a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_wj.png"></a> <a href="#"><img width="112" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_cx.png"></a></div>
+    </div>
+  </div>
+</div>
+    <script type="text/javascript">
+        //绑定省列表的改变事件
+        Event.addHandler(document.getElementById("provinceId"), "change", function (event) {
+            var selectedProvinceId = getSelectedOption(this).value;
+            if (selectedProvinceId > 0) {
+                document.getElementById("regionId").innerHTML = "<option value='-1'>请选择</option>";
+                bindCityList(selectedProvinceId, document.getElementById("cityId"));
+            }
+        })
+
+
+        //绑定市列表的改变事件
+        Event.addHandler(document.getElementById("cityId"), "change", function (event) {
+            var selectedCityId = getSelectedOption(this).value;
+            if (selectedCityId > 0) {
+                bindCityList(selectedCityId, document.getElementById("regionId"));
+            }
+        })
+
+        //绑定省列表
+        bindProvinceList(document.getElementById("provinceId"), provinceId);
+
+        if (cityId > 0) {
+            bindCityList(provinceId, document.getElementById("cityId"), cityId);
+            bindCountyList(cityId, document.getElementById("regionId"), countyId);
+        }
+    </script>
+@Html.Raw(WorkContext.ExecuteDetail)
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>
+

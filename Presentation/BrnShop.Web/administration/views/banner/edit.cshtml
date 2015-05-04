@@ -1,0 +1,158 @@
+﻿@model BrnShop.Web.Admin.Models.BannerModel
+
+@section header{
+    <title>编辑Banner</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <link href="/administration/content/css/uploadify.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        //防止chrome缓存jquery.uploadify.js文件，而引起chrome崩溃
+        document.write("<script type='text/javascript' "
+            + "src='/administration/scripts/jquery.uploadify.js?" + new Date()
+            + "'></s" + "cript>");  
+    </script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+         $(function () {
+             $("#uploadify").uploadify({
+                 'formData': { 'uid': '@WorkContext.Uid', 'password': '@WorkContext.EncryptPwd' },
+                 'swf': '/administration/content/flashes/uploadify.swf',
+                 'uploader': '@WorkContext.ShopConfig.UploadServer/admin/tool/upload?operation=uploadbannerimg',
+                 'buttonText': '上传图片',
+                 'height': 24,
+                 'width': 80,
+                 'fileTypeDesc': 'Image Files',
+                 'fileTypeExts': '@ViewData["allowImgType"]',
+                 'fileSizeLimit': '@ViewData["maxImgSize"]',
+                 'auto': true,
+                 'multi': false,
+                 'removeTimeout': 2,
+                 'onUploadSuccess': function (file, data, response) {
+                     if (data == "-1")
+                         alert('上传图片不能为空');
+                     else if (data == "-2")
+                         alert('上传图片的类型不允许');
+                     else if (data == "-3")
+                         alert('上传图片超过系统允许的最大大小');
+                     else {
+                         $(".uploadPreview").empty().append("<img width=\"88\" height=\"88\" src=\"@WorkContext.ShopConfig.UploadServer/upload/banner/" + data + "\"  />");
+                         $("#Img").val(data);
+                         $(".upload span[htmlFor='Img']").empty();
+                     }
+                 }
+             });
+         });
+    
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+Banner管理 &gt;&gt; 添加Banner
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+          <tr>
+    <td width="54px" align="right">标题：</td>
+    <td>@Html.TextBoxFor(x => x.BannerTitle, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.BannerTitle)</td>
+    </tr>
+          <tr>
+    <td align="right">地址：</td>
+    <td>@Html.TextBoxFor(x => x.Url, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.Url)</td>
+    </tr>
+        <tr>
+    <td align="right">图片：</td>
+    <td>
+      <div class="upload">
+        <div class="uploadPreview">
+         @{
+    if (!string.IsNullOrEmpty(Model.Img))
+    {
+            <img width="88" height="88" src="@WorkContext.ShopConfig.UploadServer/upload/banner/@Model.Img" /> 
+    }
+    else
+    {
+                                @:暂无图片
+        }
+}
+        </div>
+        <div class="uploadProgressBar" id="uploadify-queue"></div>
+        <div class="uploadBut"><input type="file" name="uploadify" id="uploadify" /></div>
+        @Html.TextBoxFor(x => x.Img, new { @class = "hide" })
+        <div style="position:absolute; top:30px; left:180px;">@Html.ValidationMessageFor(x => x.Img)</div>
+      </div>
+
+    </td>
+    </tr>
+
+        <tr>
+    <td align="right">时间：</td>
+    <td>
+        @Html.TextBoxFor(x => x.StartTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'StartTime'})" })
+        至
+        @Html.TextBoxFor(x => x.EndTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'EndTime'})" })
+        @Html.ValidationMessageFor(x => x.StartTime)
+        @Html.ValidationMessageFor(x => x.EndTime)
+    </td>
+    </tr>
+                <tr>
+<td align="right">
+    类型：
+</td>
+<td>
+    <p>
+        <label>@Html.RadioButtonFor(x => x.BannerType, 0, new { @class = "checkbox", disabled = "disabled" })PC</label>
+        <label>@Html.RadioButtonFor(x => x.BannerType, 1, new { @class = "checkbox", disabled = "disabled" })手机</label>
+        <br />
+    </p>
+</td>
+</tr>
+    <tr>
+<td align="right">
+    显示：
+</td>
+<td>
+    <p>
+        <label>@Html.RadioButtonFor(x => x.IsShow, 1, new { @class = "checkbox" })是</label>
+        <label>@Html.RadioButtonFor(x => x.IsShow, 0, new { @class = "checkbox" })否</label>
+        <br />
+    </p>
+</td>
+</tr>
+
+      <tr>
+    <td align="right">排序：</td>
+    <td>@Html.TextBoxFor(x => x.DisplayOrder, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.DisplayOrder)</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

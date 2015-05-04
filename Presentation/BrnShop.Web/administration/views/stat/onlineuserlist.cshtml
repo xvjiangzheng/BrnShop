@@ -1,0 +1,92 @@
+﻿@model BrnShop.Web.Admin.Models.OnlineUserListModel
+
+@section header{
+<title>在线用户</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+<script type="text/javascript" src="/administration/scripts/region.js"></script>
+<script type="text/javascript">
+    provinceId = @Model.ProvinceId; //省id
+    cityId = @Model.CityId; //市id
+    countyId = @Model.RegionId; //县或区id
+</script>
+}
+
+@section body{
+<h1 class="rightH1">
+报表统计 &gt;&gt; 在线用户
+<div class="right">
+<a href="@Url.Action("onlineusertrend")" class="menuBT"><img src="/administration/content/images/add.jpg"/>趋势分析</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("onlineuserlist", "stat"))
+{
+    <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+    <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>
+          省：
+        </td>
+        <td>
+         <select class="provinceSelect" id="provinceSelect" name="provinceId">
+             <option selected="selected" value="-1">请选择</option>
+         </select>
+         &nbsp;&nbsp;市：
+          <select class="citySelect" id="citySelect" name="cityId">
+                <option selected="selected" value="-1">请选择</option>
+          </select>
+          &nbsp;&nbsp;区/县：
+          <select class="countySelect" id="countySelect" name="regionid">
+                <option selected="selected" value="-1">请选择</option>
+          </select>
+    </td>
+       <td>
+       <input id="SearchOnlineUser" name="SearchOnlineUser" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="16" align="left"></th>
+    <th width="86" align="left" name="sortTitle" column="olid" direction="DESC">编号</th>
+    <th width="86" align="left">用户ID</th>
+    <th width="146" align="left">SessionID</th>
+    <th align="left">用户昵称</th>
+    <th width="120" align="left">IP</th>
+    <th width="126" align="left" name="sortTitle" column="updatetime" direction="DESC">最后更新时间</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (OnlineUserInfo info in Model.OnlineUserList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.OlId</td>
+    <td>@info.Uid</td>
+    <td>@info.Sid</td>
+    <td>@info.NickName</td>
+    <td>@info.IP</td>
+    <td>@info.UpdateTime</td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

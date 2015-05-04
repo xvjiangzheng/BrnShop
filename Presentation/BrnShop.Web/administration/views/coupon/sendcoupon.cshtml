@@ -1,0 +1,88 @@
+﻿@model BrnShop.Web.Admin.Models.SendCouponModel
+
+@section header{
+    <title>发放优惠劵</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+        var uType = @Model.UType;
+        $(function () {
+            if (uType != 2) {
+                $("#uvaluetr").show();
+            }
+           else {
+                $("#uvaluetr").hide();
+            }
+
+            $("input[name='UType']").click(function () {
+                var type=$(this).val();
+                if (type != 2) {
+                    $("#uvaluetr").show();
+                }
+                else {
+                    $("#uvaluetr").hide();
+                }
+            })
+        })
+    
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+优惠劵管理 &gt;&gt; 发放优惠劵
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+<div class="addTable">
+@using (Html.BeginForm())
+{
+<table width="100%">
+  <tr>
+    <td width="76px" align="right">发放类型：</td>
+    <td>
+    <p>
+      <label>@Html.RadioButtonFor(x => x.UType, 0, new { @class = "checkbox" }) 按用户ID</label>
+      <label>@Html.RadioButtonFor(x => x.UType, 1, new { @class = "checkbox" }) 按账户名</label>
+      <label>@Html.RadioButtonFor(x => x.UType, 2, new { @class = "checkbox" }) 线下发放</label>
+      <br />
+    </p>
+    </td>
+  </tr>
+
+    <tr id="uvaluetr">
+    <td align="right">用户：</td>
+    <td>@Html.TextBoxFor(x => x.UValue, new { @class = "input", size = "20" }) @Html.ValidationMessageFor(x => x.UValue)</td>
+    </tr>
+    <tr>
+    <td align="right">数量：</td>
+    <td>@Html.TextBoxFor(x => x.Count, new { @class = "input", size = "5" }) 此优惠劵还剩余 @Html.Raw(ViewData["surplusCount"].ToString()) 张 @Html.ValidationMessageFor(x => x.Count)</td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+}
+</div>
+}

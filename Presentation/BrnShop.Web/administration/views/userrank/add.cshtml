@@ -1,0 +1,123 @@
+﻿@model BrnShop.Web.Admin.Models.UserRankModel
+
+@section header{
+    <title>添加会员等级</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <link href="/administration/content/css/uploadify.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        //防止chrome缓存jquery.uploadify.js文件，而引起chrome崩溃
+        document.write("<script type='text/javascript' "
+            + "src='/administration/scripts/jquery.uploadify.js?" + new Date()
+            + "'></s" + "cript>");  
+    </script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#uploadify").uploadify({
+                'formData': { 'uid': '@WorkContext.Uid', 'password': '@WorkContext.EncryptPwd' },
+                'swf': '/administration/content/flashes/uploadify.swf',
+                'uploader': '@WorkContext.ShopConfig.UploadServer/admin/tool/upload?operation=uploaduserrankavatar',
+                'buttonText': '上传头像',
+                'height': 24,
+                'width': 80,
+                'fileTypeDesc': 'Image Files',
+                'fileTypeExts': '@ViewData["allowImgType"]',
+                'fileSizeLimit': '@ViewData["maxImgSize"]',
+                'auto': true,
+                'multi': false,
+                'removeTimeout': 2,
+                'onUploadSuccess': function (file, data, response) {
+                    if (data == "-1")
+                        alert('上传头像不能为空');
+                    else if (data == "-2")
+                        alert('上传头像的类型不允许');
+                    else if (data == "-3")
+                        alert('上传头像超过系统允许的最大大小');
+                    else {
+                        $(".uploadPreview").empty().append("<img width=\"88\" height=\"88\" src=\"@WorkContext.ShopConfig.UploadServer/upload/userrank/thumb@{@ViewData["size"].ToString()}/" + data + "\"  />");
+                        $("#Avatar").val(data);
+                        $(".upload span[htmlFor='Avatar']").empty();
+                    }
+                }
+            });
+        });
+    
+    </script>
+}
+
+@section body{
+<h1 class="rightH1">
+等级管理 &gt;&gt; 添加等级
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="86px" align="right">等级名称：</td>
+    <td>@Html.TextBoxFor(x => x.UserRankTitle, new { @class = "input", size = "35" })@Html.ValidationMessageFor(x => x.UserRankTitle)</td>
+    </tr>
+        <tr>
+    <td align="right">等级头像：</td>
+    <td>
+
+      <div class="upload">
+        <div class="uploadPreview">
+         @{
+        if (!string.IsNullOrEmpty(Model.Avatar))
+        {
+            <img width="88" height="88" src="@WorkContext.ShopConfig.UploadServer/upload/userrank/thumb@{@ViewData["size"].ToString()}/@Model.Avatar" /> 
+        }
+        else
+        {
+            @:暂无图片
+        }
+        }
+        </div>
+        <div class="uploadProgressBar" id="uploadify-queue"></div>
+        <div class="uploadBut"><input type="file" name="uploadify" id="uploadify" /></div>
+        @Html.TextBoxFor(x => x.Avatar, new { @class = "hide" })
+        <div style="position:absolute; top:30px; left:180px;">@Html.ValidationMessageFor(x => x.Avatar)</div>
+      </div>
+
+    </td>
+    </tr>
+      <tr>
+    <td align="right">积分下限：</td>
+    <td>@Html.TextBoxFor(x => x.CreditsLower, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.CreditsLower)</td>
+    </tr>
+          <tr>
+    <td align="right">积分上限：</td>
+    <td>@Html.TextBoxFor(x => x.CreditsUpper, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.CreditsUpper)</td>
+    </tr>
+
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

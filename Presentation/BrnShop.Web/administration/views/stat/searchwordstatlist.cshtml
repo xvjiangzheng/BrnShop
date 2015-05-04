@@ -1,0 +1,69 @@
+﻿@model BrnShop.Web.Admin.Models.SearchWordStatListModel
+
+@section header{
+<title>搜索分析</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+报表统计 &gt;&gt; 搜索分析
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("SearchWordStatList", "Stat"))
+{
+    <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+    <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>
+          搜索词：
+        </td>
+        <td width="130">
+          	@Html.TextBox("Word", Model.Word, new { height = "18" })
+        </td>
+       <td>
+       <input id="SearchWord" name="SearchWord" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="10" align="left"></th>
+    <th align="left" align="left" name="sortTitle" column="word" direction="DESC">搜索词</th>
+    <th width="120" align="center" name="sortTitle" column="totaltimes" direction="DESC">搜索次数</th>
+    <th width="126" align="left" name="sortTitle" column="lastsearchtime" direction="DESC">最后搜索时间</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.SearchWordStatList.Rows)
+  {
+  <tr>
+    <td></td>
+    <td>@row["word"]</td>
+    <td align="center">@row["totaltimes"]</td>
+    <td>@row["lastsearchtime"]</td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

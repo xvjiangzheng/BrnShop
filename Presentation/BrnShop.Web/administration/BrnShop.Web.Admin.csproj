@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{923861A7-CAC4-4530-ADAB-F1030B78929A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BrnShop.Web.Admin</RootNamespace>
+    <AssemblyName>BrnShop.Web.Admin</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Documents\Visual Studio 2013\Projects\MvcApplication1\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AreaRegistration.cs" />
+    <Compile Include="controllers\AdvertController.cs" />
+    <Compile Include="controllers\BannerController.cs" />
+    <Compile Include="controllers\StatController.cs" />
+    <Compile Include="controllers\TopicController.cs" />
+    <Compile Include="controllers\NewsController.cs" />
+    <Compile Include="controllers\OrderController.cs" />
+    <Compile Include="controllers\BannedIPController.cs" />
+    <Compile Include="controllers\EventController.cs" />
+    <Compile Include="controllers\PromotionController.cs" />
+    <Compile Include="controllers\ProductConsultController.cs" />
+    <Compile Include="controllers\ProductReviewController.cs" />
+    <Compile Include="controllers\FriendLinkController.cs" />
+    <Compile Include="controllers\NavController.cs" />
+    <Compile Include="controllers\PluginController.cs" />
+    <Compile Include="controllers\AdminGroupController.cs" />
+    <Compile Include="controllers\UserController.cs" />
+    <Compile Include="controllers\DataBaseController.cs" />
+    <Compile Include="controllers\LogController.cs" />
+    <Compile Include="controllers\UserRankController.cs" />
+    <Compile Include="controllers\FilterWordController.cs" />
+    <Compile Include="controllers\HelpController.cs" />
+    <Compile Include="controllers\BrandController.cs" />
+    <Compile Include="controllers\CategoryController.cs" />
+    <Compile Include="controllers\CouponController.cs" />
+    <Compile Include="controllers\ProductController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\SetController.cs" />
+    <Compile Include="models\AdminGroupModel.cs" />
+    <Compile Include="models\AdvertModel.cs" />
+    <Compile Include="models\BannedIPModel.cs" />
+    <Compile Include="models\BannerModel.cs" />
+    <Compile Include="models\CouponModel.cs" />
+    <Compile Include="models\EventModel.cs" />
+    <Compile Include="models\FriendLinkModel.cs" />
+    <Compile Include="models\HelpModel.cs" />
+    <Compile Include="models\HomeModel.cs" />
+    <Compile Include="models\NavModel.cs" />
+    <Compile Include="models\NewsModel.cs" />
+    <Compile Include="models\OrderModel.cs" />
+    <Compile Include="models\PluginModel.cs" />
+    <Compile Include="models\ProductConsultModel.cs" />
+    <Compile Include="models\ProductReviewModel.cs" />
+    <Compile Include="models\ProductModel.cs" />
+    <Compile Include="models\PromotionModel.cs" />
+    <Compile Include="models\StatModel.cs" />
+    <Compile Include="models\TopicModel.cs" />
+    <Compile Include="models\UserModel.cs" />
+    <Compile Include="models\FilterWordModel.cs" />
+    <Compile Include="controllers\HomeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\ToolController.cs" />
+    <Compile Include="models\BrandModel.cs" />
+    <Compile Include="models\CategoryModel.cs" />
+    <Compile Include="models\LogModel.cs" />
+    <Compile Include="models\SetModel.cs" />
+    <Compile Include="models\UserRankModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="cache\category\selectlist.js" />
+    <Content Include="cache\menu\2.js" />
+    <Content Include="content\ueditor\dialogs\anchor\anchor.html" />
+    <Content Include="content\ueditor\dialogs\image\image.css" />
+    <Content Include="content\ueditor\dialogs\image\image.html" />
+    <Content Include="content\ueditor\dialogs\image\image.js" />
+    <Content Include="content\ueditor\dialogs\image\images\alignicon.jpg" />
+    <Content Include="content\ueditor\dialogs\image\images\bg.png" />
+    <Content Include="content\ueditor\dialogs\image\images\icons.gif" />
+    <Content Include="content\ueditor\dialogs\image\images\icons.png" />
+    <Content Include="content\ueditor\dialogs\image\images\image.png" />
+    <Content Include="content\ueditor\dialogs\image\images\progress.png" />
+    <Content Include="content\ueditor\dialogs\image\images\success.gif" />
+    <Content Include="content\ueditor\dialogs\image\images\success.png" />
+    <Content Include="content\ueditor\dialogs\internal.js" />
+    <Content Include="content\ueditor\dialogs\link\link.html" />
+    <Content Include="content\ueditor\dialogs\preview\preview.html" />
+    <Content Include="content\ueditor\dialogs\table\dragicon.png" />
+    <Content Include="content\ueditor\dialogs\table\edittable.css" />
+    <Content Include="content\ueditor\dialogs\table\edittable.html" />
+    <Content Include="content\ueditor\dialogs\table\edittable.js" />
+    <Content Include="content\ueditor\dialogs\table\edittd.html" />
+    <Content Include="content\ueditor\dialogs\table\edittip.html" />
+    <Content Include="content\ueditor\lang\zh-cn\images\copy.png" />
+    <Content Include="content\ueditor\lang\zh-cn\images\localimage.png" />
+    <Content Include="content\ueditor\lang\zh-cn\images\music.png" />
+    <Content Include="content\ueditor\lang\zh-cn\images\upload.png" />
+    <Content Include="content\ueditor\lang\zh-cn\zh-cn.js" />
+    <Content Include="content\ueditor\themes\default\css\ueditor.css" />
+    <Content Include="content\ueditor\themes\default\css\ueditor.min.css" />
+    <Content Include="content\ueditor\themes\default\dialogbase.css" />
+    <Content Include="content\ueditor\themes\default\images\anchor.gif" />
+    <Content Include="content\ueditor\themes\default\images\arrow.png" />
+    <Content Include="content\ueditor\themes\default\images\arrow_down.png" />
+    <Content Include="content\ueditor\themes\default\images\arrow_up.png" />
+    <Content Include="content\ueditor\themes\default\images\button-bg.gif" />
+    <Content Include="content\ueditor\themes\default\images\cancelbutton.gif" />
+    <Content Include="content\ueditor\themes\default\images\charts.png" />
+    <Content Include="content\ueditor\themes\default\images\cursor_h.gif" />
+    <Content Include="content\ueditor\themes\default\images\cursor_h.png" />
+    <Content Include="content\ueditor\themes\default\images\cursor_v.gif" />
+    <Content Include="content\ueditor\themes\default\images\cursor_v.png" />
+    <Content Include="content\ueditor\themes\default\images\dialog-title-bg.png" />
+    <Content Include="content\ueditor\themes\default\images\filescan.png" />
+    <Content Include="content\ueditor\themes\default\images\highlighted.gif" />
+    <Content Include="content\ueditor\themes\default\images\icons-all.gif" />
+    <Content Include="content\ueditor\themes\default\images\icons.gif" />
+    <Content Include="content\ueditor\themes\default\images\icons.png" />
+    <Content Include="content\ueditor\themes\default\images\loaderror.png" />
+    <Content Include="content\ueditor\themes\default\images\loading.gif" />
+    <Content Include="content\ueditor\themes\default\images\lock.gif" />
+    <Content Include="content\ueditor\themes\default\images\neweditor-tab-bg.png" />
+    <Content Include="content\ueditor\themes\default\images\pagebreak.gif" />
+    <Content Include="content\ueditor\themes\default\images\scale.png" />
+    <Content Include="content\ueditor\themes\default\images\sortable.png" />
+    <Content Include="content\ueditor\themes\default\images\spacer.gif" />
+    <Content Include="content\ueditor\themes\default\images\sparator_v.png" />
+    <Content Include="content\ueditor\themes\default\images\table-cell-align.png" />
+    <Content Include="content\ueditor\themes\default\images\tangram-colorpicker.png" />
+    <Content Include="content\ueditor\themes\default\images\toolbar_bg.png" />
+    <Content Include="content\ueditor\themes\default\images\unhighlighted.gif" />
+    <Content Include="content\ueditor\themes\default\images\upload.png" />
+    <Content Include="content\ueditor\themes\default\images\videologo.gif" />
+    <Content Include="content\ueditor\themes\default\images\word.gif" />
+    <Content Include="content\ueditor\themes\default\images\wordpaste.png" />
+    <Content Include="content\ueditor\themes\iframe.css" />
+    <Content Include="content\ueditor\third-party\codemirror\codemirror.css" />
+    <Content Include="content\ueditor\third-party\codemirror\codemirror.js" />
+    <Content Include="content\ueditor\third-party\jquery-1.10.2.js" />
+    <Content Include="content\ueditor\third-party\jquery-1.10.2.min.js" />
+    <Content Include="content\ueditor\third-party\SyntaxHighlighter\shCore.js" />
+    <Content Include="content\ueditor\third-party\SyntaxHighlighter\shCoreDefault.css" />
+    <Content Include="content\ueditor\third-party\webuploader\Uploader.swf" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.css" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.custom.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.custom.min.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.flashonly.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.flashonly.min.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.html5only.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.html5only.min.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.min.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.withoutimage.js" />
+    <Content Include="content\ueditor\third-party\webuploader\webuploader.withoutimage.min.js" />
+    <Content Include="content\ueditor\third-party\zeroclipboard\ZeroClipboard.js" />
+    <Content Include="content\ueditor\third-party\zeroclipboard\ZeroClipboard.min.js" />
+    <Content Include="content\ueditor\third-party\zeroclipboard\ZeroClipboard.swf" />
+    <Content Include="content\ueditor\ueditor.all.js" />
+    <Content Include="content\ueditor\ueditor.config.js" />
+    <Content Include="content\ueditor\ueditor.parse.js" />
+    <Content Include="scripts\excanvas.js" />
+    <Content Include="scripts\jquery.flot.js" />
+    <Content Include="scripts\jquery.flot.pie.js" />
+    <Content Include="scripts\jquery.js" />
+    <Content Include="scripts\jquery.uploadify.js" />
+    <Content Include="scripts\product.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="content\images\tree_open.gif" />
+    <Content Include="content\images\tree_close.gif" />
+    <Content Include="content\images\a.jpg" />
+    <Content Include="content\images\delete2.gif" />
+    <Content Include="content\images\progressbar.gif" />
+    <Content Include="content\images\selectbg.gif" />
+    <Content Include="content\images\selectbgico.gif" />
+    <Content Include="content\jbox\jquery.jBox-2.3.min.js" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-button1.png" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-button2.png" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-close1.gif" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-close2.gif" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-content-loading.gif" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-icons-ie6.gif" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-icons.png" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-loading1.gif" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-loading2.gif" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-loading3.gif" />
+    <Content Include="content\jbox\Skins\Default\images\jbox-title-icon.gif" />
+    <Content Include="content\jbox\Skins\Default\jbox.css" />
+    <Content Include="content\css\site.css" />
+    <Content Include="content\my97datepicker\calendar.js" />
+    <Content Include="content\my97datepicker\config.js" />
+    <Content Include="content\my97datepicker\lang\zh-cn.js" />
+    <Content Include="content\my97datepicker\My97DatePicker.htm" />
+    <Content Include="content\my97datepicker\skin\datePicker.gif" />
+    <Content Include="content\my97datepicker\skin\default\datepicker.css" />
+    <Content Include="content\my97datepicker\skin\default\img.gif" />
+    <Content Include="content\my97datepicker\skin\WdatePicker.css" />
+    <Content Include="content\my97datepicker\skin\whyGreen\bg.jpg" />
+    <Content Include="content\my97datepicker\skin\whyGreen\datepicker.css" />
+    <Content Include="content\my97datepicker\skin\whyGreen\img.gif" />
+    <Content Include="content\my97datepicker\WdatePicker.js" />
+    <Content Include="content\css\uploadify.css" />
+    <Content Include="content\images\add.jpg" />
+    <Content Include="content\images\bg.jpg" />
+    <Content Include="content\images\bottombg.jpg" />
+    <Content Include="content\images\bt_right.jpg" />
+    <Content Include="content\images\cancel.jpg" />
+    <Content Include="content\images\delete.jpg" />
+    <Content Include="content\images\edit.jpg" />
+    <Content Include="content\images\goback.jpg" />
+    <Content Include="content\images\ico1.jpg" />
+    <Content Include="content\images\li.jpg" />
+    <Content Include="content\images\li1.jpg" />
+    <Content Include="content\images\logo.jpg" />
+    <Content Include="content\images\menubg.jpg" />
+    <Content Include="content\images\menubg_bottom.jpg" />
+    <Content Include="content\images\menubg_top.jpg" />
+    <Content Include="content\images\menuli_bg.jpg" />
+    <Content Include="content\images\menuli_bg_hot.jpg" />
+    <Content Include="content\images\nav_bg_hot.jpg" />
+    <Content Include="content\images\refresh.jpg" />
+    <Content Include="content\images\right_ico.jpg" />
+    <Content Include="content\images\s.jpg" />
+    <Content Include="content\images\search1.gif" />
+    <Content Include="content\images\submit.jpg" />
+    <Content Include="content\images\tagbg-left.jpg" />
+    <Content Include="content\images\tagbg.jpg" />
+    <Content Include="content\images\tip.gif" />
+    <Content Include="content\images\top_bg.jpg" />
+    <Content Include="content\flashes\uploadify.swf" />
+    <Content Include="content\images\uploadify-cancel.png" />
+    <Content Include="scripts\region.js" />
+    <Content Include="scripts\showlist.js" />
+    <Content Include="scripts\jquery.validate.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="scripts\selectlist.js" />
+    <None Include="content\jbox\Skins\Default\Desktop.ini" />
+    <None Include="content\ueditor\third-party\jquery-1.10.2.min.map" />
+    <None Include="views\admingroup\add.cshtml" />
+    <None Include="views\admingroup\edit.cshtml" />
+    <None Include="views\admingroup\list.cshtml" />
+    <None Include="views\advert\addadvert.cshtml" />
+    <None Include="views\advert\addadvertposition.cshtml" />
+    <None Include="views\advert\advertlist.cshtml" />
+    <None Include="views\advert\advertpositionlist.cshtml" />
+    <None Include="views\advert\editadvert.cshtml" />
+    <None Include="views\advert\editadvertposition.cshtml" />
+    <None Include="views\bannedip\add.cshtml" />
+    <None Include="views\bannedip\edit.cshtml" />
+    <None Include="views\bannedip\list.cshtml" />
+    <None Include="views\banner\add.cshtml" />
+    <None Include="views\banner\edit.cshtml" />
+    <None Include="views\banner\list.cshtml" />
+    <None Include="views\brand\add.cshtml" />
+    <None Include="views\brand\edit.cshtml" />
+    <None Include="views\brand\list.cshtml" />
+    <None Include="views\category\addattribute.cshtml" />
+    <None Include="views\category\addattributegroup.cshtml" />
+    <None Include="views\category\addattributevalue.cshtml" />
+    <None Include="views\category\addcategory.cshtml" />
+    <None Include="views\category\attributegrouplist.cshtml" />
+    <None Include="views\category\attributelist.cshtml" />
+    <None Include="views\category\attributevaluelist.cshtml" />
+    <None Include="views\category\categorylist.cshtml" />
+    <None Include="views\category\editattribute.cshtml" />
+    <None Include="views\category\editattributegroup.cshtml" />
+    <None Include="views\category\editattributevalue.cshtml" />
+    <None Include="views\category\editcategory.cshtml" />
+    <None Include="views\coupon\addcoupontype.cshtml" />
+    <None Include="views\coupon\couponlist.cshtml" />
+    <None Include="views\coupon\couponproductlist.cshtml" />
+    <None Include="views\coupon\coupontypelist.cshtml" />
+    <None Include="views\coupon\sendcoupon.cshtml" />
+    <None Include="views\coupon\showcoupontype.cshtml" />
+    <None Include="views\database\manage.cshtml" />
+    <None Include="views\event\add.cshtml" />
+    <None Include="views\event\edit.cshtml" />
+    <None Include="views\event\list.cshtml" />
+    <None Include="views\filterword\add.cshtml" />
+    <None Include="views\filterword\edit.cshtml" />
+    <None Include="views\filterword\list.cshtml" />
+    <None Include="views\friendlink\add.cshtml" />
+    <None Include="views\friendlink\edit.cshtml" />
+    <None Include="views\friendlink\list.cshtml" />
+    <None Include="views\help\addhelp.cshtml" />
+    <None Include="views\help\addhelpcategory.cshtml" />
+    <None Include="views\help\edithelp.cshtml" />
+    <None Include="views\help\edithelpcategory.cshtml" />
+    <None Include="views\help\list.cshtml" />
+    <None Include="views\home\index.cshtml" />
+    <None Include="views\home\menu.cshtml" />
+    <None Include="views\home\navbar.cshtml" />
+    <None Include="views\home\shopruninfo.cshtml" />
+    <None Include="views\log\adminoperateloglist.cshtml" />
+    <None Include="views\log\creditloglist.cshtml" />
+    <None Include="views\nav\add.cshtml" />
+    <None Include="views\nav\edit.cshtml" />
+    <None Include="views\nav\list.cshtml" />
+    <None Include="views\news\addnews.cshtml" />
+    <None Include="views\news\addnewstype.cshtml" />
+    <None Include="views\news\editnews.cshtml" />
+    <None Include="views\news\editnewstype.cshtml" />
+    <None Include="views\news\newslist.cshtml" />
+    <None Include="views\news\newstypelist.cshtml" />
+    <None Include="views\order\operateorder.cshtml" />
+    <None Include="views\order\orderinfo.cshtml" />
+    <None Include="views\order\orderlist.cshtml" />
+    <None Include="views\order\printorder.cshtml" />
+    <None Include="views\order\refundlist.cshtml" />
+    <None Include="views\plugin\config.cshtml" />
+    <None Include="views\plugin\edit.cshtml" />
+    <None Include="views\plugin\list.cshtml" />
+    <None Include="views\productconsult\addproductconsulttype.cshtml" />
+    <None Include="views\productconsult\editproductconsulttype.cshtml" />
+    <None Include="views\productconsult\productconsultlist.cshtml" />
+    <None Include="views\productconsult\productconsulttypelist.cshtml" />
+    <None Include="views\productconsult\reply.cshtml" />
+    <None Include="views\productreview\productreviewlist.cshtml" />
+    <None Include="views\productreview\productreviewreplylist.cshtml" />
+    <None Include="views\product\addproduct.cshtml" />
+    <None Include="views\product\addsignproduct.cshtml" />
+    <None Include="views\product\addsku.cshtml" />
+    <None Include="views\product\addtimeproduct.cshtml" />
+    <None Include="views\product\editproduct.cshtml" />
+    <None Include="views\product\edittimeproduct.cshtml" />
+    <None Include="views\product\onsaleproductlist.cshtml" />
+    <None Include="views\product\outsaleproductlist.cshtml" />
+    <None Include="views\product\productimagelist.cshtml" />
+    <None Include="views\product\productkeywordlist.cshtml" />
+    <None Include="views\product\recyclebinproductlist.cshtml" />
+    <None Include="views\product\relateproductlist.cshtml" />
+    <None Include="views\product\signproductlist.cshtml" />
+    <None Include="views\product\timeproductlist.cshtml" />
+    <None Include="views\promotion\addbuysendpromotion.cshtml" />
+    <None Include="views\promotion\addfullcutpromotion.cshtml" />
+    <None Include="views\promotion\addfullsendpromotion.cshtml" />
+    <None Include="views\promotion\addgiftpromotion.cshtml" />
+    <None Include="views\promotion\addsinglepromotion.cshtml" />
+    <None Include="views\promotion\addsuitpromotion.cshtml" />
+    <None Include="views\promotion\buysendproductlist.cshtml" />
+    <None Include="views\promotion\buysendpromotionlist.cshtml" />
+    <None Include="views\promotion\editbuysendpromotion.cshtml" />
+    <None Include="views\promotion\editfullcutpromotion.cshtml" />
+    <None Include="views\promotion\editfullsendpromotion.cshtml" />
+    <None Include="views\promotion\editgiftpromotion.cshtml" />
+    <None Include="views\promotion\editsinglepromotion.cshtml" />
+    <None Include="views\promotion\editsuitpromotion.cshtml" />
+    <None Include="views\promotion\fullcutproductlist.cshtml" />
+    <None Include="views\promotion\fullcutpromotionlist.cshtml" />
+    <None Include="views\promotion\fullsendproductlist.cshtml" />
+    <None Include="views\promotion\fullsendpromotionlist.cshtml" />
+    <None Include="views\promotion\giftlist.cshtml" />
+    <None Include="views\promotion\giftpromotionlist.cshtml" />
+    <None Include="views\promotion\singlepromotionlist.cshtml" />
+    <None Include="views\promotion\suitproductlist.cshtml" />
+    <None Include="views\promotion\suitpromotionlist.cshtml" />
+    <None Include="views\set\access.cshtml" />
+    <None Include="views\set\account.cshtml" />
+    <None Include="views\set\credit.cshtml" />
+    <None Include="views\set\email.cshtml" />
+    <None Include="views\set\performance.cshtml" />
+    <None Include="views\set\printorder.cshtml" />
+    <None Include="views\set\shop.cshtml" />
+    <None Include="views\set\site.cshtml" />
+    <None Include="views\set\sms.cshtml" />
+    <None Include="views\set\theme.cshtml" />
+    <None Include="views\set\upload.cshtml" />
+    <None Include="views\shared\error.cshtml" />
+    <None Include="views\shared\prompt.cshtml" />
+    <None Include="views\shared\_layout.cshtml" />
+    <None Include="views\stat\clientstat.cshtml" />
+    <None Include="views\stat\onlineuserlist.cshtml" />
+    <None Include="views\stat\onlineusertrend.cshtml" />
+    <None Include="views\stat\productstat.cshtml" />
+    <None Include="views\stat\regionstat.cshtml" />
+    <None Include="views\stat\salelist.cshtml" />
+    <None Include="views\stat\saletrend.cshtml" />
+    <None Include="views\stat\searchwordstatlist.cshtml" />
+    <None Include="views\topic\add.cshtml" />
+    <None Include="views\topic\edit.cshtml" />
+    <None Include="views\topic\list.cshtml" />
+    <None Include="views\userrank\add.cshtml" />
+    <None Include="views\userrank\edit.cshtml" />
+    <None Include="views\userrank\list.cshtml" />
+    <None Include="views\user\add.cshtml" />
+    <None Include="views\user\edit.cshtml" />
+    <None Include="views\user\list.cshtml" />
+    <None Include="views\Web.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="views\_ViewStart.cshtml" />
+    <None Include="Web.config" />
+    <None Include="Web.linux.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\BrnShop.Core\BrnShop.Core.csproj">
+      <Project>{253C5E59-316C-44C8-A8A1-2BC2BD64ADE5}</Project>
+      <Name>BrnShop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\BrnShop.Services\BrnShop.Services.csproj">
+      <Project>{311C5C3B-2427-4A8E-B623-2BAEB95B1D9E}</Project>
+      <Name>BrnShop.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BrnShop.Web.Framework\BrnShop.Web.Framework.csproj">
+      <Project>{BC9FDDF7-958C-4CD9-9068-1F721EEC34C3}</Project>
+      <Name>BrnShop.Web.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

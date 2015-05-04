@@ -1,0 +1,90 @@
+﻿@model BrnShop.Web.Admin.Models.TopicModel
+
+@section header{
+    <title>修改活动专题</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+活动专题管理 &gt;&gt; 修改活动专题
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="80px" align="right">标题：</td>
+    <td>@Html.TextBoxFor(x => x.Title, new { @class="input",size="35"})@Html.ValidationMessageFor(x=>x.Title)</td>
+    </tr>
+            <tr>
+    <td align="right">开始时间：</td>
+    <td>
+        @Html.TextBoxFor(x => x.StartTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'StartTime'})" })
+        @Html.ValidationMessageFor(x => x.StartTime)
+    </td>
+    </tr>
+    <tr>
+    <td align="right">结束时间：</td>
+    <td>
+        @Html.TextBoxFor(x => x.EndTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'EndTime'})" })
+        @Html.ValidationMessageFor(x => x.EndTime)
+    </td>
+    </tr>
+    <tr>
+    <td align="right">标题Html：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.HeadHtml, new { cols = "40", rows = "6" }) @Html.ValidationMessageFor(x => x.HeadHtml)</p>
+    <br />
+    </td>
+        </tr>
+    <tr>
+    <td align="right">主体Html：</td>
+    <td>
+    <p>@Html.TextAreaFor(x => x.BodyHtml, new { cols = "40", rows = "6" }) @Html.ValidationMessageFor(x => x.BodyHtml)</p>
+    <br />
+    </td>
+        </tr>
+            <tr>
+<td align="right">
+    是否显示：
+</td>
+<td>
+    <p>
+        <label>@Html.RadioButtonFor(x => x.IsShow, 1, new { @class = "checkbox" })是</label>
+        <label>@Html.RadioButtonFor(x => x.IsShow, 0, new { @class = "checkbox" })否</label>
+        <br />
+    </p>
+</td>
+</tr>
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+    }
+}

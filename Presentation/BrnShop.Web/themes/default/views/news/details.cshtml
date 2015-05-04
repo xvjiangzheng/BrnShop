@@ -1,0 +1,195 @@
+﻿@model BrnShop.Web.Models.NewsModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@Model.NewsInfo.Title-@{@WorkContext.ShopConfig.SiteTitle}</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="@{@WorkContext.CSSCDN}/themes/default/css/help.css" rel="stylesheet" type="text/css" />
+    <script src="@{@WorkContext.ScriptCDN}/scripts/utils.js" type="text/javascript"></script>
+    <script src="@{@WorkContext.ScriptCDN}/scripts/common.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        uid = @WorkContext.Uid;
+        isGuestSC = @WorkContext.ShopConfig.IsGuestSC;
+        scSubmitType = @WorkContext.ShopConfig.SCSubmitType;
+    </script>
+</head>
+
+<body>
+
+<div id="headerBar" class="bigBox">
+<div class="box">
+欢迎访问 @WorkContext.ShopConfig.ShopName
+<div  class="headerLink">
+    @if (WorkContext.Uid < 1)
+    {
+        <a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">[登录]</a>
+        <a href="@Url.Action("register", "account")" class="A_b">[注册]</a>
+    }
+    else
+    {
+        @:您好: @WorkContext.NickName
+        <a href="@Url.Action("logout", "account")">[退出]</a>
+        if (WorkContext.AdminGid > 1)
+        {
+        <a href="@Url.Action("index", "home", new RouteValueDictionary { { "area", "admin" } })">[商城管理]</a>
+        }
+        <a href="@Url.Action("orderlist", "ucenter")">[我的订单]</a>
+    }
+</div>
+</div> 
+</div>
+
+
+<div id="header" class="bigBox">
+<div class="box" id="header1">
+<a href="/" class="logo left"><img src="@{@WorkContext.ImageCDN}/themes/default/images/logo.jpg" /></a>
+<div class="search left">
+<div class="searchCon">
+    <input type="text" id="keyword" name="keyword" class="Stext" autocomplete="off" onkeydown="javascript:if(event.keyCode==13) search(document.getElementById('keyword').value);" value="@WorkContext.SearchWord" />
+    <input name="" type="button" value="搜索" class="Sbutton" onclick="search(document.getElementById('keyword').value)" />
+<div class="clear"></div>
+</div>
+
+<div class="searchHot">热门搜索：
+ @{
+     List<AdvertInfo> searchWordAdvertList = Adverts.GetAdvertList(5);
+     }
+     @Html.Raw(searchWordAdvertList[0].Body)
+ </div>
+
+</div>
+
+
+<div class="shopping right" onmousemove="getCartSnap()" id="cartSnapBox" onmouseout="closeCartSnap(event)">
+<h2><a href="@Url.Action("index", "cart")">我的购物车<b id="cartSnapProudctCount">@WorkContext.CartProductCount</b></a></h2>
+<div id="cartSnap" class="shoppingList" style=" display:none;"><div class="loding"><img src="@{@WorkContext.ImageCDN}/themes/default/images/loading.gif" /><br />加载中，请稍候... </div></div>
+</div>
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div id="nav" class="bigBox">
+<div class="box">
+<!-- 分类导航 -->
+
+<div id="categorys">
+<h2>全部商品分类</h2>
+
+<div id="categorysCon">
+
+@{
+    List<NavInfo> navList = Navs.GetNavList();
+    }
+@{
+    int layerFlag = 0;
+    foreach (NavInfo info in navList)
+    {
+        if (info.Layer == 1)
+        {
+            if (layerFlag == 1)
+            {
+               @:</div></div>
+            }
+            @:<div class="item" onmouseover="this.className='item hotItem'" onmouseout="this.className='item'"><h3><a href="javascript:void(0)">@info.Name</a></h3><div class="itmeSon">
+            layerFlag = 1;
+        }
+        else if (info.Layer == 2)
+        {
+            @:<dl><dt><a style="" href="javascript:void(0)">@info.Name</a></dt><dd>
+            foreach (NavInfo nav in navList.FindAll(x => x.Pid == info.Id))
+            {
+                 @:<em><a style="" href="@nav.Url">@nav.Name</a></em>
+            }
+            @:</dd><div class="clear"></div></dl>
+        }
+    }
+    @:</div></div>
+}
+
+</div>
+
+</div>
+
+<!-- 分类导航结束 -->
+
+<ul id="navItme">
+<li><a href="/">首页</a></li>
+<li><a href="@Url.Action("category", "catalog", new RouteValueDictionary { { "cateId", 55 } })">电视专场</a></li>
+<li><a href="@Url.Action("category", "catalog", new RouteValueDictionary { { "cateId", 65 } })">电脑专场</a></li>
+<li><a href="@Url.Action("category", "catalog", new RouteValueDictionary { { "cateId", 71 } })">手机专场</a></li>
+</ul>
+</div>
+</div>
+
+<div class="box">
+<div id="news" class="box">
+<h1 class="newsTitle">@Model.NewsInfo.Title</h1>
+<div class="newsInfo">时间：@Model.NewsInfo.AddTime</div>
+<div class="edit">
+@Html.Raw(Model.NewsInfo.Body)
+</div>
+
+</div>
+
+</div>
+
+<div id="footer" class="bigBox">
+  <div class="box">
+
+    @{
+        int flag = 1;
+        foreach (HelpInfo info in WorkContext.HelpList)
+        {
+            if (info.Pid != 0)
+            {
+                if (info.Url.Length == 0)
+                {
+            <a href="@Url.Action("question", "help", new RouteValueDictionary { { "id", info.Id } })">@info.Title</a>
+                }
+                else
+                {
+            <a href="@info.Url">@info.Title</a>
+                }
+            }
+            else
+            {
+                if (flag != 1)
+                {
+                @:</div>
+            }
+            @:<div class="footerBox"><h3>@info.Title</h3>
+            flag++;
+            }
+        }
+        if (WorkContext.HelpList.Count > 0)
+        {
+        @:</div>
+    }
+    }
+
+  <div class="clear"></div>
+  </div>
+  <div class="bigBox footerB">
+    <div id="footerB">
+      <div class="links">
+        @foreach (FriendLinkInfo info in WorkContext.FriendLinkList)
+        {
+        <a href="@info.Url" target="@info.Target" title="@info.Title">@info.Name</a> @:|
+        }
+      </div>
+      <div>北京市公安局朝阳分局备案编号031143485246&nbsp;&nbsp;|&nbsp;&nbsp;京ICP证047722号&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" target="_blank">互联网药品信息服务资格证编号(京)-经营性-2012-0005</a><br />石家庄蝶影软件开发有限公司 程序版本 @WorkContext.ShopVersion 版权所有 @WorkContext.ShopCopyright</div>
+      <div><a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_jy.gif"></a> <a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_kx.gif"></a> <a href="#"><img width="108" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_wj.png"></a> <a href="#"><img width="112" height="40" src="@{@WorkContext.ImageCDN}/themes/default/images/power_cx.png"></a></div>
+    </div>
+  </div>
+</div>
+@Html.Raw(WorkContext.ExecuteDetail)
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

@@ -1,0 +1,297 @@
+﻿@model BrnShop.Web.Admin.Models.AddProductModel
+           
+@section header{
+    <title>添加商品</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/content/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="/administration/content/ueditor/ueditor.all.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <link type="text/css" href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+    <script type="text/javascript" src="/administration/scripts/product.js"></script>
+    <script type="text/javascript">
+        productPageType=0;
+
+        @{
+            StringBuilder productAttributeListStr = new StringBuilder();
+            if (Model.AttrIdList!=null && Model.AttrIdList.Length >0)
+            {
+                productAttributeListStr.Append("[");
+                for (int i=0;i<Model.AttrIdList.Length;i++)
+                {
+                    productAttributeListStr.AppendFormat("{0}'attrId':'{1}','attrValueId':'{2}','inputValue':'{3}'{4},", "{", Model.AttrIdList[i], Model.AttrValueIdList[i], Model.AttrInputValueList[i], "}");
+                }
+                productAttributeListStr.Remove(productAttributeListStr.Length - 1, 1);
+                productAttributeListStr.Append("]");
+            }
+            else
+            {
+                productAttributeListStr.Append("null");
+            }
+         }
+       //商品属性列表
+       productAttributeList = @Html.Raw(productAttributeListStr.ToString()); 
+
+    </script>
+}
+@section body{
+    <h1 class="rightH1">
+        商品管理 &gt;&gt; 添加商品
+        <div class="right">
+            <a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT">
+                <img src="/administration/content/images/goback.jpg" />返回列表</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <ul class="addTag">
+        <li class="hot"><a href="javascript:;">基本信息</a></li>
+        <li><a href="javascript:;">属性信息</a></li>
+        <li><a href="javascript:;">辅助信息</a></li>
+        <li><a href="javascript:;">详细描述</a></li>
+        <div class="clear">
+        </div>
+    </ul>
+    @using (Html.BeginForm())
+    {
+        <div class="addTable">
+            <table width="100%">
+                <tr>
+                    <td width="94px" align="right">
+                        商品名称：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.ProductName, new { @class = "input", size = "80" })
+                        @Html.ValidationMessageFor(x => x.ProductName)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        商品货号：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.PSN, new { @class = "input", size = "35" })
+                        @Html.ValidationMessageFor(x => x.PSN)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        商品分类：
+                    </td>
+                    <td>
+                        <div class="selectBt" style="float: left;">
+                            <input type="button" value="@Model.CategoryName" onclick="openCategorySelectLayer(this)" />
+                            <input type="hidden" class="CateId" id="CateId" name="CateId" value="@Model.CateId" />
+                            <input type="hidden" class="CategoryName" id="CategoryName" name="CategoryName" value="@Model.CategoryName" />
+                        </div>
+                        @Html.ValidationMessageFor(x => x.CateId)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        商品品牌：
+                    </td>
+                    <td>
+                        <div class="selectBt">
+                            <input type="button" value="@Model.BrandName" onclick="openBrandSelectLayer(this)" />
+                            <input type="hidden" class="BrandId" id="BrandId" name="BrandId" value="@Model.BrandId" />
+                            <input type="hidden" class="BrandName" id="BrandName" name="BrandName" value="@Model.BrandName"/>
+                        </div>
+                        @Html.ValidationMessageFor(x => x.BrandId)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        成本价：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.CostPrice, new { @class = "input", size = "10" })元 @Html.ValidationMessageFor(x => x.CostPrice)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        市场价：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.MarketPrice, new { @class = "input", size = "10" })元 @Html.ValidationMessageFor(x => x.MarketPrice)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        本店价：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.ShopPrice, new { @class = "input", size = "10" })元 @Html.ValidationMessageFor(x => x.ShopPrice)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        <a href="" class="addBt submit">
+                            <img src="/administration/content/images/submit.jpg" /></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="addTable hide">
+            <table width="100%" id="commonAttributeTable">
+                <tr>
+                    <td width="110px;" align="right">请先选择分类</td>
+                    <td></td>
+                </tr>
+                <tr class="keepTr">
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        <a href="" class="addBt submit">
+                            <img src="/administration/content/images/submit.jpg" /></a>
+                    </td>
+                </tr>
+                <tr class="keepTr">
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="addTable hide">
+            <table width="100%">
+                <tr>
+                    <td width="84px" align="right">
+                        重量：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.Weight, new { @class = "input", size = "10" })克
+                        @Html.ValidationMessageFor(x => x.Weight)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        排序：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.DisplayOrder, new { @class = "input", size = "10" })
+                        @Html.ValidationMessageFor(x => x.DisplayOrder)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        库存数量：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.StockNumber, new { @class = "input", size = "10" })
+                        @Html.ValidationMessageFor(x => x.StockNumber)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        库存警戒线：
+                    </td>
+                    <td>@Html.TextBoxFor(x => x.StockLimit, new { @class = "input", size = "10" })
+                        @Html.ValidationMessageFor(x => x.StockLimit)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        是否上架：
+                    </td>
+                    <td>
+                        <p>
+                            <label>@Html.RadioButtonFor(x => x.State, 0, new { @class = "checkbox" })是</label>
+                            <label>@Html.RadioButtonFor(x => x.State, 1, new { @class = "checkbox" })否</label>
+                            <br />
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        商品标签：
+                    </td>
+                    <td>
+                        <p>
+                            <label>@Html.CheckBoxFor(x => x.IsHot, new { @class = "checkbox" })热销</label>
+                            <label>@Html.CheckBoxFor(x => x.IsBest, new { @class = "checkbox" })精品</label>
+                            <label>@Html.CheckBoxFor(x => x.IsNew, new { @class = "checkbox" })新品</label>
+                            <br />
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        <a href="" class="addBt submit">
+                            <img src="/administration/content/images/submit.jpg" /></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+    
+        <div class="addTable hide">
+            <table width="100%">
+                <tr>
+                    <td width="0px" align="right">
+                        <div style="margin-left: 15px;">
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin-top: 5px;">
+                        </div>
+                         <script name="Description" id="bspEditor" type="text/plain">@Html.Raw(Model.Description)</script>
+                         <script type="text/javascript">
+                             UE.Editor.prototype.getActionUrl = function (action) {
+                                 if (action == "config") {
+                                     return "@WorkContext.ShopConfig.UploadServer/admin/tool/upload?operation=ueconfig";
+                                 } else {
+                                     return "@WorkContext.ShopConfig.UploadServer/admin/tool/upload?operation=uploadproducteditorimage";
+                                 }
+                             }
+                             UE.getEditor('bspEditor');
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        <a href="" class="addBt submit">
+                            <img src="/administration/content/images/submit.jpg" /></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        &nbsp;
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    }
+}

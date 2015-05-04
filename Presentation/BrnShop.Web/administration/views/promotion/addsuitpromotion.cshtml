@@ -1,0 +1,121 @@
+﻿@model BrnShop.Web.Admin.Models.SuitPromotionModel
+
+@section header{
+    <title>添加套装促销</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+}   
+
+@section body{
+<h1 class="rightH1">
+套装促销 &gt;&gt; 添加促销
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+
+          <tr>
+    <td  width="106px" align="right">活动名称：</td>
+    <td>@Html.TextBoxFor(x => x.PromotionName, new { @class = "input", size = "70" })@Html.ValidationMessageFor(x => x.PromotionName)</td>
+    </tr>
+
+    <tr>
+    <td align="right">活动时间1：</td>
+    <td>
+    
+        @Html.TextBoxFor(x => x.StartTime1, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'StartTime1'})" })
+        至
+        @Html.TextBoxFor(x => x.EndTime1, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'EndTime1'})" })
+        @Html.ValidationMessageFor(x => x.StartTime1)
+        @Html.ValidationMessageFor(x => x.EndTime1)
+    
+    </td>
+    </tr>
+    <tr>
+    <td align="right">活动时间2：</td>
+    <td>
+    
+        @Html.TextBoxFor(x => x.StartTime2, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'StartTime2'})" })
+        至
+        @Html.TextBoxFor(x => x.EndTime2, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'EndTime2'})" })
+        @Html.ValidationMessageFor(x => x.StartTime2)
+        @Html.ValidationMessageFor(x => x.EndTime2)
+    
+    </td>
+    </tr>
+    <tr>
+    <td align="right">活动时间3：</td>
+    <td>
+    
+        @Html.TextBoxFor(x => x.StartTime3, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'StartTime3'})" })
+        至
+        @Html.TextBoxFor(x => x.EndTime3, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'EndTime3'})" })
+        @Html.ValidationMessageFor(x => x.StartTime3)
+        @Html.ValidationMessageFor(x => x.EndTime3)
+    
+    </td>
+    </tr>
+                              <tr>
+    <td align="right">最低用户等级：</td>
+    <td>@Html.DropDownListFor(x => x.UserRankLower, ViewData["userRankList"] as List<SelectListItem>) @Html.ValidationMessageFor(x => x.UserRankLower)</td>
+    </tr>
+                              <tr>
+    <td align="right">配额上限：</td>
+    <td>@Html.TextBoxFor(x => x.QuotaUpper, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.QuotaUpper)</td>
+    </tr>
+    <tr>
+        <td align="right">
+        限购一个：
+        </td>
+        <td>
+            <p>
+            <label>@Html.RadioButtonFor(x => x.OnlyOnce, 1, new { @class = "checkbox" })是</label>
+            <label>@Html.RadioButtonFor(x => x.OnlyOnce, 0, new { @class = "checkbox" })否</label>
+            <br />
+        </p>
+        </td>
+        </tr>
+        <tr>
+                    <td align="right">
+                        状态：
+                    </td>
+                    <td>
+                        <p>
+                            <label>@Html.RadioButtonFor(x => x.State, 1, new { @class = "checkbox" })启动</label>
+                            <label>@Html.RadioButtonFor(x => x.State, 0, new { @class = "checkbox" })暂停</label>
+                            <br />
+                        </p>
+                    </td>
+                </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

@@ -1,0 +1,93 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台菜单栏</title>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript">
+        document.write("<script src='/administration/cache/menu/@{@WorkContext.AdminGid}.js?time=" + new Date() + "'></s" + "cript>")
+    </script>
+    <style type="text/css">
+        *{ margin:0;padding:0;}
+        html { overflow: hidden;overflow-y: scroll; }
+        * html body{ overflow:visible;}
+        body{ font:12px/22px 'Microsoft Yahei',Verdana,Arial,sans-serif,"Times New Roman"; word-wrap:break-word; }
+        body,ul,li,h2,img,div{ margin:0; padding:0;}
+        body div{ text-align:left;}
+        li{ list-style-type:none;}
+        img{ border:0 none;}
+        a:hover{ color:#9f0017;}
+        a:link, a:visited{ text-decoration:none; color:#000;}
+        a { outline:none;color:#000;}
+        h2{ font-size:20px;}
+        .clear{ clear:both;}
+        .left{ float:left;}
+        .right{ float:right;}
+
+        /*左侧菜单*/
+        #menu{ background:url(/administration/content/images/menubg.jpg) repeat-y right; width:150px; overflow:hidden;}
+        #menu img{ margin-left:14px;}
+
+        #menu ul li{ padding-top:5px; height:30px; overflow:hidden;}
+        #menu ul li.hot{ height:auto}
+
+        #menu ul li h2{background:url(/administration/content/images/menuli_bg.jpg); height:29px; color:#404040; line-height:23px; font-size:14px; font-weight:normal; padding-left:30px; cursor:pointer;}
+        /*#menu ul li h2.hot{background:url(/administration/content/images/menuli_bg_hot.jpg); color:#FFF; font-weight:bold;}*/
+
+        #menu ul li a{ display:block; background:url(/administration/content/images/li.jpg) no-repeat 35px center; height:25px; line-height:25px; padding-left:48px;}
+        #menu ul li a:hover,#menu ul li a.hot{ background:url(/administration/content/images/li1.jpg) no-repeat 35px center; color:#e17a00; }
+    </style>
+</head>
+<body style="background: #e6e7e9;">
+    <div id="menu">
+        <img src="/administration/content/images/menubg_top.jpg" width="142px" height="49" />
+        <ul id="menuUl">
+        <li>正在加载...</li>
+        </ul>
+        <img src="/administration/content/images/menubg_bottom.jpg" width="142px" height="47" />
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var menuLiList = "";
+            if (menuList != undefined && menuList != null && menuList.length > 0) {
+                for (var i = 0; i < menuList.length; i++) {
+                    if (i == 0) {
+                        menuLiList += "<li class='hot'><h2>" + menuList[i].title + "</h2>";
+                    }
+                    else {
+                        menuLiList += "<li><h2>" + menuList[i].title + "</h2>";
+                    }
+                    for (var j = 0; j < menuList[i].subMenuList.length; j++) {
+                        menuLiList += "<a href='" + menuList[i].subMenuList[j].url + "' target='frameRight'>" + menuList[i].subMenuList[j].title + "</a>";
+                    }
+                    menuLiList += "</li>";
+                }
+            }
+            if (menuLiList != "") {
+                document.getElementById("menuUl").innerHTML = menuLiList;
+            }
+
+            $("#menu h2").click(function () {
+                if ($(this).parent("li").hasClass("hot")) {
+                    $(this).removeClass("hot").parent("li").removeClass("hot");
+                } else {
+                    $("#menu h2").removeClass("hot");
+                    $(this).addClass("hot").parent("li").addClass("hot");
+                }
+            })
+
+
+            $("#menu ul li a").click(function () {
+                $("#menu h2").removeClass("hot");
+                $("#menu a").removeClass("hot");
+                $(this).addClass("hot").parent("li").children("h2").addClass("hot")
+
+            })
+        })
+
+    </script>
+</body>
+</html>

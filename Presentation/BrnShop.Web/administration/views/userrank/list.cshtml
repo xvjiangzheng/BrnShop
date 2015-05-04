@@ -1,0 +1,60 @@
+﻿@model BrnShop.Web.Admin.Models.UserRankListModel
+
+@section header{
+<title>会员等级列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+等级管理 &gt;&gt; 等级列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+        <div class="table_top">
+        </div>
+@using (Html.BeginForm("list", "userrank"))
+{
+  <div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="20"></th>
+    <th align="left">等级名称</th>
+    <th width="120" align="left">积分下限</th>  
+    <th width="120" align="left">积分上限</th>  
+    <th width="90" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (UserRankInfo info in Model.UserRankList)
+  {
+  <tr>
+    <td></td>
+    <td>@info.Title</td>
+    <td>@info.CreditsLower</td>
+    <td>@info.CreditsUpper</td>
+    <td>
+    @if (info.System == 0)
+    {
+        @Html.ActionLink("[编辑]", "edit", new { userRid = info.UserRid }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "del", new { userRid = info.UserRid }, new { @class = "deleteOperate" })
+    }
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+}
+<div class="table_bottom" style=" margin-left:15px;">
+      <div>(1)第一个会员等级的积分下限必须为"0"，最后一个会员等级的积分上限必须为"-1"。</div>
+      <div>(2)会员等级的积分限额必须具有连贯性,即一个会员等级的积分下限必须等于它上一个会员等级的积分上限</div>
+      <div>(3)会员等级必须依次递增，不能递减或穿插式排列</div>
+</div>
+}

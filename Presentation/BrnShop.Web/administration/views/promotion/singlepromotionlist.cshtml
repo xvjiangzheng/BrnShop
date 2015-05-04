@@ -1,0 +1,120 @@
+﻿@model BrnShop.Web.Admin.Models.SinglePromotionListModel
+           
+@section header{
+    <title>单品促销列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <link rel="stylesheet" type="text/css"  href="/administration/content/jbox/Skins/Default/jbox.css"/>
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/administration/scripts/selectlist.js"></script>
+}
+@section body{
+    <h1 class="rightH1">
+        单品促销管理 &gt;&gt; 促销列表
+<div class="right">
+<a href="@Url.Action("addsinglepromotion")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+        <div class="clear">
+        </div>
+    </h1>
+
+ @using (Html.BeginForm())
+    {
+    
+        <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+        <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+        <div class="dataListSearch">
+            <table height="32">
+                <tbody>
+                    <tr>
+                        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif" /></td>
+                        <td>活动商品：</td>
+                        <td width="100">
+                            <div class="selectBt">
+                                <input type="button" value="@Model.ProductName" onclick="openProductSelectLayer(this)" style="height:22px; line-height:22px;background:url(/administration/content/images/selectbgico.gif) no-repeat 6px center; padding-left:22px; padding-right:10px;">
+                                <input type="hidden" class="Pid" id="Pid" name="Pid" value="@Model.Pid" />
+                                <input type="hidden" class="ProductName" id="ProductName" name="ProductName" value="@Model.ProductName" />
+                            </div>
+                        </td>
+                        <td>&nbsp;活动名称：</td>
+                        <td width="180">@Html.TextBox("PromotionName", Model.PromotionName, new { height = "28", size = "30" })</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;活动时间：</td>
+                        <td width="180">@Html.TextBox("PromotionTime", Model.PromotionTime, new { height = "28", size = "30", onfocus = "WdatePicker({el:'PromotionTime'})" })</td>
+                        <td><input id="SearchProduct" name="SearchProduct" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="40" align="center"><input type="checkbox" id="allSelect" /></th>
+                    <th width="70" align="left">活动编号</th>
+                    <th width="220" align="left">活动名称</th>
+                    <th align="left">商品名称</th>
+                    <th width="80" align="left">活动类型</th>
+                    <th width="130" align="left">活动时间</th>
+                    <th width="50" align="left">状态</th>
+                    <th width="90" align="left">管理操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.SinglePromotionList.Rows)
+                {
+                    <tr>
+                        <td align="center"><input type="checkbox" value="@row["pmid"]" selectItem="true" name="pmIdList"/></td>
+                        <td>@row["pmid"]</td>
+                        <td> @row["name"]</td>
+                        <td> @row["pname"]</td>
+                        <td>
+                             @{
+                                if (row["discounttype"].ToString() == "0")
+                                {
+                                    @:折扣
+                                }
+                                else if (row["discounttype"].ToString() == "1")
+                                {
+                                    @:直降
+                                }
+                                else if (row["discounttype"].ToString() == "2")
+                                {
+                                    @:折后价
+                                }
+                            }
+                        </td>
+                        <td> @row["starttime1"]<br />@row["endtime1"]</td>
+                        <td>
+                             @{
+                                if (row["state"].ToString() == "0")
+                                {
+                                @:暂停
+                                }
+                                else
+                                {
+                                    @:开启
+                                }
+                            }
+                        </td>
+                        <td>
+        @Html.ActionLink("[编辑]", "editsinglepromotion", new { pmid = row["pmid"] }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "delsinglepromotion", new { pmidList = row["pmid"] }, new { @class = "deleteOperate" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+        <div class="dataListEdit">
+    <a href="#" delUrl="@Url.Action("delsinglepromotion")" class="batch batchDel">批量删除</a>
+            <div class="page">
+                @Html.AdminPager(Model.PageModel)
+            </div>
+        </div>
+    }
+}

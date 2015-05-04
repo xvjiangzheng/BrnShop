@@ -1,0 +1,64 @@
+body{ background:#f2f2f2; }
+#loginTop{ padding:30px 0; margin-top:10px; width:900px;}
+#loginTop h2{ float:left; height:42px; line-height:42px; border-left:1px solid #e3e3e3; padding-left:15px; margin-left:15px;font-size:24px; font-weight:normal; color:#333;}
+
+.login{ width:900px; margin:20px auto; margin-bottom:50px;border:5px solid #e8e8e8; background:#FFF; height:355px; position:relative;}
+
+.login div.right{ width:340px; padding:20px;}
+.login .text{width: 282px;height: 24px;line-height: 24px;padding: 4px 20px 4px 3px;border: 1px solid #cccccc;font-size: 14px;}
+.login dl{ padding-bottom:5px;}
+.login .userName{ background:url(/themes/default/images/p.jpg) no-repeat 285px center;}
+.login .passWord{ background:url(/themes/default/images/lock.jpg) no-repeat 285px center;}
+.login .YZMbox{ visibility:hidden;}
+.login .YZM{ width:145px; margin-right:10px;}
+
+
+.loginBt{}
+.loginBt .loginIn{ font-size:18px; font-weight:bold; color:#FFF; display:block; text-align:center; width:307px; padding:7px 0; font-weight:normal; margin-top:10px;}
+
+.openID{ padding:10px 0; margin-top:10px;}
+.openID a{ color:#333;}
+.openID h4{ color:#999; font-size:12px; font-weight:normal;}
+
+.login .loginREG{border:5px solid #e8e8e8; border-top:0; position:absolute; right:40px; bottom:-37px;text-align: center;font-size: 14px;background: #7cbe56;width: 115px;height:32px; line-height:32px; color:#FFF;display: block;color: #FFF;}
+.login .loginREG:hover{ background:#89c964}
+
+
+.reg{ background:#FFF;width:900px; padding:40px 0; border:1px solid #DDD;font-family: arial,"宋体";}
+.regTitle{width:900px; text-align:right; padding-bottom:5px;}
+.reg th{ font-weight:normal; font-size:14px;color: #999;
+padding-right: 10px;width: 190px;text-align: right; height:60px;}
+.reg th em{ color:red;}
+.reg .tipBox{ position:relative; width:100%; height:38px; line-height:38px;}
+.reg .tip{ background:#f7f7f7; border:1px solid #ddd; width:260px; height:36px; line-height:36px; padding:0 10px; position:absolute; left:0; top:0;}
+.reg .text{width: 238px;height: 16px;padding: 10px 25px 10px 5px;border: 1px solid #cccccc;float: none;font-size: 14px;color: #999;overflow: hidden; outline:none;}
+body .reg .succ_ok .text{ background:url(/themes/default/images/succ-ok.png) no-repeat right center;}
+body .reg .succ_error .text{ background:url(/themes/default/images/succ-error.png) no-repeat right center;}
+body .reg .succ_error .tip{ border:1px solid #ffbdbe;background: #FFEBEB; color:red; }
+body .reg .succ_on .text{ border:1px solid #7abd54;}
+
+
+.reg .userName{ background:url(/themes/default/images/p.jpg) no-repeat 245px center;}
+.reg .passWord{ background:url(/themes/default/images/lock.jpg) no-repeat 245px center;}
+.reg .YZM{ width:132px;}
+
+html body .reg .regBt{font-size:18px; font-weight:bold; color:#FFF; display:block; text-align:center; width:270px; padding:7px 0; font-weight:normal; margin-top:10px;}
+
+
+.findPassword{ position:relative;background:#FFF;width:900px; padding:40px 0; border:1px solid #DDD;font-family: arial,"宋体";}
+
+
+.step{ margin:0 auto; width:650px; padding:20px 0;}
+.step li{ position:relative; border-top:5px solid #cccccc; width:160px; text-align:center; height:40px; line-height:40px; float:left;}
+.step li s{ width:20px; height:20px; background:#CCC; position:absolute; top:-13px; left:50%; margin-left:-10px; font-weight:bold; color:#FFF; line-height:20px;}
+.step li.hot{ border-top:5px solid #7abd54; color:#7abd54;}
+.step li.hot s{ background:#7abd54;}
+
+
+.findPassword .text{width: 238px;height: 16px;padding: 10px 25px 10px 5px;border: 1px solid #cccccc;float: none;font-size: 14px;color: #999;overflow: hidden; outline:none;}
+
+.findPassword th{ font-weight:normal; font-size:14px;color: #999;
+padding-right: 10px;width: 190px;text-align: right; height:60px;}
+.findPassword th em{ color:red;}
+.passBt{font-size:14px; font-weight:bold; color:#FFF; display:block; text-align:center; width:100px; padding:7px 0; font-weight:normal; margin-top:10px;}
+.findPassword select{ padding:4px;}

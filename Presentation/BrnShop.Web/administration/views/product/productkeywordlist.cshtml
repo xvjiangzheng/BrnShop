@@ -1,0 +1,136 @@
+﻿@model BrnShop.Web.Admin.Models.ProductKeywordListModel
+           
+@section header{
+    <title>商品关键词列表</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <link href="/administration/content/jbox/Skins/Default/jbox.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/administration/content/jbox/jquery.jBox-2.3.min.js"></script>
+    <script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+    <script type="text/javascript">
+        /*相关性*/
+        var relevancyinputtempvalue = 0;
+        $(function () {
+            $(".relevancyinput").focus(function () {
+                var relevancyinputobj = $(this);
+                relevancyinputtempvalue = relevancyinputobj.val();
+                relevancyinputobj.val("");
+                relevancyinputobj.attr("class", "selectedsortinput");
+            });
+            $(".relevancyinput").blur(function () {
+                var relevancyinputobj = $(this);
+                if (relevancyinputobj.val() == "") {
+                    relevancyinputobj.val(relevancyinputtempvalue)
+                }
+                else {
+                    var reg = /^-?\d+$/;
+                    if (!reg.test(relevancyinputobj.val())) {
+                        relevancyinputobj.val(relevancyinputtempvalue).attr("class", "selectedsortinput");
+                        alert("只能输入数字！")
+                        return;
+                    }
+                    else {
+                        if (relevancyinputtempvalue != relevancyinputobj.val()) {
+                            $.jBox.tip("正在更新...", 'loading');
+                            $.get(relevancyinputobj.attr("url") + "&relevancy=" + relevancyinputobj.val(), function (data, textStatus) {
+                                if (data != "0") {
+                                    $.jBox.tip('更新成功！', 'success');
+                                } else {
+                                    relevancyinputobj.val(relevancyinputtempvalue);
+                                    $.jBox.error('更新失败，请联系管理员！', '更新失败');
+                                }
+                            });
+                        }
+                    }
+                }
+                relevancyinputobj.attr("class", "unselectedsortinput");
+            });
+        });
+    </script>
+}
+@section body{
+    <h1 class="rightH1">
+        商品管理 &gt;&gt; 关键词列表
+        <div class="right">
+            <a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT">
+                <img src="/administration/content/images/goback.jpg" />返回列表</a>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </h1>
+    <div class="table_top">
+    </div>
+    <div class="dataList">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="10"></th>
+                    <th width="60" align="left">编号</th>
+                    <th align="left">关键词</th>
+                    <th width="200" align="center">相关性</th>
+                    <th width="70" align="left">管理操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ProductKeywordInfo info in Model.ProductKeywordList)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@info.KeywordId</td>
+                        <td>@info.Keyword</td>
+                        <td align="center">
+                            <input type="text" url="@Url.Action("updateproductkeywordrelevancy", new { keywordId = info.KeywordId })" value="@info.Relevancy" class="relevancyinput unselectedsortinput" />
+                        </td>
+                        <td>
+                        <a href="#" url="@Url.Action("delproductkeyword", new { keywordIdList = info.KeywordId })" class = "ajaxdeleteOperate" }>[删除]</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="table_bottom">
+    </div>
+    @using (Html.BeginForm("addproductkeyword", "product"))
+    {
+        <div class="addTable" style="margin-left: 15px; margin-bottom: 10px; padding-top: 10px;
+            border: 2px solid #dbeffa">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="66px" align="right">关键词：</td>
+                        <td><input type="text" name="keyword" id="keyword" value="" class = "input" size = "30"/></td>
+                    </tr>
+                    <tr>
+                        <td align="right">相关性：</td>
+                        <td><input type="text" name="relevancy" id="relevancy" value="0" class = "input" size = "5"/></td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                        </td>
+                        <td>
+                            <input type="hidden" value="@Model.Pid" id="pid" name="pid"/>
+                            <input type="image" id="addKeyword" style="margin: 0px; padding: 0px;" src="/administration/content/images/a.jpg" />
+                            <script type="text/javascript">
+                                $("#addKeyword").click(function () {
+                                    if ($("#keyword").val() == "") {
+                                        alert("关键词不能为空");
+                                        return false;
+                                    }
+                                    else {
+                                        $(this).parents("form").submit();
+                                        return false;
+                                    }
+                                })
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}

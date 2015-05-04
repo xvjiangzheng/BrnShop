@@ -1,0 +1,117 @@
+﻿@model BrnShop.Web.Admin.Models.NewsModel
+
+@section header{
+    <title>添加新闻</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/content/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="/administration/content/ueditor/ueditor.all.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+新闻管理 &gt;&gt; 添加新闻
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+<div class="addTable">
+
+<table width="100%">
+  <tr>
+    <td width="76px" align="right">标题：</td>
+    <td>@Html.TextBoxFor(x => x.Title, new { @class = "input", size = "45" })@Html.ValidationMessageFor(x => x.Title)</td>
+    </tr>
+                             <tr>
+    <td align="right">类型：</td>
+    <td>@Html.DropDownListFor(x => x.NewsTypeId, ViewData["newsTypeList"] as List<SelectListItem>)@Html.ValidationMessageFor(x => x.NewsTypeId)
+    </td>
+    </tr>
+
+      <tr>
+    <td align="right">Url：</td>
+    <td>@Html.TextBoxFor(x => x.Url, new { @class = "input", size = "45" })@Html.ValidationMessageFor(x => x.Url)</td>
+    </tr>
+
+          <tr>
+    <td align="right">内容：</td>
+    <td>
+         <script name="Body" id="bspEditor">@Model.Body</script>
+         <script type="text/javascript">
+             UE.Editor.prototype.getActionUrl = function (action) {
+                 if (action == "config") {
+                     return "@WorkContext.ShopConfig.UploadServer/admin/tool/upload?operation=ueconfig";
+                 } else {
+                     return "@WorkContext.ShopConfig.UploadServer/admin/tool/upload?operation=uploadnewseditorimage";
+                 }
+             }
+             UE.getEditor('bspEditor');
+        </script>
+    </td>
+    </tr>
+
+
+      <tr>
+    <td align="right">排序：</td>
+    <td>@Html.TextBoxFor(x => x.DisplayOrder, new { @class = "input", size = "3" })@Html.ValidationMessageFor(x => x.DisplayOrder)</td>
+    </tr>
+    <tr>
+        <td align="right">是否显示：</td>
+    <td>
+        <p>
+            <label>@Html.RadioButtonFor(x => x.IsShow, 1, new { @class = "checkbox" })是</label>
+            <label>@Html.RadioButtonFor(x => x.IsShow, 0, new { @class = "checkbox" })否</label>
+            <br />
+        </p>
+    </td>
+    </tr>
+
+        <tr>
+        <td align="right">是否置顶：</td>
+    <td>
+        <p>
+            <label>@Html.RadioButtonFor(x => x.IsTop, 1, new { @class = "checkbox" })是</label>
+            <label>@Html.RadioButtonFor(x => x.IsTop, 0, new { @class = "checkbox" })否</label>
+            <br />
+        </p>
+    </td>
+    </tr>
+
+        <tr>
+        <td align="right">是否置首：</td>
+    <td>
+        <p>
+            <label>@Html.RadioButtonFor(x => x.IsHome, 1, new { @class = "checkbox" })是</label>
+            <label>@Html.RadioButtonFor(x => x.IsHome, 0, new { @class = "checkbox" })否</label>
+            <br />
+        </p>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+        <script type="text/javascript">
+            $(function () {
+                $("#sumbitBut").click(function () {
+                    $("form:first").submit();
+                    return false;
+                })
+            });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

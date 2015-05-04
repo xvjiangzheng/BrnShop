@@ -1,0 +1,270 @@
+﻿@model BrnShop.Web.Mobile.Models.ConfirmOrderModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>确认订单-@{@WorkContext.ShopConfig.SiteTitle}触屏版</title>
+    @Html.Raw(WorkContext.ShopConfig.SEOKeyword)
+    @Html.Raw(WorkContext.ShopConfig.SEODescription)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/base.css" rel="stylesheet" type="text/css">
+    <link href="@{@WorkContext.CSSCDN}/mobile/themes/default/css/buy.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="@{@WorkContext.ScriptCDN}/mobile/scripts/utils.js"></script>
+    <script type="text/javascript" src="@{@WorkContext.ScriptCDN}/mobile/scripts/common.js"></script>
+    <script type="text/javascript" src="@{@WorkContext.ScriptCDN}/mobile/scripts/order.js"></script>
+    <script type="text/javascript" src="@{@WorkContext.ScriptCDN}/mobile/scripts/region.js"></script>
+</head>
+
+<body>
+<header>
+  <div class="new-header">
+    <a href="javascript:pageBack()" class="new-a-back"><span>返回</span></a>
+    <h2>确认订单</h2>
+    <a href="javascript:navSH()" class="new-a-brn"><span>BRN键</span></a> 
+  </div>
+  <div class="new-brn-tab" id="nav" style=" display:none;">
+    <div class="new-tbl-type"> 
+    <a href="@Url.Action("index", "home")" class="new-tbl-cell"><span class="icon">首页</span><p style="color:#6e6e6e;">首页</p></a> 
+    <a href="@Url.Action("list", "category")" class="new-tbl-cell"><span class="icon2 on">分类搜索</span><p style="color:#6e6e6e;" class="on">分类搜索</p></a> 
+    <a href="@Url.Action("index", "cart")" class="new-tbl-cell"><span class="icon3">购物车</span><p style="color:#6e6e6e;">购物车</p></a> 
+    <a href="@Url.Action("index", "ucenter")" class="new-tbl-cell"><span class="icon4 on">个人中心</span><p style="color:#6e6e6e;" class="on">个人中心</p></a> 
+    </div>
+  </div>
+</header>
+
+<div id="mainBlock">
+
+<div class="allCon">
+<div class="title">收货人信息</div>
+<div class="con">
+<a href="javascript:getShipAddressList()" id="shipAddressShowBlock">
+@if (Model.DefaultFullShipAddressInfo != null)
+{
+<p> @Model.DefaultFullShipAddressInfo.Consignee @Model.DefaultFullShipAddressInfo.Mobile </p>
+<p style="font-size:14px;"> @Model.DefaultFullShipAddressInfo.ProvinceName @Model.DefaultFullShipAddressInfo.CityName @Model.DefaultFullShipAddressInfo.CountyName @Model.DefaultFullShipAddressInfo.Address </p>
+}
+else
+{ 
+    <text><p>您还没有配送地址，请先添加。<a href="javascript:void(0)" onclick="getShipAddressList()">点击添加</a><p></text>
+}
+</a>
+<span class="icon-arr"></span>
+</div>
+
+<div class="title">支付信息</div>
+<div class="con">
+<a href="javascript:showPayPluginList()"><span id="payPluginShowBlock">@Model.DefaultPayPluginInfo.FriendlyName</span></a>
+<span class="icon-arr"></span>
+</div>
+
+<div class="title">配送信息</div>
+<div class="con">
+<a href="javascript:showShipPluginList()"><span id="shipPluginShowBlock">@Model.DefaultShipPluginInfo.FriendlyName</span></a>
+<span class="icon-arr"></span>
+</div>
+
+<div class="title">其它信息</div>
+<div class="con">
+<a href="javascript:getValidCouponList()"><span>选择优惠券</span></a>
+<span class="icon-arr"></span>
+</div>
+<div id="selectCouponList"></div>
+
+<div class="con">
+<a href="javascript:void(0)"><span>@Model.PayCreditName 支付</span><span class="tip">可用 @Model.MaxUsePayCredits @Model.PayCreditName，抵￥ @Html.Raw(Credits.PayCreditsToMoney(Model.MaxUsePayCredits).ToString()) 元</span></a>
+<input class="checkbox" type="checkbox" value="@Model.MaxUsePayCredits" id="payCreditCount" name="payCreditCount" style="position:absolute; right:10px; top:50%; margin-top:-9px;" />
+</div>
+</div>
+
+<div class="orderInfo">
+<span class="bg-border"><span class="icon"></span></span>
+<div style="padding: 10px 30px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr><td>商品金额</td><td align="right">￥@Model.ProductAmount</td></tr>
+  <tr><td>返&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;现</td><td align="right">-￥@Model.FullCut</td></tr>
+  <tr><td>税&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费</td><td align="right">￥<span id="payFeeShowBlock">@Model.PayFee</span></td></tr>
+  <tr><td>运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费</td><td align="right">￥<span id="shipFeeShowBlock">@Model.ShipFee</span></td></tr>
+  <tr><td>应付金额</td><td align="right" class="allPrice">￥<span id="orderAmountShowBlock">@Model.OrderAmount</span></td></tr>
+</table>
+</div>
+</div>
+
+<input type="hidden" id="selectedCartItemKeyList" value="@Model.SelectedCartItemKeyList" />
+<input type="hidden" id="payFee" value="@Model.PayFee" />
+<input type="hidden" id="shipFee" value="@Model.ShipFee" />
+<input type="hidden" id="fullCut" value="@Model.FullCut" />
+<input type="hidden" id="orderAmount" value="@Model.OrderAmount" />
+@if (Model.DefaultFullShipAddressInfo != null)
+{
+    <input type="hidden" value="@Model.DefaultFullShipAddressInfo.SAId" name="saId" id="saId" />
+}
+else
+{ 
+    <input type="hidden" value="0" name="saId" id="saId" />
+}
+@if (Model.DefaultPayPluginInfo != null)
+{
+    <input type="hidden" value="@Model.DefaultPayPluginInfo.SystemName" name="payName" id="payName" />
+}
+else
+{
+    <input type="hidden" value="" name="payName" id="payName" />
+}
+@if (Model.DefaultShipPluginInfo != null)
+{
+    <input type="hidden" value="@Model.DefaultShipPluginInfo.SystemName" name="shipName" id="shipName" />
+}
+else
+{
+    <input type="hidden" value="" name="shipName" id="shipName" />
+}
+<a href="javascript:submitOrder()" class="redBt subOrder">提交订单</a>
+@*<a href="javascript:void(0)"  class="errorBt subOrder">提交订单</a>*@
+
+</div>
+
+<div class="allCon" id="shipAddressListBlock" style="display:none;"></div>
+<form name="addShipAddressForm" action="" id="addShipAddressBlock" style="display:none;">
+<div class="allCon">
+<div class="title">收货人地址</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>收货人：</span>
+<p><input type="text" name="consignee" class="text" value="" /></p>
+</div>
+<div class="tip" style="display:block;"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>手机号：</span>
+<p><input type="text" name="mobile" class="text" value="" /></p>
+</div>
+<div class="tip" style="display:block;"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>所在省：</span>
+<p>
+    <select id="provinceId" name="provinceId" class="select" style="width:100%; padding:4px;">
+    <option selected="selected" value="-1">请选择</option>
+    </select>
+</p>
+</div>
+<div class="tip"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>所在市：</span>
+<p>
+    <select id="cityId" name="cityId" class="select" style="width:100%; padding:4px;">
+    <option selected="selected" value="-1">请选择</option>
+    </select>
+</p>
+</div>
+<div class="tip"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>所在县：</span>
+<p>
+    <select id="regionId" name="regionId" class="select" style="width:100%; padding:4px;">
+    <option selected="selected" value="-1">请选择</option>
+    </select>
+</p>
+</div>
+<div class="tip"></div>
+</div>
+
+<div class="ADcell">
+<div class="ADcellCon">
+<span>详细地址：</span>
+<p><input type="text" name="address" class="text" value="" /></p>
+</div>
+<div class="tip" style="display:block;"></div>
+</div>
+
+</div>
+<a href="javascript:void(0)" onclick="javascript:addShipAddress()" class="redBt subOrder">提交</a>
+</form>
+
+<div class="allCon" id="payPluginListBlock" style="display:none;">
+<div class="title">支付信息</div>
+@foreach (PluginInfo info in Model.PayPluginList)
+{
+<div class="allCell" onclick="selectPayPlugin('@info.SystemName','@info.FriendlyName')"><span class="radio"></span>@info.FriendlyName</div>
+}
+</div>
+
+<div class="allCon" id="shipPluginListBlock" style="display:none;">
+<div class="title">配送信息</div>
+@foreach (PluginInfo info in Model.ShipPluginList)
+{
+<div class="allCell" onclick="selectShipPlugin('@info.SystemName','@info.FriendlyName')"><span class="radio"></span>@info.FriendlyName</div>
+}
+</div>
+
+<div class="allCon" id="validCouponListBlcok" style="display:none;">
+<div class="title">优惠劵</div>
+<div id="validCouponList"></div>
+<a href="javascript:confirmSelectedCoupon()" class="redBt subOrder">确认</a>
+</div>
+
+
+<div class="viewport">
+  <footer>
+    <div class="footerTop">
+      @if (WorkContext.Uid < 1)
+      {
+      <div class="left"><a href="@Url.Action("login", "account", new RouteValueDictionary { { "returnUrl", WorkContext.Url } })">登录</a> | <a href="@Url.Action("register", "account")">注册</a></div>
+      }
+      else
+      {
+        <div class="left"><a href="@Url.Action("index", "ucenter")">@WorkContext.NickName</a> | <a href="@Url.Action("logout", "account")">退出</a></div>   
+      }
+      <div class="right"><a href="#top">回到顶部 </a></div>
+      <div class="clear"></div>
+    </div>
+    <div class="footerCon"><a href="@Url.Action("index", "home")" class="hot">触屏版</a><a href="/">电脑版</a></div>
+    <div class="copyright" align="center">www.brnshop.com </div>
+  </footer>
+</div>
+<script type="text/javascript">
+    //绑定省列表的改变事件
+    Event.addHandler(document.getElementById("provinceId"), "change", function (event) {
+        var selectedProvinceId = getSelectedOption(this).value;
+        if (selectedProvinceId > 0) {
+            document.getElementById("regionId").innerHTML = "<option value='-1'>请选择</option>";
+            bindCityList(selectedProvinceId, document.getElementById("cityId"));
+        }
+    })
+
+
+    //绑定市列表的改变事件
+    Event.addHandler(document.getElementById("cityId"), "change", function (event) {
+        var selectedCityId = getSelectedOption(this).value;
+        if (selectedCityId > 0) {
+            bindCityList(selectedCityId, document.getElementById("regionId"));
+        }
+    })
+
+    //绑定省列表
+    bindProvinceList(document.getElementById("provinceId"), provinceId);
+
+    if (cityId > 0) {
+        bindCityList(provinceId, document.getElementById("cityId"), cityId);
+        bindCountyList(cityId, document.getElementById("regionId"), countyId);
+    }
+</script>
+@Html.Raw(WorkContext.ShopConfig.Script)
+</body>
+</html>

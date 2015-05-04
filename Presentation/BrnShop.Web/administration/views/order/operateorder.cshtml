@@ -1,0 +1,171 @@
+﻿@model BrnShop.Web.Admin.Models.OperateOrderModel
+
+@section header{
+    @if (Model.OrderActionType == OrderActionType.Pay)
+    {
+        <title>支付订单</title>
+    }
+    else if (Model.OrderActionType == OrderActionType.Confirm)
+    {
+        <title>确认订单</title>
+    }
+    else if (Model.OrderActionType == OrderActionType.PreProduct)
+    {
+        <title>备货</title>
+    }
+    else if (Model.OrderActionType == OrderActionType.Send)
+    {
+        <title>发货</title>
+    }
+    else if (Model.OrderActionType == OrderActionType.Complete)
+    {
+        <title>完成订单</title>
+    }
+    else if (Model.OrderActionType == OrderActionType.Cancel)
+    {
+        <title>取消订单</title>
+    }
+    else if (Model.OrderActionType == OrderActionType.Return)
+    {
+        <title>退货</title>
+    }
+    else if (Model.OrderActionType == OrderActionType.Lock)
+    {
+        <title>锁定订单</title>
+    }
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+订单管理 &gt;&gt;     
+    @if (Model.OrderActionType == OrderActionType.Pay)
+    {
+        @:支付订单
+    }
+    else if (Model.OrderActionType == OrderActionType.Confirm)
+    {
+        @:确认订单
+    }
+    else if (Model.OrderActionType == OrderActionType.PreProduct)
+    {
+        @:备货
+    }
+    else if (Model.OrderActionType == OrderActionType.Send)
+    {
+        @:发货
+    }
+    else if (Model.OrderActionType == OrderActionType.Complete)
+    {
+        @:完成订单
+    }
+    else if (Model.OrderActionType == OrderActionType.Cancel)
+    {
+        @:取消订单
+    }
+    else if (Model.OrderActionType == OrderActionType.Return)
+    {
+        @:退货
+    }
+    else if (Model.OrderActionType == OrderActionType.Lock)
+    {
+        @:锁定订单
+    }
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+@if (Model.OrderActionType == OrderActionType.Pay)
+{
+    <tr>
+    <td width="80px" align="right">支付单号：</td>
+    <td><input class="input" id="paySN" name="paySN" size="35" type="text" value="" />@Html.ValidationMessage("paySN")</td>
+    </tr>
+    <tr>
+    <td width="80px" align="right">操作备注：</td>
+    <td>
+    <p><textarea cols="40" id="actionDes" name="actionDes" rows="6">@Model.ActionDes</textarea>@Html.ValidationMessage("actionDes")</p>
+    </td>
+    </tr>
+}
+else if (Model.OrderActionType == OrderActionType.Send)
+{
+    <tr>
+    <td width="80px" align="right">配送单号：</td>
+    <td><input class="input" id="shipSN" name="shipSN" size="35" type="text" value="" />@Html.ValidationMessage("shipSN")</td>
+    </tr>
+    <tr>
+    <td width="80px" align="right">操作备注：</td>
+    <td>
+    <p><textarea cols="40" id="actionDes" name="actionDes" rows="6">@Model.ActionDes</textarea>@Html.ValidationMessage("actionDes")</p>
+    </td>
+    </tr>
+}
+else if (Model.OrderActionType == OrderActionType.Complete)
+{
+    if (Model.OrderInfo.PaySN.Length == 0)
+    {
+    <tr>
+    <td width="80px" align="right">支付单号：</td>
+    <td><input class="input" id="paySN" name="paySN" size="35" type="text" value="" />@Html.ValidationMessage("paySN")</td>
+    </tr>
+    }
+    <tr>
+    <td width="80px" align="right">操作备注：</td>
+    <td>
+    <p><textarea cols="40" id="actionDes" name="actionDes" rows="6">@Model.ActionDes</textarea>@Html.ValidationMessage("actionDes")</p>
+    </td>
+    </tr>
+}
+else if (Model.OrderActionType == OrderActionType.Lock)
+{
+    <tr>
+    <td width="80px" align="right">锁定原因：</td>
+    <td>
+    <p>
+    <label><input class="checkbox" name="actionDes" type="radio" value="恶意订单" checked="checked"/>恶意订单</label>
+    <label><input class="checkbox" name="actionDes" type="radio" value="系统错误" />系统错误</label>
+    <label><input class="checkbox" name="actionDes" type="radio" value="其它" />其它</label>
+    <br />
+    </p>
+    </td>
+    </tr>
+}
+else
+{
+    <br />
+    <tr>
+    <td width="80px" align="right">操作备注：</td>
+    <td>
+    <p><textarea cols="40" id="actionDes" name="actionDes" rows="6">@Model.ActionDes</textarea>@Html.ValidationMessage("actionDes")</p>
+    </td>
+    </tr>
+}
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+        <script type="text/javascript">
+            $(function () {
+                $("#sumbitBut").click(function () {
+                    $("form:first").submit();
+                    return false;
+                })
+            });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

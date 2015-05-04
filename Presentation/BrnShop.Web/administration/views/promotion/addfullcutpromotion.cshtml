@@ -1,0 +1,117 @@
+﻿@model BrnShop.Web.Admin.Models.FullCutPromotionModel
+
+@section header{
+    <title>添加满减促销活动</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+}   
+
+@section body{
+<h1 class="rightH1">
+满减促销 &gt;&gt; 添加促销
+<div class="right">
+<a href="@Html.Raw(ViewData["referer"].ToString())" class="menuBT"><img src="/administration/content/images/goback.jpg"/>返回列表</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+          <tr>
+    <td width="106px" align="right">活动名称：</td>
+    <td>@Html.TextBoxFor(x => x.PromotionName, new { @class = "input", size = "70" })@Html.ValidationMessageFor(x => x.PromotionName)</td>
+    </tr>
+
+    <tr>
+    <td align="right">活动时间：</td>
+    <td>
+    
+            @Html.TextBoxFor(x => x.StartTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'StartTime'})" })
+        至
+        @Html.TextBoxFor(x => x.EndTime, new { @class = "input", size = "18", onfocus = "WdatePicker({el:'EndTime'})" })
+        @Html.ValidationMessageFor(x => x.StartTime)
+        @Html.ValidationMessageFor(x => x.EndTime)
+    
+    </td>
+    </tr>
+                                  <tr>
+    <td align="right">最低用户等级：</td>
+    <td>@Html.DropDownListFor(x => x.UserRankLower, ViewData["userRankList"] as List<SelectListItem>) @Html.ValidationMessageFor(x => x.UserRankLower)</td>
+    </tr>
+              <tr>
+    <td align="right">活动额度1：</td>
+    <td>@Html.TextBoxFor(x => x.LimitMoney1, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.LimitMoney1)元</td>
+    </tr>
+              <tr>
+    <td align="right">减免额度1：</td>
+    <td>@Html.TextBoxFor(x => x.CutMoney1, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.CutMoney1)元</td>
+    </tr>
+                  <tr>
+    <td align="right">活动额度2：</td>
+    <td>@Html.TextBoxFor(x => x.LimitMoney2, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.LimitMoney2)元</td>
+    </tr>
+              <tr>
+    <td align="right">减免额度2：</td>
+    <td>@Html.TextBoxFor(x => x.CutMoney2, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.CutMoney2)元</td>
+    </tr>
+                  <tr>
+    <td align="right">活动额度3：</td>
+    <td>@Html.TextBoxFor(x => x.LimitMoney3, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.LimitMoney3)元</td>
+    </tr>
+              <tr>
+    <td align="right">减免额度3：</td>
+    <td>@Html.TextBoxFor(x => x.CutMoney3, new { @class = "input", size = "8" })@Html.ValidationMessageFor(x => x.CutMoney3)元</td>
+    </tr>
+            <tr>
+                    <td align="right">
+                        活动类型：
+                    </td>
+                    <td>
+                        <p>
+                            <label>@Html.RadioButtonFor(x => x.Type, 0, new { @class = "checkbox" }) 全场参加</label>
+                            <label>@Html.RadioButtonFor(x => x.Type, 1, new { @class = "checkbox" }) 部分商品参加</label>
+                            <label>@Html.RadioButtonFor(x => x.Type, 2, new { @class = "checkbox" }) 部分商品不参加</label>
+                            <br />
+                        </p>
+                    </td>
+                </tr>
+        <tr>
+                    <td align="right">
+                        状态：
+                    </td>
+                    <td>
+                        <p>
+                            <label>@Html.RadioButtonFor(x => x.State, 1, new { @class = "checkbox" })启动</label>
+                            <label>@Html.RadioButtonFor(x => x.State, 0, new { @class = "checkbox" })暂停</label>
+                            <br />
+                        </p>
+                    </td>
+                </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}

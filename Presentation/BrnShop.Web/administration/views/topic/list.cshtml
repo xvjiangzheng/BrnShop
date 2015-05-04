@@ -1,0 +1,89 @@
+﻿@model BrnShop.Web.Admin.Models.TopicListModel
+
+@section header{
+<title>活动专题列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+<script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+活动专题管理 &gt;&gt; 活动专题列表
+<div class="right">
+<a href="@Url.Action("add")" class="menuBT"><img src="/administration/content/images/add.jpg"/>添加</a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("list", "topic"))
+{
+    <input type="hidden" value="@Model.SortColumn" id="sortColumn" name="sortColumn" />
+    <input type="hidden" value="@Model.SortDirection" id="sortDirection" name="sortDirection" />
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>编号：</td>
+        <td width="100">@Html.TextBox("TopicSN", Model.TopicSN, new { height = "12" })</td>
+        <td>&nbsp;&nbsp;&nbsp;标题：</td>
+        <td width="130">@Html.TextBox("TopicTitle", Model.TopicTitle, new { height = "18" })</td>
+        <td>&nbsp;&nbsp;&nbsp;开始时间：</td>
+        <td width="130">@Html.TextBox("StartTime", Model.StartTime, new { height = "18", onfocus = "WdatePicker({el:'StartTime'})" })</td>
+        <td>&nbsp;&nbsp;&nbsp;结束时间：</td>
+        <td width="130">@Html.TextBox("EndTime", Model.EndTime, new { height = "18", onfocus = "WdatePicker({el:'EndTime'})" })</td>
+        <td><input id="SearchTopic" name="SearchTopic" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" /></td>
+      </tr>
+     </tbody></table>
+</div>
+
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="40" align="center"><input type="checkbox" id="allSelect"/></th>
+    <th width="140" align="left">编号</th>
+    <th align="left" name="sortTitle" column="title" direction="DESC">标题</th>
+    <th width="140" align="left" name="sortTitle" column="starttime" direction="DESC">开始时间</th>
+    <th width="140" align="left" name="sortTitle" column="endtime" direction="ASC">结束时间</th>  
+    <th width="50" align="left" >显示</th>
+    <th width="80" align="left">管理操作</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.TopicList.Rows)
+  {
+  <tr>
+    <td align="center"><input type="checkbox" value="@row["topicid"]" selectItem="true" name="topicId" /></td>
+    <td>@row["sn"]</td>
+    <td>@row["title"]</td>
+    <td>@row["starttime"]</td>
+    <td>@row["endtime"]</td>
+    <td>
+    @if (row["isshow"].ToString() == "1")
+    {
+         @:是
+    }
+    else
+    {
+        @:否 
+    }
+    </td>
+    <td>
+        @Html.ActionLink("[编辑]", "edit", new { topicId = row["topicid"] }, new { @class = "editOperate" })
+        @Html.ActionLink("[删除]", "del", new { topicId = row["topicid"] }, new { @class = "deleteOperate" })
+    </td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+}

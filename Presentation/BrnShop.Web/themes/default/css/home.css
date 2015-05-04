@@ -1,0 +1,66 @@
+/*@webSir Css*/
+
+/*index第一部分*/
+#index1{ padding:14px 0 0 220px; height:240px; overflow:hidden; width:990px;}
+.indexPic{ width:670px; height:240px; }
+#bannerBox{position:relative;}
+#bannerContentID li{position:relative;}
+#bannerNumID{ position:absolute; bottom:15px; right:15px;}
+#bannerNumID li{list-style:none;float:left;background:#999999; color:#FFF;-moz-border-radius: 22px;-webkit-border-radius:22px;border-radius: 22px; width:22px; height:22px; line-height:22px; text-align:center; margin-left:5px;}
+#bannerNumID li:hover,#bannerNumID li.active{background:#e4393c;}
+
+
+/*公告*/
+.gonggao{ width:302px; height:238px; border:1px solid #e1e1e1;}
+.gonggao h2{ font-size:14px; position:relative; height:35px; line-height:35px; padding-left:30px; background:url(/themes/default/images/gonggao.jpg) no-repeat 10px 10px; margin-top:5px;}
+.gonggao h2 .more{ position:absolute; display:block; width:80px; text-align:center; color:#FFF; background:#d1caca; font-weight:normal; height:20px; line-height:20px; right:10px; top:6px; font-size:12px;}
+.gonggao h2 .more:hover{ background:#cd292b;}
+.gonggao .textList{ padding:10px; padding-left:20px;}
+
+
+#index2{padding:14px 0 0 220px; height:176px; overflow:hidden; width:990px;}
+
+#index2 .scroll{ border:1px solid #e1e1e1; width:668px; height:160px; position:relative;}
+.inScroll{ }
+#index2 .scroll ul{  position:absolute; width:10000px;}
+#index2 .scroll li{ float:left;}
+
+.bt{ display:block; background:url(/themes/default/images/lr.jpg) no-repeat left top; width:20px; height:20px; position:absolute;}
+
+body .btL{ background-position:left bottom; left:8px; top:50%; margin-top:-10px;}
+html body .btLhot,body .btL:hover{background-position:left top;}
+body .btR{ background-position:right bottom;right:8px; top:50%;margin-top:-10px;}
+html body .btRhot,body .btR:hover{background-position:right top;}
+
+.indexAd{width:302px; border:1px solid #e1e1e1; height:160px;}
+
+
+/*楼层*/
+
+.floor{ margin-top:20px;}
+.floorT{ height:35px; font-size:22px; position:relative;line-height:35px; border-bottom:2px solid #aaa;}
+.floorT b{ font-size:16px; display:block; float:left;margin-right:10px; background:url(/themes/default/images/floorB.gif) no-repeat; width:28px; height:32px; text-align:center; line-height:32px; color:#FFF;}
+.floorT ul{ position:absolute; left:205px; bottom:-2px;}
+.floorT ul li{ float:left;}
+.floorT ul li a{ font-size:14px; display:block; width:150px; text-align:center;height:35px; overflow:hidden;_float:left;}
+.floorT ul li a:hover,.floorT ul li a.hot{ background:url(/themes/default/images/itab3.gif) no-repeat bottom;}
+
+.floorBt{ position:absolute; right:0; top:5px;}
+
+.floorBt a{ color:#005EA7; background:url(/themes/default/images/i.gif) no-repeat right center; font-size:12px; font-weight:normal; padding:0 12px; padding-left:20px;}
+.floorBt a:hover{ text-decoration:underline;}
+.floorL{ width:205px; height:320px; overflow:hidden; position:relative;}
+.floorL ul{ padding:15px 0 15px 15px; *padding:0 0 15px 15px;}
+.floorL li{ float:left; width:80px;height:25px; overflow:hidden;padding-right:5px; *margin-top:5px;}
+.floorL .more{ display:block; width:180px; margin-left:12px; text-align:center; background:#eaeaea; border:1px solid #dfdfdf;}
+
+.floorAD{ position:absolute; bottom:0px;width:205px; }
+
+
+.floorR{ width:1004px;height:320px;overflow:hidden;}
+.floorCon{ width:1004px; height:320px; position:relative; padding-top:15px; overflow:hidden;}
+.floorCon ul{ width:120%; position:absolute; left:0; top:15px;}
+.floorCon li{ float:left; margin-right:20px; width:236px;}
+.floorCon li em{ display:block;color:#505050;padding-top:5px; height:46px; overflow:hidden;}
+.floorCon li b{ display:block; color:#d23335; }
+.floorCon li b s{ font-weight:normal; padding-left:10px; color:#505050;}

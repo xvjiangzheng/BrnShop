@@ -1,0 +1,116 @@
+﻿@model BrnShop.Web.Admin.Models.CreditLogListModel
+
+@section header{
+<title>积分日志列表</title>
+<link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+<script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+<script type="text/javascript" src="/administration/scripts/showlist.js"></script>
+<script type="text/javascript" src="/administration/content/my97datepicker/WdatePicker.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+日志管理 &gt;&gt; 积分日志列表
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+@using (Html.BeginForm("creditloglist", "log"))
+{
+    
+<div class="dataListSearch">
+<table height="32">
+        <tbody>
+        <tr>
+        <td width="35"><img id="searchImg" src="/administration/content/images/search1.gif"/></td>
+        <td>账户名：</td>
+        <td width="130">@Html.TextBox("AccountName", Model.AccountName, new { height = "18" })</td>
+        <td>&nbsp;&nbsp;&nbsp;开始时间：</td>
+        <td width="130">@Html.TextBox("StartTime", Model.StartTime, new { height = "18", onclick = "WdatePicker({el:'StartTime'})" })
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;结束时间：</td>
+        <td width="130">@Html.TextBox("EndTime", Model.EndTime, new { height = "18", onclick = "WdatePicker({el:'EndTime'})" })
+        </td>
+       <td>
+       <input id="SearchLog" name="SearchLog" type="image" class="searchBut submit" src="/administration/content/images/s.jpg" />
+       </td>
+      </tr>
+     </tbody></table>
+</div>
+<div class="dataList">
+<table width="100%">
+<thead>
+  <tr>
+    <th width="60" align="center">编号</th>
+    <th width="120" align="left" >用户</th>
+    <th width="120" align="left" >操作人</th>
+    <th width="80" align="left" >支付积分</th>
+    <th width="80" align="left" >等级积分</th>
+    <th align="left" >操作描述</th>
+    <th width="134" align="left" >操作时间</th>
+    </tr>
+</thead>
+  <tbody>
+  @foreach (DataRow row in Model.CreditLogList.Rows)
+  {
+  <tr>
+    <td align="center">@row["logid"]</td>
+    <td>@row["rusername"]</td>
+        <td>
+      @if (row["operator"].ToString() == "0")
+      {
+          @:系统 
+      }
+      else
+      {
+           @row["ousername"]
+      }
+</td>
+    <td>@row["paycredits"]</td>
+    <td>@row["rankcredits"]</td>
+    <td>@row["actiondes"]</td>
+    <td>@row["actiontime"]</td>
+    </tr>
+  }
+</tbody>
+</table>
+</div>
+<div class="dataListEdit">
+<div class="page">
+    @Html.AdminPager(Model.PageModel)
+</div>
+</div>
+}
+     <div class="table_bottom"></div>
+    @using (Html.BeginForm("sendcredits", "log"))
+    {
+        <div class="addTable" style="margin-left: 15px; margin-bottom: 10px; padding-top: 10px;
+            border: 2px solid #dbeffa">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="60px" align="right">用户名：</td>
+                        <td width="66px"><input style="padding:4px;" id="rUserName" name="rUserName" type="text" value="" /></td>
+                        <td width="70px" align="right">&nbsp;&nbsp;支付积分：</td>
+                        <td width="66px"><input style="padding:4px;" id="payCredits" name="payCredits" type="text" value="" /></td>
+                        <td width="70px" align="right">&nbsp;&nbsp;等级积分：</td>
+                        <td width="66px"><input style="padding:4px;" id="rankCredits" name="rankCredits" type="text" value="" /></td>
+                        <td>
+                            <input id="sendCredit" name="sendCredit" type="image" class="searchBut"
+                                style="margin:0px 6px; padding:0px;" src="/administration/content/images/a.jpg" />
+                            <script type="text/javascript">
+                                $(function () {
+                                    $("#sendCredit").click(function () {
+                                        $("form:eq(1)").submit();
+                                        return false;
+                                    })
+                                });
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}

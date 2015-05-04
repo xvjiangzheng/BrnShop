@@ -1,0 +1,140 @@
+﻿@model BrnShop.Web.Admin.Models.PerformanceModel
+
+@section header{
+    <title>性能设置</title>
+    <link type="text/css" rel="stylesheet" href="/administration/content/css/site.css"/>
+    <script type="text/javascript" src="/administration/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/administration/scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+@section body{
+<h1 class="rightH1">
+系统设置 &gt;&gt; 性能设置
+<div class="right">
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</h1>
+
+@using (Html.BeginForm())
+{
+<div class="addTable">
+<table width="100%">
+  <tr>
+    <td width="150px" align="right">图片CDN：</td>
+    <td>
+    @Html.TextBoxFor(x => x.ImageCDN, new { @class = "input", size = "35" })不能以"/"结尾，没有则留空
+    </td>
+    </tr>
+
+      <tr>
+    <td align="right">CSSCDN：</td>
+    <td>
+@Html.TextBoxFor(x => x.CSSCDN, new { @class = "input", size = "35" })不能以"/"结尾，没有则留空
+    </td>
+        </tr>
+
+     <tr>
+    <td align="right">脚本CDN：</td>
+    <td>
+   @Html.TextBoxFor(x => x.ScriptCDN, new { @class = "input", size = "35" })不能以"/"结尾，没有则留空
+    </td>
+    </tr>
+
+    <tr>
+    <td align="right">在线用户过期时间：</td>
+    <td>
+    @Html.TextBoxFor(x => x.OnlineUserExpire, new { @class = "input", size = "35" })单位为分钟 @Html.ValidationMessageFor(x => x.OnlineUserExpire)
+    </td>
+    </tr>
+
+      <tr>
+    <td align="right">最大在线人数：</td>
+    <td>
+@Html.TextBoxFor(x => x.MaxOnlineCount, new { @class = "input", size = "35" }) @Html.ValidationMessageFor(x => x.MaxOnlineCount)
+    </td>
+        </tr>
+
+     <tr>
+    <td align="right">在线人数缓存时间：</td>
+    <td>
+   @Html.TextBoxFor(x => x.OnlineUserExpire, new { @class = "input", size = "35" })单位为分钟,0代表即时数量 @Html.ValidationMessageFor(x => x.OnlineUserExpire)
+    </td>
+    </tr>
+
+      <tr>
+    <td align="right">更新用户在线时间间隔：</td>
+    <td>
+    @Html.TextBoxFor(x => x.UpdateOnlineTimeSpan, new { @class = "input", size = "35" })单位为分钟,0代表不更新 @Html.ValidationMessageFor(x => x.UpdateOnlineTimeSpan)
+    </td>
+    </tr>
+
+         <tr>
+    <td align="right">更新PV统计时间间隔：</td>
+    <td>
+   @Html.TextBoxFor(x => x.UpdatePVStatTimespan, new { @class = "input", size = "35" })单位为分钟,0代表不统计pv @Html.ValidationMessageFor(x => x.UpdatePVStatTimespan)
+    </td>
+    </tr>
+
+                  <tr>
+    <td align="right">是否统计浏览器：</td>
+    <td><p>
+      <label>
+@Html.RadioButtonFor(x => x.IsStatBrowser, 1, new { @class = "checkbox" })统计</label>
+      <label>
+@Html.RadioButtonFor(x => x.IsStatBrowser, 0, new { @class = "checkbox" })不统计</label>
+@Html.ValidationMessageFor(x => x.IsStatBrowser)
+ <br />
+    </p>
+</td>
+    </tr>
+
+                      <tr>
+    <td align="right">是否统计操作系统：</td>
+    <td><p>
+      <label>
+@Html.RadioButtonFor(x => x.IsStatOS, 1, new { @class = "checkbox" })统计</label>
+      <label>
+@Html.RadioButtonFor(x => x.IsStatOS, 0, new { @class = "checkbox" })不统计</label>
+@Html.ValidationMessageFor(x => x.IsStatOS)
+ <br />
+    </p>
+</td>
+    </tr>
+
+                      <tr>
+    <td align="right">是否统计区域：</td>
+    <td><p>
+      <label>
+@Html.RadioButtonFor(x => x.IsStatRegion, 1, new { @class = "checkbox" })统计</label>
+      <label>
+@Html.RadioButtonFor(x => x.IsStatRegion, 0, new { @class = "checkbox" })不统计</label>
+@Html.ValidationMessageFor(x => x.IsStatRegion)
+ <br />
+    </p>
+</td>
+    </tr>
+
+    <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+    <a href="" class="addBt" id="sumbitBut" ><img src="/administration/content/images/submit.jpg" /></a>
+            <script type="text/javascript">
+                $(function () {
+                    $("#sumbitBut").click(function () {
+                        $("form:first").submit();
+                        return false;
+                    })
+                });
+        </script>
+    </td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+</div>
+}
+}
